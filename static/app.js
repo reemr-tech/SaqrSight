@@ -38,6 +38,7 @@ function applyLang() {
   setBreadcrumb();
   if (current && viewName === 'results') showReport(current, true);
   if (viewName === 'history') refresh();
+  if (window.Motion) Motion.text();
 }
 $('uilang').onclick = () => {
   lang = lang === 'ar' ? 'en' : 'ar';
@@ -86,6 +87,7 @@ function view(id) {
   $('historynav').classList.toggle('active', id === 'history');
   setBreadcrumb();
   window.scrollTo(0, 0);
+  if (window.Motion) Motion.view(id);
 }
 function error(message) { $('error').textContent = message; $('error').hidden = !message; }
 async function request(url, options) {
@@ -251,15 +253,25 @@ function renderLegacy(p) {
   }));
 }
 
+let renderedMediaFor = null;
 function showReport(p, keepView) {
+  // Statuses from the previous render of the same report, so only changes are animated.
+  let prev = null;
+  if (current && current.id === p.id && renderedMediaFor === p.id) {
+    prev = { __status: current.status };
+    for (const s of current.sections || []) prev[s.key] = s.status;
+    prev.__modules = Object.fromEntries(Object.entries(current.modules || {}).map(([k, m]) => [k, m.status]));
+  }
   current = p;
   $('reportdate').textContent = new Date(p.created_at).toLocaleString(lang === 'ar' ? 'ar-AE' : undefined);
   $('resultcaption').textContent = p.caption || t('noText');
   $('reportid').textContent = t('reportLine', { id: p.id, lang: p.language });
   const strip = $('resultmedia');
-  strip.replaceChildren();
   const visuals = p.media ? p.media.visuals : (p.image ? [{ ref: 'image' }] : []);
-  for (const v of visuals) {
+  const sameMedia = renderedMediaFor === p.id;
+  renderedMediaFor = p.id;
+  if (!sameMedia) strip.replaceChildren();
+  for (const v of sameMedia ? [] : visuals) {
     const fig = el('figure');
     const img = el('img');
     img.src = p.media ? mediaURL(p.id, v.ref) : '/api/reports/' + encodeURIComponent(p.id) + '/image';
@@ -268,10 +280,15 @@ function showReport(p, keepView) {
     if (v.timestamp !== undefined) fig.append(el('figcaption', null, t('frameAt', { t: v.timestamp })));
     strip.append(fig);
   }
-  if (p.media && p.media.kind === 'video') {
+  if (!sameMedia && p.media && p.media.kind === 'video') {
     strip.append(el('p', 'note', t('frameNote', { ts: p.media.visuals.map(v => v.timestamp + 's').join(', ') })));
   }
-  if (p.mode === 'sample') { renderLegacy(p); if (!keepView) view('results'); return; }
+  if (p.mode === 'sample') {
+    renderLegacy(p);
+    if (!keepView) view('results');
+    if (window.Motion) Motion.report(p, prev);
+    return;
+  }
 
   const banner = $('banner');
   const a = p.assessment;
@@ -297,11 +314,13 @@ function showReport(p, keepView) {
       pending: lang === 'ar' ? 'قيد التنفيذ…' : 'Running…' }[status];
     li.append(el('span', null, t('mod_' + k)), el('em', null, statusLabel));
     if (m && m.summary) li.title = m.summary;
+    if (prev && prev.__modules && (prev.__modules[k] || 'pending') !== status) li.dataset.changed = '1';
     ul.append(li);
   }
   checks.append(ul);
   $('sections').replaceChildren(...(p.sections || []).map(renderSection));
   if (!keepView) view('results');
+  if (window.Motion) Motion.report(p, prev);
 }
 
 // ---------- history ----------
@@ -332,6 +351,7 @@ async function refresh() {
       row.append(d, open);
       list.append(row);
     }
+    if (viewName === 'history' && window.Motion) Motion.enter(list.children);
   } catch (e) {
     $('historylist').textContent = e.message;
   }

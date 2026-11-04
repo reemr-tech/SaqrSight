@@ -11,7 +11,9 @@ from conftest import mp4, png, wait
 
 def test_page_assets_and_config(client):
     assert "SaqrSight" in client.get("/").text
-    for asset in ("app.js", "style.css", "report.css", "i18n.js", "falcon.svg"):
+    for asset in ("app.js", "style.css", "report.css", "i18n.js", "falcon.svg", "motion.js", "motion.css",
+                  "vendor/gsap.min.js", "vendor/ScrollTrigger.min.js", "vendor/SplitText.min.js",
+                  "vendor/lenis.min.js", "vendor/lenis.css"):
         assert client.get("/static/" + asset).status_code == 200
     cfg = client.get("/api/config").json()
     assert cfg["limits"]["max_text_chars"] == 10000 and cfg["limits"]["max_video_seconds"] == 60

@@ -1,0 +1,52 @@
+/* Motion layer styles: aurora background, spotlight cards, scanning overlay, live statuses. */
+.hero{position:relative;isolation:isolate}
+.aurora{position:absolute;inset:0;width:100%;height:100%;z-index:-1;pointer-events:none;filter:blur(28px) saturate(1.1);opacity:.95}
+.hero-copy,.falcon-scene{position:relative;z-index:1}
+
+/* Spotlight that follows the pointer */
+.card,.report-banner,.historyitem{position:relative;overflow:hidden}
+.card::before,.report-banner::before{content:"";position:absolute;inset:0;pointer-events:none;opacity:0;transition:opacity .35s ease;
+  background:radial-gradient(420px circle at var(--mx,50%) var(--my,50%),rgba(201,169,107,.20),rgba(201,169,107,0) 60%)}
+.card:hover::before,.report-banner:hover::before{opacity:1}
+.card>*,.report-banner>*{position:relative}
+.resultgrid .card{transition:transform .35s cubic-bezier(.2,.8,.2,1),box-shadow .35s ease,border-color .35s ease}
+.resultgrid .card:hover{transform:translateY(-3px);box-shadow:0 14px 34px -18px rgba(24,59,52,.35);border-color:#d9c79c}
+/* flash when a result arrives (driven by GSAP via --flash) */
+.resultgrid .card{box-shadow:0 0 0 calc(var(--flash,0) * 3px) rgba(201,169,107,.55)}
+
+/* Buttons: subtle shine */
+.primary{position:relative;overflow:hidden}
+.primary::after{content:"";position:absolute;inset:0;transform:translateX(-120%);
+  background:linear-gradient(100deg,transparent 30%,rgba(255,255,255,.22) 50%,transparent 70%);transition:transform .7s ease}
+.primary:hover::after{transform:translateX(120%)}
+
+/* Live check statuses */
+.checklist li.pending{position:relative;overflow:hidden}
+.checklist li.pending::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,transparent,rgba(92,110,138,.14),transparent);
+  animation:saqr-shimmer 1.4s linear infinite}
+.status-chip.pending{animation:saqr-pulse 1.2s ease-in-out infinite}
+@keyframes saqr-shimmer{from{transform:translateX(-100%)}to{transform:translateX(100%)}}
+@keyframes saqr-pulse{50%{opacity:.45}}
+
+/* Scanning overlay on the submitted image / frames */
+.framestrip figure{position:relative;overflow:hidden;border-radius:6px}
+.scan{position:absolute;inset:0;pointer-events:none;border-radius:6px;background:rgba(16,47,43,.18)}
+.scan-grid{position:absolute;inset:0;opacity:.25;
+  background-image:linear-gradient(rgba(231,194,122,.5) 1px,transparent 1px),linear-gradient(90deg,rgba(231,194,122,.5) 1px,transparent 1px);
+  background-size:22px 22px}
+.scan-line{position:absolute;left:0;right:0;height:4%;min-height:6px;
+  background:linear-gradient(180deg,rgba(231,194,122,0),rgba(231,194,122,.85),rgba(231,194,122,0));box-shadow:0 0 18px rgba(231,194,122,.8)}
+.scan-corner{position:absolute;width:16px;height:16px;border:2px solid #e7c27a}
+.scan-corner.tl{top:6px;left:6px;border-right:0;border-bottom:0}.scan-corner.tr{top:6px;right:6px;border-left:0;border-bottom:0}
+.scan-corner.bl{bottom:6px;left:6px;border-right:0;border-top:0}.scan-corner.br{bottom:6px;right:6px;border-left:0;border-top:0}
+.scan-label{position:absolute;left:10px;bottom:10px;font:700 10px/1 system-ui;letter-spacing:2px;color:#f6e7c3;
+  background:rgba(16,47,43,.75);padding:4px 7px;border-radius:3px}
+
+/* SplitText masks should not clip descenders */
+.motion h1 [class*="mask"]{padding-bottom:.08em;margin-bottom:-.08em}
+.motion h1{will-change:transform}
+
+@media (prefers-reduced-motion: reduce){
+  .checklist li.pending::after,.status-chip.pending{animation:none}
+  .resultgrid .card,.primary::after,.card::before{transition:none}
+}
