@@ -1,159 +1,177 @@
-"""SaqrSight milestone 1: local submissions and explicitly simulated reports."""
-from contextlib import contextmanager
-from datetime import datetime, timezone
-from io import BytesIO
-from pathlib import Path
-import html
+"""SaqrSight SGP2: FastAPI entry point.
+
+Operations
+  GET    /api/config                         upload limits and which optional checks are available
+  POST   /api/reports                        submit caption and/or one image or short video (202, processing)
+  GET    /api/reports                        list saved reports (most recent 100)
+  GET    /api/reports/{id}                   view a report (poll until status == "complete")
+  GET    /api/reports/{id}/media/{ref}       stored image or sampled frame ("image", "frame-1", ...)
+  GET    /api/reports/{id}/image             first stored visual (kept for SGP1 compatibility)
+  GET    /api/reports/{id}/download?format=  html | json
+  DELETE /api/reports/{id}                   delete report records and stored media
+"""
+from __future__ import annotations
+
 import json
-import os
-import sqlite3
+import logging
 import uuid
-import warnings
+from datetime import datetime, timezone
 
-from fastapi import FastAPI, File, Form, HTTPException, UploadFile
-from fastapi.responses import FileResponse, HTMLResponse, Response
+from fastapi import FastAPI, File, Form, HTTPException, Request, UploadFile
+from fastapi.responses import FileResponse, HTMLResponse, JSONResponse, Response
 from fastapi.staticfiles import StaticFiles
-from PIL import Image, UnidentifiedImageError
 
-ROOT = Path(__file__).resolve().parent
-DATA = Path(os.environ.get('SAQRSIGHT_DATA_DIR', ROOT / 'data')).resolve()
-MEDIA = DATA / 'media'
-MEDIA.mkdir(parents=True, exist_ok=True)
-MAX_BYTES = 10 * 1024 * 1024
-Image.MAX_IMAGE_PIXELS = 20_000_000
-app = FastAPI(title='SaqrSight', version='0.1.0')
-app.mount('/static', StaticFiles(directory=ROOT / 'static'), name='static')
+from saqrsight import pipeline, report
+from saqrsight.analysis import claims
+from saqrsight.config import ROOT, settings
+from saqrsight.media import SubmissionError, process_upload
+from saqrsight.storage import Store
+from saqrsight.textutil import detect_language
 
-@contextmanager
-def db():
-    con = sqlite3.connect(DATA / 'saqrsight.sqlite3')
-    con.row_factory = sqlite3.Row
-    try:
-        con.execute('CREATE TABLE IF NOT EXISTS reports (id TEXT PRIMARY KEY, created_at TEXT, payload TEXT NOT NULL, image_name TEXT)')
-        yield con
-        con.commit()
-    finally:
-        con.close()
+logging.basicConfig(level=logging.INFO, format="%(levelname)s %(name)s: %(message)s")
+# HTTP client loggers print request URLs, which can carry API keys (?key=...). Keep them quiet.
+for _name in ("httpx", "httpx2", "httpcore", "urllib3", "huggingface_hub"):
+    logging.getLogger(_name).setLevel(logging.WARNING)
+cfg = settings()
+store = Store(cfg)
+store.purge_expired()
+DATA, MEDIA = cfg.data_dir, cfg.media_dir   # kept for tests and tooling
+app = FastAPI(title="SaqrSight", version=pipeline.VERSION)
+app.mount("/static", StaticFiles(directory=ROOT / "static"), name="static")
+NO_STORE = {"Cache-Control": "no-store"}
 
-with db():
-    pass
 
-def get_record(report_id):
-    with db() as con:
-        row = con.execute('SELECT * FROM reports WHERE id=?', (report_id,)).fetchone()
-    if row is None:
-        raise HTTPException(404, 'Report not found.')
-    return row
+@app.exception_handler(SubmissionError)
+def _submission_error(_: Request, e: SubmissionError):
+    return JSONResponse({"detail": e.message, "code": e.code}, status_code=e.status)
 
-def make_report(caption, language, image_meta, report_id):
-    now = datetime.now(timezone.utc).isoformat()
-    sections = [
-        ('Overall assessment', 'Sample only — no credibility assessment has been performed.'),
-        ('Confidence score', 'Not available. No trained model has been connected.'),
-        ('Text analysis', 'Sample placeholder — text analysis is not connected.' if caption else 'Not applicable — no text supplied.'),
-        ('Media analysis', 'Sample placeholder — synthetic-media detection is not connected.' if image_meta else 'Not applicable — no image supplied.'),
-        ('Consistency check', 'Sample placeholder — caption–image model is not connected.' if caption and image_meta else 'Not applicable — both text and an image are required.'),
-        ('Issue classification', 'Not assessed.'),
-        ('Review priority', 'Not assigned in sample mode.'),
-        ('Panic language indicators', 'Not assessed.'),
-        ('Previous media appearances', 'Not searched — reverse image search is not connected.'),
-        ('Official source evidence', 'Not searched — official-source retrieval is not connected.'),
-        ('Recommended action', 'Check relevant official sources and original media context. This sample report cannot establish whether the claim is true or false.'),
-    ]
-    return dict(id=report_id, created_at=now, mode='sample', caption=caption,
-                language=language, image=image_meta,
-                notice='WORKFLOW DEMONSTRATION ONLY. All analytical findings are placeholders, not AI results.',
-                sections=[dict(title=t, finding=f) for t, f in sections])
 
-@app.get('/', response_class=HTMLResponse)
+def _record(report_id: str) -> dict:
+    p = store.get(report_id)
+    if p is None:
+        raise HTTPException(404, "Report not found.")
+    return p
+
+
+@app.get("/", response_class=HTMLResponse)
 def home():
-    return (ROOT / 'static' / 'index.html').read_text(encoding='utf-8')
+    return (ROOT / "static" / "index.html").read_text(encoding="utf-8")
 
-@app.get('/api/health')
+
+@app.get("/api/health")
 def health():
-    return {'status': 'ok', 'mode': 'sample', 'version': '0.1.0'}
+    return {"status": "ok", "mode": "analysis", "version": pipeline.VERSION}
 
-@app.post('/api/reports', status_code=201)
-async def create_report(caption: str = Form(''), language: str = Form('auto'), image: UploadFile | None = File(None)):
-    caption = caption.strip()
-    if len(caption) > 10000:
-        raise HTTPException(422, 'Text must be 10,000 characters or fewer.')
-    if language not in {'auto', 'ar', 'en'}:
-        raise HTTPException(422, 'Choose Arabic, English, or automatic language selection.')
-    if not caption and (image is None or not image.filename):
-        raise HTTPException(422, 'Enter text or upload an image.')
+
+@app.get("/api/config")
+def config():
+    from saqrsight.analysis.models import load_calibration
+    return {
+        "limits": cfg.public_limits(),
+        "checks": {
+            "text_analysis": True,
+            "media_analysis": cfg.enable_models,
+            "consistency_check": cfg.enable_models and load_calibration("consistency_classifier.json") is not None,
+            "reverse_image_search": cfg.reverse_search_configured,
+            "official_sources": cfg.official_search_configured,
+        },
+        "external": {
+            "reverse_image_search": "Google Cloud Vision (the stored image, or up to "
+                                    f"{cfg.max_reverse_frames} sampled video frames, without metadata)",
+            "official_sources": f"{cfg.search_provider} search (event, place and date keywords only)",
+            "official_domains": cfg.official_domains,
+        },
+    }
+
+
+@app.post("/api/reports", status_code=202)
+async def create_report(caption: str = Form(""), language: str = Form("auto"),
+                        allow_external: bool = Form(False),
+                        image: UploadFile | None = File(None), media: UploadFile | None = File(None)):
+    upload = media if (media is not None and media.filename) else image
+    original = caption.strip()
+    if len(original) > cfg.max_text_chars:
+        raise HTTPException(422, f"Text must be {cfg.max_text_chars:,} characters or fewer.")
+    if language not in {"auto", "ar", "en", "mixed"}:
+        raise HTTPException(422, "Choose Arabic, English, mixed, or automatic language selection.")
+    has_file = upload is not None and bool(upload.filename)
+    if not original and not has_file:
+        raise HTTPException(422, "Enter text or upload an image or video.")
     rid = str(uuid.uuid4())
-    image_meta, stored_name = None, None
-    if image is not None and image.filename:
+    info = None
+    if has_file:
+        limit = max(cfg.max_image_bytes, cfg.max_video_bytes)
         try:
-            raw = await image.read(MAX_BYTES + 1)
+            raw = await upload.read(limit + 1)
         finally:
-            await image.close()
-        if len(raw) > MAX_BYTES:
-            raise HTTPException(413, 'Image must be 10 MB or smaller.')
-        try:
-            with warnings.catch_warnings():
-                warnings.simplefilter('error', Image.DecompressionBombWarning)
-                with Image.open(BytesIO(raw)) as im:
-                    if im.format not in {'JPEG', 'PNG', 'WEBP'}:
-                        raise HTTPException(415, 'Use a JPEG, PNG, or WebP image.')
-                    if getattr(im, 'n_frames', 1) != 1:
-                        raise HTTPException(415, 'Use a single still image, not an animated file.')
-                    im.load()
-                    # Re-encode to strip metadata and never retain arbitrary upload bytes.
-                    clean = im.convert('RGB')
-                    image_meta = {'width': im.width, 'height': im.height, 'original_name': Path(image.filename.replace('\\', '/')).name[:200]}
-                    stored_name = rid + '.jpg'
-                    clean.save(MEDIA / stored_name, format='JPEG', quality=90)
-        except (UnidentifiedImageError, OSError, ValueError, Image.DecompressionBombError, Image.DecompressionBombWarning):
-            raise HTTPException(415, 'Invalid image or image exceeds the 20-megapixel safety limit.')
-    selected = language
-    if language == 'auto':
-        selected = ('ar' if any('\u0600' <= c <= '\u06ff' for c in caption) else 'en') if caption else 'not applicable'
-    payload = make_report(caption, selected, image_meta, rid)
+            await upload.close()
+        if len(raw) > limit:
+            raise HTTPException(413, "The file is larger than the upload limits.")
+        info = process_upload(raw, upload.filename, store.media_folder(rid), cfg)
+    detected = detect_language(original) if original else "not applicable"
+    chosen = detected if language == "auto" else language
+    now = datetime.now(timezone.utc).isoformat()
+    details = claims.extract(original) if original else claims.ClaimDetails()
+    p = {"id": rid, "created_at": now, "status": "processing", "mode": "analysis", "version": pipeline.VERSION,
+         "caption": original, "language": chosen, "language_detected": detected,
+         "language_overridden": language != "auto", "media": info.public() if info else None,
+         "consent_external": bool(allow_external), "claim_details": details.to_dict(), "modules": {},
+         "notice": "Initial assessment generated by automated checks. It supports, but does not replace, human "
+                   "verification. Findings marked 'not configured' or 'failed' were not assessed."}
+    p["sections"] = report.build_sections(p)
     try:
-        with db() as con:
-            con.execute('INSERT INTO reports VALUES (?, ?, ?, ?)', (rid, payload['created_at'], json.dumps(payload, ensure_ascii=False), stored_name))
+        store.create(p, {"caption": original, "language": chosen, "language_detected": detected,
+                         "media_kind": info.kind if info else None, "media_meta": p["media"],
+                         "allow_external": bool(allow_external)})
     except Exception:
-        if stored_name:
-            (MEDIA / stored_name).unlink(missing_ok=True)
+        import shutil
+        shutil.rmtree(store.media_folder(rid), ignore_errors=True)
         raise
-    return payload
+    pipeline.submit(store, cfg, p, info)
+    return p
 
-@app.get('/api/reports')
+
+@app.get("/api/reports")
 def history():
-    with db() as con:
-        rows = con.execute('SELECT id,created_at,payload FROM reports ORDER BY created_at DESC LIMIT 100').fetchall()
-    return [{'id': r['id'], 'created_at': r['created_at'], 'caption': json.loads(r['payload'])['caption'], 'has_image': bool(json.loads(r['payload'])['image'])} for r in rows]
+    return store.list(100)
 
-@app.get('/api/reports/{report_id}')
+
+@app.get("/api/reports/{report_id}")
 def read_report(report_id: str):
-    return json.loads(get_record(report_id)['payload'])
+    return JSONResponse(_record(report_id), headers=NO_STORE)
 
-@app.get('/api/reports/{report_id}/image')
+
+@app.get("/api/reports/{report_id}/media/{ref}")
+def read_media(report_id: str, ref: str):
+    _record(report_id)
+    path = store.visual_path(report_id, ref)
+    if path is None:
+        raise HTTPException(404, "Media not found.")
+    return FileResponse(path, media_type="image/jpeg", headers=NO_STORE)
+
+
+@app.get("/api/reports/{report_id}/image")
 def read_image(report_id: str):
-    name = get_record(report_id)['image_name']
-    if not name or not (MEDIA / name).is_file():
-        raise HTTPException(404, 'Image not found.')
-    return FileResponse(MEDIA / name, media_type='image/jpeg', headers={'Cache-Control': 'no-store'})
+    p = _record(report_id)
+    visuals = (p.get("media") or {}).get("visuals") or [{"ref": "image"}]
+    return read_media(report_id, visuals[0]["ref"])
 
-@app.get('/api/reports/{report_id}/download')
-def download(report_id: str, format: str = 'html'):
-    p = json.loads(get_record(report_id)['payload'])
-    if format == 'json':
-        return Response(json.dumps(p, ensure_ascii=False, indent=2), media_type='application/json', headers={'Content-Disposition': f'attachment; filename="SaqrSight-{report_id}.json"'})
-    if format != 'html':
-        raise HTTPException(422, 'Supported formats: html, json.')
-    esc = html.escape
-    sections = ''.join(f'<section><h2>{esc(s["title"])}</h2><p>{esc(s["finding"])}</p></section>' for s in p['sections'])
-    content = f'''<!doctype html><html lang="en"><meta charset="utf-8"><title>SaqrSight sample report</title><style>body{{font:16px system-ui;max-width:820px;margin:40px auto;padding:20px;color:#173c37}}aside{{padding:18px;background:#fff1d8;border:1px solid #b18432}}section{{break-inside:avoid;border-bottom:1px solid #ddd}}h2{{font-size:18px}}pre{{white-space:pre-wrap;font:inherit}}@media print{{body{{margin:0}}}}</style><h1>SaqrSight · Sample report</h1><aside>{esc(p['notice'])}</aside><p>Report ID: {esc(p['id'])}<br>Created: {esc(p['created_at'])}<br>Language: {esc(p['language'])}</p><h2>Submitted text</h2><pre dir="auto">{esc(p['caption'] or 'No text supplied.')}</pre><p>Image: {esc(p['image']['original_name']) if p['image'] else 'Not supplied'}</p>{sections}<p>Milestone 1 · Local workflow prototype</p></html>'''
-    return Response(content, media_type='text/html', headers={'Content-Disposition': f'attachment; filename="SaqrSight-{report_id}.html"'})
 
-@app.delete('/api/reports/{report_id}', status_code=204)
+@app.get("/api/reports/{report_id}/download")
+def download(report_id: str, format: str = "html"):
+    p = _record(report_id)
+    name = f"SaqrSight-{report_id}"
+    if format == "json":
+        return Response(json.dumps(p, ensure_ascii=False, indent=2), media_type="application/json",
+                        headers={"Content-Disposition": f'attachment; filename="{name}.json"'})
+    if format != "html":
+        raise HTTPException(422, "Supported formats: html, json.")
+    return Response(report.render_html(p), media_type="text/html",
+                    headers={"Content-Disposition": f'attachment; filename="{name}.html"'})
+
+
+@app.delete("/api/reports/{report_id}", status_code=204)
 def delete_report(report_id: str):
-    row = get_record(report_id)
-    with db() as con:
-        con.execute('DELETE FROM reports WHERE id=?', (report_id,))
-    if row['image_name']:
-        (MEDIA / row['image_name']).unlink(missing_ok=True)
+    if not store.delete(report_id):
+        raise HTTPException(404, "Report not found.")
     return Response(status_code=204)

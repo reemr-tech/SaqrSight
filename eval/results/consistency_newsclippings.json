@@ -1,0 +1,59 @@
+{
+  "dataset": "NewsCLIPpings merged_balanced",
+  "C": 0.01,
+  "thresholds": {
+    "agree": 0.81,
+    "disagree": 0.23
+  },
+  "val": {
+    "accuracy": 0.6697,
+    "auc": 0.7444,
+    "match": {
+      "precision": 0.6578,
+      "recall": 0.7076,
+      "f1": 0.6818,
+      "n": 3512
+    },
+    "mismatch": {
+      "precision": 0.6836,
+      "recall": 0.6318,
+      "f1": 0.6567,
+      "n": 3512
+    },
+    "three_way": {
+      "agree_precision": 0.8512,
+      "disagree_precision": 0.8566,
+      "coverage": 0.2148,
+      "agree_share": 0.0689,
+      "disagree_share": 0.1459
+    }
+  },
+  "test": {
+    "accuracy": 0.6799,
+    "auc": 0.7528,
+    "match": {
+      "precision": 0.6671,
+      "recall": 0.7183,
+      "f1": 0.6918,
+      "n": 3632
+    },
+    "mismatch": {
+      "precision": 0.6949,
+      "recall": 0.6415,
+      "f1": 0.6671,
+      "n": 3632
+    },
+    "three_way": {
+      "agree_precision": 0.8951,
+      "disagree_precision": 0.8601,
+      "coverage": 0.2165,
+      "agree_share": 0.0709,
+      "disagree_share": 0.1456
+    }
+  },
+  "sizes": {
+    "train": 71072,
+    "val": 7024,
+    "test": 7264
+  }
+}

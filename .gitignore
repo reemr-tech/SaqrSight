@@ -2,3 +2,8 @@
 __pycache__/
 .pytest_cache/
 data/
+
+# external datasets and model caches (not redistributed)
+external/
+.env
+*.sqlite3
