@@ -18,7 +18,7 @@ import re
 from functools import lru_cache
 
 from ..schema import COMPLETED, Finding, ModuleResult, not_applicable
-from ..textutil import normalize_with_map
+from ..textutil import TASHKEEL_RE, TATWEEL, normalize_with_map
 from . import lexicon as L
 
 MODULE = "text_analysis"
@@ -113,7 +113,10 @@ def find_matches(caption: str) -> list[dict]:
             if s < last_end:
                 continue
             last_end = e
-            excerpt = caption[idx[s]: idx[e - 1] + 1]
+            end = idx[e - 1] + 1
+            while end < len(caption) and (TASHKEEL_RE.match(caption[end]) or caption[end] == TATWEEL):
+                end += 1   # keep diacritics that belong to the last matched letter
+            excerpt = caption[idx[s]: end]
             matches.append({"category": category, "excerpt": excerpt, "start": idx[s],
                             "context": _context(norm, s, e, category)})
     matches.sort(key=lambda m: m["start"])

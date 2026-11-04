@@ -69,7 +69,7 @@ class Settings:
         self.official_domains = [d.strip().lower() for d in domains.split(",") if d.strip()] or DEFAULT_OFFICIAL_DOMAINS
 
         # Retention: reports older than this many days are purged at startup (0 = keep until deleted).
-        self.retention_days = _int("SAQRSIGHT_RETENTION_DAYS", 30)
+        self.retention_days = _int("SAQRSIGHT_RETENTION_DAYS", 90)
 
     @property
     def reverse_search_configured(self) -> bool:
