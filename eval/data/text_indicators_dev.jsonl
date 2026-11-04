@@ -1,0 +1,40 @@
+{"id":"d-en-01","lang":"en","text":"URGENT: share this with everyone before it gets deleted!","labels":["urgency","share_pressure","manipulation"],"phenomenon":"indicator"}
+{"id":"d-en-02","lang":"en","text":"Breaking: explosion near Jebel Ali port, people are dying. Spread the word!","labels":["urgency","fear","share_pressure"],"phenomenon":"indicator"}
+{"id":"d-en-03","lang":"en","text":"Do not share unverified videos of the accident on Sheikh Zayed Road.","labels":[],"phenomenon":"negation"}
+{"id":"d-en-04","lang":"en","text":"No need to panic, the water supply in Sharjah is normal according to SEWA.","labels":[],"phenomenon":"negation"}
+{"id":"d-en-05","lang":"en","text":"They don't want you to know the real reason the malls are closing.","labels":["manipulation"],"phenomenon":"indicator"}
+{"id":"d-en-06","lang":"en","text":"A viral post claims \"the airport is closed, share now\" but this is fake.","labels":[],"phenomenon":"quote"}
+{"id":"d-en-07","lang":"en","text":"Rumours of a lockdown in Abu Dhabi are false, officials said.","labels":[],"phenomenon":"debunk"}
+{"id":"d-en-08","lang":"en","text":"NCM issued a warning: dangerous fog on roads to Al Ain this morning, drive carefully.","labels":[],"phenomenon":"warning"}
+{"id":"d-en-09","lang":"en","text":"Stock up on water NOW, shortages expected across Dubai!!","labels":["urgency","fear"],"phenomenon":"indicator"}
+{"id":"d-en-10","lang":"en","text":"The new metro station in Dubai opens next month.","labels":[],"phenomenon":"neutral"}
+{"id":"d-en-11","lang":"en","text":"Leaked video shows what the media is hiding about the fire in Ajman.","labels":["manipulation"],"phenomenon":"indicator"}
+{"id":"d-en-12","lang":"en","text":"Forward this to your family immediately: chaos at the Hatta border.","labels":["share_pressure","urgency","fear"],"phenomenon":"indicator"}
+{"id":"d-en-13","lang":"en","text":"Heavy rain expected in Fujairah on Thursday, according to the National Centre of Meteorology.","labels":[],"phenomenon":"warning"}
+{"id":"d-en-14","lang":"en","text":"Please don't forward messages about the outbreak unless they come from MOHAP.","labels":[],"phenomenon":"negation"}
+{"id":"d-en-15","lang":"en","text":"100% confirmed: schools will close tomorrow. Retweet!","labels":["manipulation","share_pressure"],"phenomenon":"indicator"}
+{"id":"d-en-16","lang":"en","text":"Terrifying scenes in Deira, a disaster is unfolding.","labels":["fear"],"phenomenon":"indicator"}
+{"id":"d-en-17","lang":"en","text":"Someone wrote \"catastrophe in Dubai Marina\" under the photo, but it is from 2015.","labels":[],"phenomenon":"quote"}
+{"id":"d-en-18","lang":"en","text":"Happening now: smoke over Business Bay.","labels":["urgency"],"phenomenon":"indicator"}
+{"id":"d-en-19","lang":"en","text":"Abu Dhabi Police advised residents to avoid the area during the evacuation drill.","labels":[],"phenomenon":"warning"}
+{"id":"d-en-20","lang":"en","text":"Wake up people, the truth about the power cuts is being covered up.","labels":["manipulation"],"phenomenon":"indicator"}
+{"id":"d-ar-01","lang":"ar","text":"عاجل: انشروها قبل الحذف","labels":["urgency","share_pressure","manipulation"],"phenomenon":"indicator"}
+{"id":"d-ar-02","lang":"ar","text":"انفجار ضخم في جبل علي والوضع كارثي، شاركوا الخبر","labels":["fear","share_pressure"],"phenomenon":"indicator"}
+{"id":"d-ar-03","lang":"ar","text":"لا تنشروا الشائعات حول الحادث في شارع الشيخ زايد","labels":[],"phenomenon":"negation"}
+{"id":"d-ar-04","lang":"ar","text":"لا داعي للهلع، المياه متوفرة في الشارقة","labels":[],"phenomenon":"negation"}
+{"id":"d-ar-05","lang":"ar","text":"فيديو مسرب يكشف ما يخفونه عن الحريق","labels":["manipulation"],"phenomenon":"indicator"}
+{"id":"d-ar-06","lang":"ar","text":"يتداول منشور يقول إن المطار مغلق، والخبر غير صحيح","labels":[],"phenomenon":"quote"}
+{"id":"d-ar-07","lang":"ar","text":"نفت شرطة دبي الشائعات عن حظر تجول في المدينة","labels":[],"phenomenon":"debunk"}
+{"id":"d-ar-08","lang":"ar","text":"حسب المركز الوطني للأرصاد، ضباب كثيف وخطير على الطرق صباح اليوم","labels":[],"phenomenon":"warning"}
+{"id":"d-ar-09","lang":"ar","text":"خزنوا الماء والطعام فوراً، نقص حاد قادم!!","labels":["fear","urgency"],"phenomenon":"indicator"}
+{"id":"d-ar-10","lang":"ar","text":"افتتاح محطة مترو جديدة في دبي الشهر المقبل","labels":[],"phenomenon":"neutral"}
+{"id":"d-ar-11","lang":"ar","text":"الحقيقة التي لن يخبرك بها أحد عن انقطاع الكهرباء","labels":["manipulation"],"phenomenon":"indicator"}
+{"id":"d-ar-12","lang":"ar","text":"ارسلوها لكل الأهل حالاً، فوضى في منفذ حتا","labels":["share_pressure","urgency","fear"],"phenomenon":"indicator"}
+{"id":"d-ar-13","lang":"ar","text":"أعلنت الهيئة الوطنية لإدارة الطوارئ عن تمرين إخلاء في أبوظبي","labels":[],"phenomenon":"warning"}
+{"id":"d-ar-14","lang":"ar","text":"مؤكد 100% المدارس بتسكر بكرة، انشر","labels":["manipulation","share_pressure"],"phenomenon":"dialect"}
+{"id":"d-ar-15","lang":"ar","text":"مشاهد مرعبة في ديرة والوضع كارثة","labels":["fear"],"phenomenon":"indicator"}
+{"id":"d-ar-16","lang":"ar","text":"زعم أحد الحسابات أن هناك انفجار في دبي مارينا، والصورة قديمة","labels":[],"phenomenon":"quote"}
+{"id":"d-ar-17","lang":"ar","text":"الحين دخان فوق الخليج التجاري","labels":[],"phenomenon":"dialect"}
+{"id":"d-ar-18","lang":"ar","text":"انتبهوا! تحذير عاجل لكل سكان العين","labels":["urgency"],"phenomenon":"indicator"}
+{"id":"d-ar-19","lang":"ar","text":"صدقوني الإعلام يكذبون عليكم بخصوص الأمطار","labels":["manipulation"],"phenomenon":"indicator"}
+{"id":"d-ar-20","lang":"ar","text":"تجنبوا نشر صور الضحايا احتراماً لأسرهم","labels":[],"phenomenon":"negation"}

@@ -1,0 +1,20 @@
+{"claim":"Huge fire at Dubai Marina today","result":{"title":"Civil Defence contains fire in Dubai Marina tower","snippet":"Teams responded to a fire in a residential tower in Dubai Marina.","date":"2026-11-04"},"gold":"supporting"}
+{"claim":"Huge fire at Dubai Marina today","result":{"title":"Dubai Police deny rumours of fire in Dubai Marina","snippet":"There is no truth to reports circulating online.","date":"2026-11-04"},"gold":"contradicting"}
+{"claim":"Huge fire at Dubai Marina today","result":{"title":"Fire breaks out in Dubai Marina building","snippet":"","date":"2015-12-31"},"gold":"insufficient"}
+{"claim":"Huge fire at Dubai Marina today","result":{"title":"Fire in Dubai Marina","snippet":"","date":null},"gold":"insufficient"}
+{"claim":"Huge fire at Dubai Marina today","result":{"title":"Warehouse fire in Sharjah industrial area","snippet":"","date":"2026-11-04"},"gold":"insufficient"}
+{"claim":"Huge fire at Dubai Marina today","result":{"title":"Dubai Marina hosts boat show","snippet":"","date":"2026-11-04"},"gold":"insufficient"}
+{"claim":"Flooding in Ras Al Khaimah yesterday","result":{"title":"Heavy rain causes flooding in Ras Al Khaimah valleys","snippet":"","date":"2026-11-03"},"gold":"supporting"}
+{"claim":"Flooding in Ras Al Khaimah yesterday","result":{"title":"NCEMA: reports of flooding in Ras Al Khaimah are false","snippet":"","date":"2026-11-03"},"gold":"contradicting"}
+{"claim":"Flooding in Ras Al Khaimah yesterday","result":{"title":"Flooding in Ras Al Khaimah","snippet":"","date":"2024-04-16"},"gold":"insufficient"}
+{"claim":"Flooding in Ras Al Khaimah yesterday","result":{"title":"Flooding in Fujairah","snippet":"","date":"2026-11-03"},"gold":"insufficient"}
+{"claim":"انفجار في جبل علي اليوم","result":{"title":"انفجار في حاوية بميناء جبل علي","snippet":"","date":"2026-11-04"},"gold":"supporting"}
+{"claim":"انفجار في جبل علي اليوم","result":{"title":"شرطة دبي تنفي وقوع انفجار في جبل علي","snippet":"","date":"2026-11-04"},"gold":"contradicting"}
+{"claim":"انفجار في جبل علي اليوم","result":{"title":"انفجار في جبل علي","snippet":"","date":"2021-07-07"},"gold":"insufficient"}
+{"claim":"انفجار في جبل علي اليوم","result":{"title":"افتتاح توسعة ميناء جبل علي","snippet":"","date":"2026-11-04"},"gold":"insufficient"}
+{"claim":"إغلاق مطار دبي اليوم","result":{"title":"لا صحة لإغلاق مطار دبي","snippet":"المطار يعمل بشكل طبيعي","date":"2026-11-04"},"gold":"contradicting"}
+{"claim":"إغلاق مطار دبي اليوم","result":{"title":"إغلاق مؤقت لمدرج في مطار دبي بسبب الضباب","snippet":"","date":"2026-11-04"},"gold":"supporting"}
+{"claim":"Collapse of a building in Ajman on 3 November 2026","result":{"title":"Partial collapse of building in Ajman, no injuries","snippet":"","date":"2026-11-03"},"gold":"supporting"}
+{"claim":"Collapse of a building in Ajman on 3 November 2026","result":{"title":"Building collapse in Ajman","snippet":"","date":"2019-02-01"},"gold":"insufficient"}
+{"claim":"Outbreak of virus in Al Ain this week","result":{"title":"MOHAP: no virus outbreak in Al Ain, reports are misinformation","snippet":"","date":"2026-11-02"},"gold":"contradicting"}
+{"claim":"Outbreak of virus in Al Ain this week","result":{"title":"Vaccination campaign in Al Ain schools","snippet":"","date":"2026-11-02"},"gold":"insufficient"}

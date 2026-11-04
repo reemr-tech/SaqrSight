@@ -1,0 +1,50 @@
+{"id":"t-en-01","lang":"en","text":"ALERT!!! Massive blast in Mussafah, act now and tell everyone you know.","labels":["urgency","fear","share_pressure"],"phenomenon":"indicator"}
+{"id":"t-en-02","lang":"en","text":"Pass this on: the government is hiding the real numbers.","labels":["share_pressure","manipulation"],"phenomenon":"indicator"}
+{"id":"t-en-03","lang":"en","text":"Please do not spread the clip from the Sharjah fire, it is not from today.","labels":[],"phenomenon":"negation"}
+{"id":"t-en-04","lang":"en","text":"Dubai Municipality says tap water is safe; there is no reason to panic.","labels":[],"phenomenon":"negation"}
+{"id":"t-en-05","lang":"en","text":"A WhatsApp message saying \"share before they delete it\" is circulating; it is a hoax.","labels":[],"phenomenon":"quote"}
+{"id":"t-en-06","lang":"en","text":"Reports of a shortage of fuel in Ajman are misinformation, the ministry said.","labels":[],"phenomenon":"debunk"}
+{"id":"t-en-07","lang":"en","text":"Civil Defence advises residents to evacuate low-lying areas in Ras Al Khaimah as a precaution.","labels":[],"phenomenon":"warning"}
+{"id":"t-en-08","lang":"en","text":"Go to the supermarket immediately, shelves will be empty by tonight!","labels":["urgency","fear"],"phenomenon":"indicator"}
+{"id":"t-en-09","lang":"en","text":"Beautiful sunset over the Burj Khalifa this evening.","labels":[],"phenomenon":"neutral"}
+{"id":"t-en-10","lang":"en","text":"What they're not telling you about the virus cases in Al Ain.","labels":["manipulation"],"phenomenon":"indicator"}
+{"id":"t-en-11","lang":"en","text":"Make this viral so the authorities act on the flooding in Fujairah.","labels":["share_pressure"],"phenomenon":"indicator"}
+{"id":"t-en-12","lang":"en","text":"Horrific crash on E311, dozens dead, the roads are a nightmare.","labels":["fear"],"phenomenon":"indicator"}
+{"id":"t-en-13","lang":"en","text":"The post alleges that \"Dubai is in total chaos\", but the photo is from another country.","labels":[],"phenomenon":"quote"}
+{"id":"t-en-14","lang":"en","text":"Just in: power outage reported in parts of Sharjah.","labels":["urgency"],"phenomenon":"indicator"}
+{"id":"t-en-15","lang":"en","text":"Trust me, this is the truth they buried about the port fire.","labels":["manipulation"],"phenomenon":"indicator"}
+{"id":"t-en-16","lang":"en","text":"Never forward voice notes claiming an attack without checking WAM first.","labels":[],"phenomenon":"negation"}
+{"id":"t-en-17","lang":"en","text":"NCEMA: a test of the emergency alert system will take place at 11am.","labels":[],"phenomenon":"warning"}
+{"id":"t-en-18","lang":"en","text":"You won't believe what happened in Dubai Marina tonight — RT before it disappears!","labels":["manipulation","share_pressure"],"phenomenon":"indicator"}
+{"id":"t-en-19","lang":"en","text":"Officials confirmed the Corniche road will reopen on Saturday.","labels":[],"phenomenon":"neutral"}
+{"id":"t-en-20","lang":"en","text":"Everyone is in a total panic at the airport, it's the end of the world.","labels":["fear"],"phenomenon":"indicator"}
+{"id":"t-en-21","lang":"en","text":"Hurry, last chance to leave the city before the storm hits!","labels":["urgency","fear"],"phenomenon":"indicator"}
+{"id":"t-en-22","lang":"en","text":"Fake: the image of a collapsed bridge in Abu Dhabi is AI-generated.","labels":[],"phenomenon":"debunk"}
+{"id":"t-en-23","lang":"en","text":"The meteorology centre warned of dangerous rip currents at Jumeirah beach.","labels":[],"phenomenon":"warning"}
+{"id":"t-en-24","lang":"en","text":"Send it to all your groups: no one is safe in Deira tonight.","labels":["share_pressure","fear"],"phenomenon":"indicator"}
+{"id":"t-en-25","lang":"en","text":"Traffic is slow near the Al Maktoum bridge this morning.","labels":[],"phenomenon":"neutral"}
+{"id":"t-ar-01","lang":"ar","text":"تنبيه!!! انفجار هائل في المصفح، عمموا الخبر بسرعة","labels":["urgency","fear","share_pressure"],"phenomenon":"indicator"}
+{"id":"t-ar-02","lang":"ar","text":"طرشوها لكل القروبات، الحكومة تخفي الأرقام الحقيقية","labels":["share_pressure","manipulation"],"phenomenon":"dialect"}
+{"id":"t-ar-03","lang":"ar","text":"رجاءً لا تشاركوا مقطع حريق الشارقة فهو ليس من اليوم","labels":[],"phenomenon":"negation"}
+{"id":"t-ar-04","lang":"ar","text":"البلدية تؤكد سلامة مياه الشرب ولا داعي للقلق","labels":[],"phenomenon":"negation"}
+{"id":"t-ar-05","lang":"ar","text":"تداول رسالة تقول \"انشروها قبل الحذف\" وهي إشاعة","labels":[],"phenomenon":"quote"}
+{"id":"t-ar-06","lang":"ar","text":"لا صحة لما يتم تداوله عن نفاد الوقود في عجمان","labels":[],"phenomenon":"debunk"}
+{"id":"t-ar-07","lang":"ar","text":"الدفاع المدني يدعو سكان المناطق المنخفضة في رأس الخيمة إلى الإخلاء احترازياً","labels":[],"phenomenon":"warning"}
+{"id":"t-ar-08","lang":"ar","text":"روحوا السوبرماركت فوراً، الرفوف بتفضى الليلة!","labels":["urgency","fear"],"phenomenon":"dialect"}
+{"id":"t-ar-09","lang":"ar","text":"غروب جميل فوق برج خليفة هذا المساء","labels":[],"phenomenon":"neutral"}
+{"id":"t-ar-10","lang":"ar","text":"ما لا يقولونه لكم عن إصابات الفيروس في العين","labels":["manipulation"],"phenomenon":"indicator"}
+{"id":"t-ar-11","lang":"ar","text":"خلوها تنتشر عشان المسؤولين يتحركون بخصوص السيول في الفجيرة","labels":["share_pressure"],"phenomenon":"dialect"}
+{"id":"t-ar-12","lang":"ar","text":"حادث مروع على الطريق وعشرات الضحايا والوضع كارثي","labels":["fear"],"phenomenon":"indicator"}
+{"id":"t-ar-13","lang":"ar","text":"يزعم المنشور أن \"دبي في فوضى تامة\" لكن الصورة من بلد آخر","labels":[],"phenomenon":"quote"}
+{"id":"t-ar-14","lang":"ar","text":"عاجل: انقطاع الكهرباء في أجزاء من الشارقة","labels":["urgency"],"phenomenon":"indicator"}
+{"id":"t-ar-15","lang":"ar","text":"صدقوني هذه الحقيقة اللي دفنوها عن حريق الميناء","labels":["manipulation"],"phenomenon":"dialect"}
+{"id":"t-ar-16","lang":"ar","text":"لا ترسلوا رسائل صوتية عن هجوم قبل التأكد من وام","labels":[],"phenomenon":"negation"}
+{"id":"t-ar-17","lang":"ar","text":"الهيئة الوطنية لإدارة الطوارئ: تجربة لنظام الإنذار الساعة 11 صباحاً","labels":[],"phenomenon":"warning"}
+{"id":"t-ar-18","lang":"ar","text":"لن تصدق ما حدث في دبي مارينا الليلة، ريتويت قبل ما ينحذف","labels":["manipulation","share_pressure"],"phenomenon":"indicator"}
+{"id":"t-ar-19","lang":"ar","text":"أكد المسؤولون إعادة فتح طريق الكورنيش يوم السبت","labels":[],"phenomenon":"neutral"}
+{"id":"t-ar-20","lang":"ar","text":"هلع في المطار، كأنها نهاية العالم","labels":["fear"],"phenomenon":"indicator"}
+{"id":"t-ar-21","lang":"ar","text":"الحقوا اطلعوا من المدينة قبل وصول العاصفة!","labels":["urgency","fear"],"phenomenon":"dialect"}
+{"id":"t-ar-22","lang":"ar","text":"مفبركة: صورة انهيار الجسر في أبوظبي مولدة بالذكاء الاصطناعي","labels":[],"phenomenon":"debunk"}
+{"id":"t-ar-23","lang":"ar","text":"حذر المركز الوطني للأرصاد من تيارات بحرية خطيرة على شاطئ جميرا","labels":[],"phenomenon":"warning"}
+{"id":"t-ar-24","lang":"ar","text":"ارسلها لكل الجروبات: لا أحد في أمان في ديرة الليلة","labels":["share_pressure","fear"],"phenomenon":"indicator"}
+{"id":"t-ar-25","lang":"ar","text":"حركة السير بطيئة قرب جسر آل مكتوم هذا الصباح","labels":[],"phenomenon":"neutral"}
