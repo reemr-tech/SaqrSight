@@ -1,0 +1,765 @@
+{
+  "id": "776a7dc3-cd02-48d4-bcbf-cee8ca70b3d1",
+  "created_at": "2026-11-04T10:46:59.225155+00:00",
+  "status": "complete",
+  "mode": "analysis",
+  "version": "0.2.0",
+  "caption": "Video of smoke over Sharjah this morning",
+  "language": "en",
+  "language_detected": "en",
+  "language_overridden": false,
+  "media": {
+    "kind": "video",
+    "original_name": "demo_pan.mp4",
+    "width": 640,
+    "height": 480,
+    "visuals": [
+      {
+        "ref": "frame-1",
+        "width": 640,
+        "height": 480,
+        "timestamp": 0.4
+      },
+      {
+        "ref": "frame-2",
+        "width": 640,
+        "height": 480,
+        "timestamp": 1.2
+      },
+      {
+        "ref": "frame-3",
+        "width": 640,
+        "height": 480,
+        "timestamp": 2.0
+      },
+      {
+        "ref": "frame-4",
+        "width": 640,
+        "height": 480,
+        "timestamp": 2.8
+      },
+      {
+        "ref": "frame-5",
+        "width": 640,
+        "height": 480,
+        "timestamp": 3.6
+      }
+    ],
+    "duration": 4.0
+  },
+  "consent_external": false,
+  "claim_details": {
+    "locations": [
+      "Sharjah"
+    ],
+    "events": [
+      "smoke"
+    ],
+    "dates": [],
+    "relative_dates": [
+      "today"
+    ],
+    "searchable": true
+  },
+  "modules": {
+    "text_analysis": {
+      "module": "text_analysis",
+      "status": "completed",
+      "version": "text-lexicon-1.0",
+      "findings": [],
+      "summary": "No urgency, fear, manipulation or share-pressure wording from the indicator list was found.",
+      "score": null,
+      "confidence": null,
+      "limitations": [
+        "Rule-based wording indicators; they describe language, not whether the claim is true.",
+        "Does not predict how readers will react.",
+        "Dialect, sarcasm, misspellings and transliterated Arabic (Arabizi) may be missed."
+      ],
+      "error": null,
+      "duration_ms": 0,
+      "data": {
+        "indicator_level": "none",
+        "categories": [],
+        "matches": [],
+        "style_signals": [],
+        "language": "en"
+      }
+    },
+    "media_analysis": {
+      "module": "media_analysis",
+      "status": "completed",
+      "version": "ai-image-detector:haywoodsloan/ai-image-detector-deploy",
+      "findings": [
+        {
+          "code": "no_synthetic_signal",
+          "message": "The detector did not flag the 5 sampled frames as AI-generated at the evaluated threshold. This does not show the media is authentic or unedited.",
+          "excerpts": [],
+          "frames": [
+            {
+              "ref": "frame-1",
+              "width": 640,
+              "height": 480,
+              "timestamp": 0.4,
+              "synthetic_score": 0.008,
+              "flagged": false
+            },
+            {
+              "ref": "frame-2",
+              "width": 640,
+              "height": 480,
+              "timestamp": 1.2,
+              "synthetic_score": 0.006,
+              "flagged": false
+            },
+            {
+              "ref": "frame-3",
+              "width": 640,
+              "height": 480,
+              "timestamp": 2.0,
+              "synthetic_score": 0.003,
+              "flagged": false
+            },
+            {
+              "ref": "frame-4",
+              "width": 640,
+              "height": 480,
+              "timestamp": 2.8,
+              "synthetic_score": 0.009,
+              "flagged": false
+            },
+            {
+              "ref": "frame-5",
+              "width": 640,
+              "height": 480,
+              "timestamp": 3.6,
+              "synthetic_score": 0.002,
+              "flagged": false
+            }
+          ],
+          "sources": [],
+          "score": 0.009357220493257046,
+          "details": {}
+        },
+        {
+          "code": "editing_not_assessed",
+          "message": "Conventional editing or manipulation (splicing, retouching, cropping) was not assessed; no evaluated method is implemented for it.",
+          "excerpts": [],
+          "frames": [],
+          "sources": [],
+          "score": null,
+          "details": {}
+        }
+      ],
+      "summary": "No AI-generation signal on the 5 sampled frames checked.",
+      "score": 0.009,
+      "confidence": "validated",
+      "limitations": [
+        "Detects possible AI generation only; it does not detect conventional photo editing.",
+        "Performance drops on screenshots, heavy compression and generators absent from its training data.",
+        "Evaluated on 286 held-out images: precision 0.813, recall 0.608, false-positive rate on authentic images 0.14."
+      ],
+      "error": null,
+      "duration_ms": 1440,
+      "data": {
+        "frames": [
+          {
+            "ref": "frame-1",
+            "width": 640,
+            "height": 480,
+            "timestamp": 0.4,
+            "synthetic_score": 0.008,
+            "flagged": false
+          },
+          {
+            "ref": "frame-2",
+            "width": 640,
+            "height": 480,
+            "timestamp": 1.2,
+            "synthetic_score": 0.006,
+            "flagged": false
+          },
+          {
+            "ref": "frame-3",
+            "width": 640,
+            "height": 480,
+            "timestamp": 2.0,
+            "synthetic_score": 0.003,
+            "flagged": false
+          },
+          {
+            "ref": "frame-4",
+            "width": 640,
+            "height": 480,
+            "timestamp": 2.8,
+            "synthetic_score": 0.009,
+            "flagged": false
+          },
+          {
+            "ref": "frame-5",
+            "width": 640,
+            "height": 480,
+            "timestamp": 3.6,
+            "synthetic_score": 0.002,
+            "flagged": false
+          }
+        ],
+        "threshold": 0.14,
+        "validated": true,
+        "validation_note": "Evaluated on 286 held-out images: precision 0.813, recall 0.608, false-positive rate on authentic images 0.14."
+      }
+    },
+    "consistency_check": {
+      "module": "consistency_check",
+      "status": "completed",
+      "version": "clip-b32-multilingual+logreg:nc-logreg-1.0",
+      "findings": [
+        {
+          "code": "inconclusive_agreement",
+          "message": "The model could not determine whether the caption and media agree.",
+          "excerpts": [],
+          "frames": [
+            {
+              "ref": "frame-1",
+              "width": 640,
+              "height": 480,
+              "timestamp": 0.4,
+              "agreement_score": 0.558
+            },
+            {
+              "ref": "frame-2",
+              "width": 640,
+              "height": 480,
+              "timestamp": 1.2,
+              "agreement_score": 0.57
+            },
+            {
+              "ref": "frame-3",
+              "width": 640,
+              "height": 480,
+              "timestamp": 2.0,
+              "agreement_score": 0.613
+            },
+            {
+              "ref": "frame-4",
+              "width": 640,
+              "height": 480,
+              "timestamp": 2.8,
+              "agreement_score": 0.464
+            },
+            {
+              "ref": "frame-5",
+              "width": 640,
+              "height": 480,
+              "timestamp": 3.6,
+              "agreement_score": 0.495
+            }
+          ],
+          "sources": [],
+          "score": 0.613,
+          "details": {}
+        },
+        {
+          "code": "needs_external_evidence",
+          "message": "These claim details cannot be assessed from the visible content.",
+          "excerpts": [
+            "Location (Sharjah): the image alone cannot confirm where it was taken.",
+            "Time (today): the image alone cannot confirm when it was taken.",
+            "Event (smoke): visible content can look consistent with an event without showing that this specific event happened."
+          ],
+          "frames": [],
+          "sources": [],
+          "score": null,
+          "details": {}
+        }
+      ],
+      "summary": "Agreement between caption and visible content is inconclusive.",
+      "score": 0.613,
+      "confidence": "validated",
+      "limitations": [
+        "Trained on English news image–caption pairs (NewsCLIPpings); Arabic captions rely on a multilingual text encoder aligned to CLIP and were not part of training.",
+        "Estimates topic agreement only. It cannot confirm date, location, or that the image is from the described event, and does not detect out-of-context reuse on its own.",
+        "NewsCLIPpings test accuracy 0.6799; see README for independent VERITE results."
+      ],
+      "error": null,
+      "duration_ms": 104,
+      "data": {
+        "decision": "inconclusive",
+        "frames": [
+          {
+            "ref": "frame-1",
+            "width": 640,
+            "height": 480,
+            "timestamp": 0.4,
+            "agreement_score": 0.558
+          },
+          {
+            "ref": "frame-2",
+            "width": 640,
+            "height": 480,
+            "timestamp": 1.2,
+            "agreement_score": 0.57
+          },
+          {
+            "ref": "frame-3",
+            "width": 640,
+            "height": 480,
+            "timestamp": 2.0,
+            "agreement_score": 0.613
+          },
+          {
+            "ref": "frame-4",
+            "width": 640,
+            "height": 480,
+            "timestamp": 2.8,
+            "agreement_score": 0.464
+          },
+          {
+            "ref": "frame-5",
+            "width": 640,
+            "height": 480,
+            "timestamp": 3.6,
+            "agreement_score": 0.495
+          }
+        ],
+        "thresholds": {
+          "agree": 0.81,
+          "disagree": 0.23
+        },
+        "unverifiable": [
+          "Location (Sharjah): the image alone cannot confirm where it was taken.",
+          "Time (today): the image alone cannot confirm when it was taken.",
+          "Event (smoke): visible content can look consistent with an event without showing that this specific event happened."
+        ],
+        "validation_note": "NewsCLIPpings test accuracy 0.6799."
+      }
+    },
+    "reverse_image_search": {
+      "module": "reverse_image_search",
+      "status": "not_configured",
+      "version": "google-vision-web-detection-v1",
+      "findings": [],
+      "summary": "Reverse image search is not configured on this server (no provider API key).",
+      "score": null,
+      "confidence": null,
+      "limitations": [],
+      "error": null,
+      "duration_ms": 0,
+      "data": {}
+    },
+    "official_sources": {
+      "module": "official_sources",
+      "status": "not_configured",
+      "version": "official-sources-v1:brave",
+      "findings": [],
+      "summary": "Official-source search is not configured on this server (no search provider API key).",
+      "score": null,
+      "confidence": null,
+      "limitations": [],
+      "error": null,
+      "duration_ms": 0,
+      "data": {}
+    }
+  },
+  "notice": "Initial assessment generated by automated checks. It supports, but does not replace, human verification. Findings marked 'not configured' or 'failed' were not assessed.",
+  "sections": [
+    {
+      "key": "initial_assessment",
+      "title": {
+        "en": "Initial Assessment",
+        "ar": "التقييم الأولي"
+      },
+      "status": "completed",
+      "status_label": {
+        "en": "Completed",
+        "ar": "مكتمل"
+      },
+      "summary": "The key claim cannot be assessed from the available inputs, model findings or retrieved sources. Wording indicators describe how the post is written, not whether it is true.",
+      "summary_ar": "لا يمكن تقييم الادعاء الأساسي من المدخلات أو النتائج أو المصادر المتاحة. مؤشرات الصياغة تصف أسلوب المنشور لا صحته.",
+      "verdict": "insufficient_evidence",
+      "label": {
+        "en": "Insufficient evidence",
+        "ar": "أدلة غير كافية"
+      },
+      "rule": "A4 (rules-1.1)"
+    },
+    {
+      "key": "confidence",
+      "title": {
+        "en": "Confidence",
+        "ar": "مستوى الثقة"
+      },
+      "status": "completed",
+      "status_label": {
+        "en": "Completed",
+        "ar": "مكتمل"
+      },
+      "summary": "Confidence applies to individual model findings only. No percentage is given for whether the claim is true.",
+      "items": [
+        "AI-image detector: evaluated model; output score 0.009 (model output, not the probability that the claim is true). Evaluated on 286 held-out images: precision 0.813, recall 0.608, false-positive rate on authentic images 0.14.",
+        "Caption–media consistency model: evaluated model; output score 0.613 (model output, not the probability that the claim is true). NewsCLIPpings test accuracy 0.6799."
+      ]
+    },
+    {
+      "key": "text_analysis",
+      "title": {
+        "en": "Text Analysis",
+        "ar": "تحليل النص"
+      },
+      "status": "completed",
+      "status_label": {
+        "en": "Completed",
+        "ar": "مكتمل"
+      },
+      "summary": "No urgency, fear, manipulation or share-pressure wording from the indicator list was found.",
+      "limitations": [
+        "Rule-based wording indicators; they describe language, not whether the claim is true.",
+        "Does not predict how readers will react.",
+        "Dialect, sarcasm, misspellings and transliterated Arabic (Arabizi) may be missed."
+      ],
+      "version": "text-lexicon-1.0"
+    },
+    {
+      "key": "media_analysis",
+      "title": {
+        "en": "Media Analysis",
+        "ar": "تحليل الوسائط"
+      },
+      "status": "completed",
+      "status_label": {
+        "en": "Completed",
+        "ar": "مكتمل"
+      },
+      "summary": "No AI-generation signal on the 5 sampled frames checked.",
+      "findings": [
+        {
+          "code": "no_synthetic_signal",
+          "message": "The detector did not flag the 5 sampled frames as AI-generated at the evaluated threshold. This does not show the media is authentic or unedited.",
+          "excerpts": [],
+          "frames": [
+            {
+              "ref": "frame-1",
+              "width": 640,
+              "height": 480,
+              "timestamp": 0.4,
+              "synthetic_score": 0.008,
+              "flagged": false
+            },
+            {
+              "ref": "frame-2",
+              "width": 640,
+              "height": 480,
+              "timestamp": 1.2,
+              "synthetic_score": 0.006,
+              "flagged": false
+            },
+            {
+              "ref": "frame-3",
+              "width": 640,
+              "height": 480,
+              "timestamp": 2.0,
+              "synthetic_score": 0.003,
+              "flagged": false
+            },
+            {
+              "ref": "frame-4",
+              "width": 640,
+              "height": 480,
+              "timestamp": 2.8,
+              "synthetic_score": 0.009,
+              "flagged": false
+            },
+            {
+              "ref": "frame-5",
+              "width": 640,
+              "height": 480,
+              "timestamp": 3.6,
+              "synthetic_score": 0.002,
+              "flagged": false
+            }
+          ],
+          "sources": [],
+          "label": null,
+          "label_ar": null
+        },
+        {
+          "code": "editing_not_assessed",
+          "message": "Conventional editing or manipulation (splicing, retouching, cropping) was not assessed; no evaluated method is implemented for it.",
+          "excerpts": [],
+          "frames": [],
+          "sources": [],
+          "label": null,
+          "label_ar": null
+        }
+      ],
+      "limitations": [
+        "Detects possible AI generation only; it does not detect conventional photo editing.",
+        "Performance drops on screenshots, heavy compression and generators absent from its training data.",
+        "Evaluated on 286 held-out images: precision 0.813, recall 0.608, false-positive rate on authentic images 0.14."
+      ],
+      "version": "ai-image-detector:haywoodsloan/ai-image-detector-deploy"
+    },
+    {
+      "key": "consistency_check",
+      "title": {
+        "en": "Consistency Check",
+        "ar": "فحص الاتساق"
+      },
+      "status": "completed",
+      "status_label": {
+        "en": "Completed",
+        "ar": "مكتمل"
+      },
+      "summary": "Agreement between caption and visible content is inconclusive.",
+      "findings": [
+        {
+          "code": "inconclusive_agreement",
+          "message": "The model could not determine whether the caption and media agree.",
+          "excerpts": [],
+          "frames": [
+            {
+              "ref": "frame-1",
+              "width": 640,
+              "height": 480,
+              "timestamp": 0.4,
+              "agreement_score": 0.558
+            },
+            {
+              "ref": "frame-2",
+              "width": 640,
+              "height": 480,
+              "timestamp": 1.2,
+              "agreement_score": 0.57
+            },
+            {
+              "ref": "frame-3",
+              "width": 640,
+              "height": 480,
+              "timestamp": 2.0,
+              "agreement_score": 0.613
+            },
+            {
+              "ref": "frame-4",
+              "width": 640,
+              "height": 480,
+              "timestamp": 2.8,
+              "agreement_score": 0.464
+            },
+            {
+              "ref": "frame-5",
+              "width": 640,
+              "height": 480,
+              "timestamp": 3.6,
+              "agreement_score": 0.495
+            }
+          ],
+          "sources": [],
+          "label": null,
+          "label_ar": null
+        },
+        {
+          "code": "needs_external_evidence",
+          "message": "These claim details cannot be assessed from the visible content.",
+          "excerpts": [
+            "Location (Sharjah): the image alone cannot confirm where it was taken.",
+            "Time (today): the image alone cannot confirm when it was taken.",
+            "Event (smoke): visible content can look consistent with an event without showing that this specific event happened."
+          ],
+          "frames": [],
+          "sources": [],
+          "label": null,
+          "label_ar": null
+        }
+      ],
+      "limitations": [
+        "Trained on English news image–caption pairs (NewsCLIPpings); Arabic captions rely on a multilingual text encoder aligned to CLIP and were not part of training.",
+        "Estimates topic agreement only. It cannot confirm date, location, or that the image is from the described event, and does not detect out-of-context reuse on its own.",
+        "NewsCLIPpings test accuracy 0.6799; see README for independent VERITE results."
+      ],
+      "version": "clip-b32-multilingual+logreg:nc-logreg-1.0"
+    },
+    {
+      "key": "issue_type",
+      "title": {
+        "en": "Issue Type",
+        "ar": "نوع المشكلة"
+      },
+      "status": "completed",
+      "status_label": {
+        "en": "Completed",
+        "ar": "مكتمل"
+      },
+      "summary": "No supported issue classification."
+    },
+    {
+      "key": "review_priority",
+      "title": {
+        "en": "Review Priority",
+        "ar": "أولوية المراجعة"
+      },
+      "status": "completed",
+      "status_label": {
+        "en": "Completed",
+        "ar": "مكتمل"
+      },
+      "summary": "Low priority for human review.",
+      "level": "low",
+      "label": {
+        "en": "Low",
+        "ar": "منخفضة"
+      },
+      "items": [
+        "Claims a specific UAE place and a very recent time."
+      ],
+      "items_ar": [
+        "يذكر مكاناً محدداً في الدولة ووقتاً قريباً جداً."
+      ]
+    },
+    {
+      "key": "panic_language",
+      "title": {
+        "en": "Panic-Related Language Indicators",
+        "ar": "مؤشرات لغة الذعر"
+      },
+      "status": "completed",
+      "status_label": {
+        "en": "Completed",
+        "ar": "مكتمل"
+      },
+      "summary": "Indicator level: none. These describe wording that may create urgency or alarm; they do not predict panic or show the claim is false."
+    },
+    {
+      "key": "previous_media",
+      "title": {
+        "en": "Previous Media Appearances",
+        "ar": "ظهور سابق للوسائط"
+      },
+      "status": "not_configured",
+      "status_label": {
+        "en": "Not configured",
+        "ar": "غير مُفعّل"
+      },
+      "summary": "Reverse image search is not configured on this server (no provider API key).",
+      "version": "google-vision-web-detection-v1"
+    },
+    {
+      "key": "official_sources",
+      "title": {
+        "en": "Official Source Evidence",
+        "ar": "أدلة المصادر الرسمية"
+      },
+      "status": "not_configured",
+      "status_label": {
+        "en": "Not configured",
+        "ar": "غير مُفعّل"
+      },
+      "summary": "Official-source search is not configured on this server (no search provider API key).",
+      "version": "official-sources-v1:brave"
+    },
+    {
+      "key": "recommended_action",
+      "title": {
+        "en": "Recommended Action",
+        "ar": "الإجراء المقترح"
+      },
+      "status": "completed",
+      "status_label": {
+        "en": "Completed",
+        "ar": "مكتمل"
+      },
+      "summary": "Check when the photo or video was first published; compare that date with the time the post claims.",
+      "items": [
+        "Check when the photo or video was first published; compare that date with the time the post claims.",
+        "Compare landmarks, signs and buildings in the media with earlier coverage of the stated location.",
+        "Run a reverse image search yourself (for example Google Lens or TinEye) to look for earlier appearances.",
+        "Search the official sources listed in this report directly for the event, place and date."
+      ],
+      "items_ar": [
+        "تحقق من تاريخ أول نشر للصورة أو الفيديو وقارنه بالوقت الذي يدّعيه المنشور.",
+        "قارن المعالم واللافتات والمباني في الوسائط بتغطيات سابقة للمكان المذكور.",
+        "أجرِ بحثاً عكسياً عن الصورة بنفسك (مثل Google Lens أو TinEye) للبحث عن ظهور سابق لها.",
+        "ابحث مباشرة في المصادر الرسمية المذكورة عن الحدث والمكان والتاريخ."
+      ]
+    }
+  ],
+  "assessment": {
+    "verdict": "insufficient_evidence",
+    "label": {
+      "en": "Insufficient evidence",
+      "ar": "أدلة غير كافية"
+    },
+    "rule": "A4",
+    "rules_version": "rules-1.1",
+    "explanation": {
+      "en": "The key claim cannot be assessed from the available inputs, model findings or retrieved sources. Wording indicators describe how the post is written, not whether it is true.",
+      "ar": "لا يمكن تقييم الادعاء الأساسي من المدخلات أو النتائج أو المصادر المتاحة. مؤشرات الصياغة تصف أسلوب المنشور لا صحته."
+    },
+    "contradictions": [],
+    "support": [],
+    "unverified": [
+      {
+        "en": "where it happened (Sharjah)",
+        "ar": "مكان الحدث"
+      },
+      {
+        "en": "when it happened (today)",
+        "ar": "زمان الحدث"
+      },
+      {
+        "en": "that this specific event took place",
+        "ar": "وقوع هذا الحدث بعينه"
+      }
+    ],
+    "checked": [
+      "text_analysis",
+      "media_analysis",
+      "consistency_check"
+    ],
+    "issue_types": [],
+    "priority": {
+      "level": "low",
+      "label": {
+        "en": "Low",
+        "ar": "منخفضة"
+      },
+      "points": 1,
+      "reasons": [
+        {
+          "en": "Claims a specific UAE place and a very recent time.",
+          "ar": "يذكر مكاناً محدداً في الدولة ووقتاً قريباً جداً."
+        }
+      ]
+    }
+  },
+  "priority": {
+    "level": "low",
+    "label": {
+      "en": "Low",
+      "ar": "منخفضة"
+    },
+    "points": 1,
+    "reasons": [
+      {
+        "en": "Claims a specific UAE place and a very recent time.",
+        "ar": "يذكر مكاناً محدداً في الدولة ووقتاً قريباً جداً."
+      }
+    ]
+  },
+  "recommended_actions": [
+    {
+      "en": "Check when the photo or video was first published; compare that date with the time the post claims.",
+      "ar": "تحقق من تاريخ أول نشر للصورة أو الفيديو وقارنه بالوقت الذي يدّعيه المنشور."
+    },
+    {
+      "en": "Compare landmarks, signs and buildings in the media with earlier coverage of the stated location.",
+      "ar": "قارن المعالم واللافتات والمباني في الوسائط بتغطيات سابقة للمكان المذكور."
+    },
+    {
+      "en": "Run a reverse image search yourself (for example Google Lens or TinEye) to look for earlier appearances.",
+      "ar": "أجرِ بحثاً عكسياً عن الصورة بنفسك (مثل Google Lens أو TinEye) للبحث عن ظهور سابق لها."
+    },
+    {
+      "en": "Search the official sources listed in this report directly for the event, place and date.",
+      "ar": "ابحث مباشرة في المصادر الرسمية المذكورة عن الحدث والمكان والتاريخ."
+    }
+  ]
+}

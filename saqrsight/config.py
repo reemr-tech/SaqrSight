@@ -50,7 +50,7 @@ class Settings:
 
         # Analysis modules. Model-based modules can be switched off (e.g. on low-memory machines).
         self.enable_models = _bool("SAQRSIGHT_ENABLE_MODELS", True)
-        self.visual_model = os.environ.get("SAQRSIGHT_VISUAL_MODEL", "Organika/sdxl-detector")
+        self.visual_model = os.environ.get("SAQRSIGHT_VISUAL_MODEL", "haywoodsloan/ai-image-detector-deploy")
         self.clip_image_model = os.environ.get("SAQRSIGHT_CLIP_IMAGE_MODEL", "clip-ViT-B-32")
         self.clip_text_model = os.environ.get(
             "SAQRSIGHT_CLIP_TEXT_MODEL", "sentence-transformers/clip-ViT-B-32-multilingual-v1")
