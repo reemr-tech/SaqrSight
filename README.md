@@ -260,6 +260,12 @@ What this means:
   claim "apparently consistent". The verdict-level VERITE figures in
   `eval/results/consistency_verite.json` therefore do not independently test that rule. The model
   and thresholds were not changed.
+* **Verdict level** (app encoder, `rules-1.1`): **14.8%** of miscaptioned pairs and 1.6% of
+  out-of-context pairs still end up *apparently consistent*, against 11.2% of true pairs. The
+  share of miscaptioned pairs with "agree" was 29.1%, so the place/time rule removes about half.
+  The rest remain because the claim extractor only recognises UAE places, and most VERITE captions
+  name places elsewhere. Of the remaining verdicts, 4.0% of true pairs are wrongly *potentially
+  misleading*, against 4.5% of miscaptioned and 14.3% of out-of-context pairs.
 * Replacing the OpenAI text encoder with the multilingual one (needed for Arabic) costs about
   0.04 AUC on English. Arabic captions are unevaluated until the reviewed UAE set exists.
 * NewsCLIPpings and VERITE support match vs. mismatch (and, for VERITE, a 3-way label). Nothing in

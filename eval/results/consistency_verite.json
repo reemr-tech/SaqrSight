@@ -1,9 +1,9 @@
 {
   "usable_pairs": 691,
   "class_counts": {
-    "true": 223,
+    "out-of-context": 245,
     "miscaptioned": 223,
-    "out-of-context": 245
+    "true": 223
   },
   "thresholds": {
     "agree": 0.81,
@@ -52,6 +52,23 @@
       "wrongly_supported_rate": {
         "miscaptioned": 0.274,
         "out-of-context": 0.09
+      },
+      "verdict_by_class": {
+        "true": {
+          "apparently_consistent": 0.099,
+          "potentially_misleading": 0.027,
+          "insufficient_evidence": 0.874
+        },
+        "miscaptioned": {
+          "apparently_consistent": 0.135,
+          "potentially_misleading": 0.031,
+          "insufficient_evidence": 0.834
+        },
+        "out-of-context": {
+          "apparently_consistent": 0.016,
+          "potentially_misleading": 0.192,
+          "insufficient_evidence": 0.792
+        }
       }
     },
     "multi": {
@@ -96,6 +113,23 @@
       "wrongly_supported_rate": {
         "miscaptioned": 0.291,
         "out-of-context": 0.102
+      },
+      "verdict_by_class": {
+        "true": {
+          "apparently_consistent": 0.112,
+          "potentially_misleading": 0.04,
+          "insufficient_evidence": 0.848
+        },
+        "miscaptioned": {
+          "apparently_consistent": 0.148,
+          "potentially_misleading": 0.045,
+          "insufficient_evidence": 0.807
+        },
+        "out-of-context": {
+          "apparently_consistent": 0.016,
+          "potentially_misleading": 0.143,
+          "insufficient_evidence": 0.841
+        }
       }
     }
   }
