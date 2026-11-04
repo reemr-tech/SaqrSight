@@ -1,0 +1,7 @@
+# Model-based checks (AI-image signal, caption–media consistency) and evaluation scripts.
+-r requirements.txt
+torch==2.15.0
+transformers==5.22.1
+sentence-transformers==6.2.0
+scikit-learn==1.9.1
+pyarrow==26.0.1

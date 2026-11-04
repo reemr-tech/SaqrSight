@@ -1,0 +1,51 @@
+[
+  {
+    "id": "en-urgent-fire",
+    "language": "en",
+    "media": "demo_smoke_skyline.jpg",
+    "caption": "URGENT 🚨 Huge fire at Dubai Marina right now!! Share this with everyone before they delete it.",
+    "demonstrates": "high language indicators + public-safety claim -> high review priority; place/time remain unverified"
+  },
+  {
+    "id": "ar-urgent-fire",
+    "language": "ar",
+    "media": "demo_smoke_skyline.jpg",
+    "caption": "عاجل 🚨 حريق ضخم في دبي مارينا الآن! انشروها قبل الحذف",
+    "demonstrates": "Arabic indicators, RTL display, exact Arabic excerpts"
+  },
+  {
+    "id": "en-calm-smoke",
+    "language": "en",
+    "media": "demo_smoke_skyline.jpg",
+    "caption": "Smoke rising over city buildings.",
+    "demonstrates": "neutral wording; consistency check on caption vs visible content"
+  },
+  {
+    "id": "en-mismatch",
+    "language": "en",
+    "media": "demo_smoke_skyline.jpg",
+    "caption": "Camels racing in the desert near Al Ain during the festival.",
+    "demonstrates": "caption describing something not visible -> consistency check"
+  },
+  {
+    "id": "en-debunk",
+    "language": "en",
+    "media": null,
+    "caption": "Do not share this rumour. Dubai Police say there is no fire at Dubai Marina.",
+    "demonstrates": "negation and debunk context are not counted as indicators"
+  },
+  {
+    "id": "ar-warning",
+    "language": "ar",
+    "media": null,
+    "caption": "حسب المركز الوطني للأرصاد، ضباب كثيف وخطير على الطرق المؤدية إلى العين صباح اليوم",
+    "demonstrates": "attributed official warning is labelled as a possible legitimate warning"
+  },
+  {
+    "id": "video-caption",
+    "language": "en",
+    "media": "demo_pan.mp4",
+    "caption": "Video of smoke over Sharjah this morning",
+    "demonstrates": "video frame sampling with timestamps; findings apply to sampled frames"
+  }
+]

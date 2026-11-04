@@ -1,0 +1,29 @@
+{
+  "offline_judgement": {
+    "n": 20,
+    "accuracy": 1.0,
+    "per_label": {
+      "supporting": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "n": 5
+      },
+      "contradicting": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "n": 5
+      },
+      "insufficient": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "n": 10
+      }
+    },
+    "confusion": {
+      "contradicting->contradicting": 5,
+      "insufficient->insufficient": 10,
+      "supporting->supporting": 5
+    },
+    "errors": []
+  }
+}

@@ -8,10 +8,14 @@ OVERALL ASSESSMENT (first matching rule wins)
          (decisive "disagree" threshold only).
   A2 Insufficient evidence – no contradiction, but the media may be AI-generated (validated signal):
        origin of the media must be established before agreement means anything.
-  A3 Apparently consistent – no contradiction, and at least one applicable content check supports
-       agreement (consistency "agree", or an official source reporting the same event/place/time).
+  A3 Apparently consistent – no contradiction, and either
+       * an official source reports the same event, place and time; or
+       * the consistency check finds topic agreement AND the caption makes no place or time claim
+         that the visible content cannot establish.
        The explanation lists which real-world details remain unverified.
   A4 Insufficient evidence – everything else (key claim not assessable from inputs/findings/sources).
+       Includes topic agreement for a caption whose key claim is a place or time: on VERITE,
+       29% of miscaptioned pairs received "agree", so agreement cannot vouch for such details.
   Never sufficient on their own for A1: urgent or alarming wording, a synthetic-media signal,
   a failed or unconfigured search, "no results".
 
@@ -30,7 +34,7 @@ from __future__ import annotations
 from .analysis.claims import ClaimDetails
 from .schema import COMPLETED
 
-RULES_VERSION = "rules-1.0"
+RULES_VERSION = "rules-1.1"
 SAFETY_EVENTS = {"fire", "explosion", "attack", "flood", "outbreak", "collapse", "earthquake", "shortage", "closure"}
 
 VERDICTS = {
@@ -82,17 +86,24 @@ def assess(modules: dict, details: ClaimDetails, has_caption: bool, has_media: b
     synthetic = bool(visual and visual.get("confidence") == "validated" and "possible_synthetic" in _codes(visual))
     if synthetic:
         issues.append("possible_synthetic_media")
+    topic_only = False
     if cons and cons["data"].get("decision") == "agree":
-        support.append({"en": "Caption and visible content appear consistent in topic.",
-                        "ar": "النص والمحتوى المرئي متسقان في الموضوع.", "module": "consistency_check"})
+        if details.locations or details.has_time:
+            topic_only = True   # agreement cannot vouch for the place/time that the claim hinges on
+        else:
+            support.append({"en": "Caption and visible content appear consistent in topic.",
+                            "ar": "النص والمحتوى المرئي متسقان في الموضوع.", "module": "consistency_check"})
     if off and "supporting" in _codes(off):
         support.append({"en": "An official source reports the same event, place and time.",
                         "ar": "مصدر رسمي يذكر الحدث والمكان والزمان نفسها.", "module": "official_sources"})
 
     unverified = []
-    if details.locations:
+    official_support = bool(off and "supporting" in _codes(off))
+    if official_support:
+        pass   # the source was matched on event, place and time; the user is still told to read it
+    elif details.locations:
         unverified.append({"en": "where it happened (" + ", ".join(details.locations) + ")", "ar": "مكان الحدث"})
-    if details.has_time:
+    if details.has_time and not official_support:
         unverified.append({"en": "when it happened (" + ", ".join(details.relative_dates + details.dates) + ")",
                            "ar": "زمان الحدث"})
     if details.events and not (off and "supporting" in _codes(off)):
@@ -116,11 +127,21 @@ def assess(modules: dict, details: ClaimDetails, has_caption: bool, has_media: b
         if unverified:
             exp_en += " Still unverified: " + "; ".join(u["en"] for u in unverified) + "."
             exp_ar += " لم يتم التحقق بعد من: " + "، ".join(u["ar"] for u in unverified) + "."
+        if official_support:
+            exp_en += " Read the cited source to confirm it describes the same incident."
+            exp_ar += " اقرأ المصدر المذكور للتأكد من أنه يصف الواقعة نفسها."
     else:
         verdict, rule = "insufficient_evidence", "A4"
         if not has_caption:
             exp_en = "No claim text was supplied, so there is no claim to assess against the media."
             exp_ar = "لم يُقدَّم نص ادعاء، لذلك لا يوجد ادعاء لتقييمه."
+        elif topic_only:
+            exp_en = ("The visible content appears consistent with the caption's topic, but the claim depends on "
+                      + "; ".join(u["en"] for u in unverified[:2])
+                      + ", which the image cannot establish. A genuine photo can match the topic while the place or "
+                        "date is wrong, so external evidence is needed.")
+            exp_ar = ("يبدو المحتوى المرئي متسقاً مع موضوع النص، لكن الادعاء يعتمد على المكان أو الزمان، ولا يمكن للصورة "
+                      "إثبات ذلك. قد تطابق صورة حقيقية الموضوع بينما يكون المكان أو التاريخ خاطئاً، لذا يلزم دليل خارجي.")
         else:
             exp_en = ("The key claim cannot be assessed from the available inputs, model findings or retrieved sources. "
                       "Wording indicators describe how the post is written, not whether it is true.")

@@ -125,14 +125,25 @@ def test_contradictions_make_potentially_misleading():
         assert a["priority"]["level"] in ("medium", "high")
 
 
-def test_apparently_consistent_lists_unverified_details():
+def test_topic_agreement_cannot_vouch_for_place_or_time():
+    agree = {"consistency_check": mod("consistency_check", data={"decision": "agree"}, confidence="validated")}
     d = claims.extract("Smoke over a building in Dubai today")
-    a = assessment.assess({"consistency_check": mod("consistency_check", data={"decision": "agree"},
-                                                    confidence="validated")}, d, True, True)
-    assert a["verdict"] == "apparently_consistent"
-    assert "Still unverified" in a["explanation"]["en"] and "Dubai" in a["explanation"]["en"]
+    a = assessment.assess(agree, d, True, True)
+    assert a["verdict"] == "insufficient_evidence" and a["rule"] == "A4"
+    assert "cannot establish" in a["explanation"]["en"] and "Dubai" in a["explanation"]["en"]
     acts = assessment.recommended_actions({}, d, a)
     assert any("first published" in x["en"] for x in acts)
+
+
+def test_apparently_consistent_lists_unverified_details():
+    agree = {"consistency_check": mod("consistency_check", data={"decision": "agree"}, confidence="validated")}
+    a = assessment.assess(agree, claims.extract("Smoke rising over a building"), True, True)
+    assert a["verdict"] == "apparently_consistent" and a["rule"] == "A3"
+    assert "Still unverified" in a["explanation"]["en"]       # the event itself remains unverified
+    d = claims.extract("Fire at Dubai Marina today")
+    a = assessment.assess({"official_sources": mod("official_sources", codes=["supporting"])}, d, True, False)
+    assert a["verdict"] == "apparently_consistent"
+    assert "Still unverified" not in a["explanation"]["en"] and "Read the cited source" in a["explanation"]["en"]
 
 
 # ---------------- evidence providers ---------------------------------------------------------

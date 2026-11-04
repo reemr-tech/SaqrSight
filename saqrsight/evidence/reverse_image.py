@@ -86,6 +86,9 @@ def claimed_window(details: claims.ClaimDetails, today: date) -> tuple[date, dat
         return today - timedelta(days=2), today
     if "this week" in rel:
         return today - timedelta(days=7), today
+    explicit = [d for d in (claims.parse_claim_date(x, today.year) for x in details.dates) if d]
+    if explicit:
+        return min(explicit) - timedelta(days=2), max(explicit) + timedelta(days=2)
     return None
 
 

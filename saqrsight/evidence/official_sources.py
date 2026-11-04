@@ -90,7 +90,7 @@ def judge(result: dict, d: claims.ClaimDetails, today: date) -> dict:
     same_place = (not specific) or bool(set(r.locations) & set(specific))
     window = claimed_window(d, today)
     date_known = result.get("date") is not None
-    claimed_dates = [parse_date(x) for x in d.dates]
+    claimed_dates = [claims.parse_claim_date(x, today.year) for x in d.dates]
     claimed_dates = [x for x in claimed_dates if x]
     if not date_known:
         same_time = None

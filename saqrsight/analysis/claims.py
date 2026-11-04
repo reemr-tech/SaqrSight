@@ -69,6 +69,38 @@ DATE_PATTERNS = [
 ]
 
 
+MONTH_NUM = {m: i + 1 for i, m in enumerate(
+    ["january", "february", "march", "april", "may", "june", "july", "august", "september", "october",
+     "november", "december"])}
+MONTH_NUM.update({m[:3]: n for m, n in list(MONTH_NUM.items())})
+MONTH_NUM["sept"] = 9
+MONTH_NUM.update({m: i + 1 for i, m in enumerate(
+    ["يناير", "فبراير", "مارس", "ابريل", "مايو", "يونيو", "يوليو", "اغسطس", "سبتمبر", "اكتوبر", "نوفمبر", "ديسمبر"])})
+
+
+def parse_claim_date(text: str, default_year: int | None = None):
+    """Parse an explicit date as written in a (normalized) caption. Day-first for numeric dates (UAE usage)."""
+    from datetime import date
+    text = text.strip().replace(",", "")
+    try:
+        m = re.fullmatch(r"(\d{4})-(\d{2})-(\d{2})", text)
+        if m:
+            return date(int(m[1]), int(m[2]), int(m[3]))
+        m = re.fullmatch(r"(\d{1,2})[/.-](\d{1,2})[/.-](\d{2,4})", text)
+        if m:
+            y = int(m[3]) + (2000 if len(m[3]) == 2 else 0)
+            return date(y, int(m[2]), int(m[1]))
+        m = re.fullmatch(r"(\d{1,2}) (\S+)(?: (\d{4}))?", text) or None
+        if m and m[2] in MONTH_NUM and (m[3] or default_year):
+            return date(int(m[3] or default_year), MONTH_NUM[m[2]], int(m[1]))
+        m = re.fullmatch(r"(\S+) (\d{1,2})(?: (\d{4}))?", text)
+        if m and m[1] in MONTH_NUM and (m[3] or default_year):
+            return date(int(m[3] or default_year), MONTH_NUM[m[1]], int(m[2]))
+    except ValueError:
+        return None
+    return None
+
+
 @dataclass
 class ClaimDetails:
     locations: list[str] = field(default_factory=list)
