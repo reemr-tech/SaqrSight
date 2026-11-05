@@ -192,3 +192,7 @@ footer{color:var(--dim);border-top-color:var(--line);font-family:var(--mono)}
 .report-banner.processing{background:linear-gradient(120deg,rgba(34,211,238,.10),rgba(12,20,36,.96) 55%)}
 .report-banner.sample{background:linear-gradient(120deg,rgba(124,92,255,.12),rgba(12,20,36,.96) 55%)}
 .report-banner p{color:var(--muted)}
+
+/* new falcon logo */
+.brand-mark{width:54px;height:54px;object-fit:contain;filter:drop-shadow(0 0 10px rgba(34,211,238,.35))}
+@media(max-width:720px){.brand-mark{width:40px;height:40px}}
