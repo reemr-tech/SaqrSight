@@ -1,6 +1,6 @@
 {
-  "id": "ec518f04-f561-4bfd-81d0-211d201c5cbd",
-  "created_at": "2026-11-04T10:46:57.515890+00:00",
+  "id": "ab50a473-f2af-44e9-869a-c7aac0153366",
+  "created_at": "2026-11-05T11:45:05.336285+00:00",
   "status": "complete",
   "mode": "analysis",
   "version": "0.2.0",
@@ -96,7 +96,7 @@
         "Evaluated on 286 held-out images: precision 0.813, recall 0.608, false-positive rate on authentic images 0.14."
       ],
       "error": null,
-      "duration_ms": 329,
+      "duration_ms": 296,
       "data": {
         "frames": [
           {
@@ -154,7 +154,7 @@
         "NewsCLIPpings test accuracy 0.6799; see README for independent VERITE results."
       ],
       "error": null,
-      "duration_ms": 62,
+      "duration_ms": 58,
       "data": {
         "decision": "disagree",
         "frames": [
@@ -447,7 +447,8 @@
         "en": "Completed",
         "ar": "مكتمل"
       },
-      "summary": "Avoid sharing this post until the discrepancy is resolved; open the cited sources and compare them with the claim.",
+      "summary": "Suggested next steps to verify this claim:",
+      "summary_ar": "الخطوات المقترحة للتحقق من هذا الادعاء:",
       "items": [
         "Avoid sharing this post until the discrepancy is resolved; open the cited sources and compare them with the claim.",
         "Compare landmarks, signs and buildings in the media with earlier coverage of the stated location.",

@@ -1,6 +1,6 @@
 {
-  "id": "4115a614-00d3-45d2-b048-90592b1d02f8",
-  "created_at": "2026-11-04T10:46:58.541194+00:00",
+  "id": "7380d11f-d3c6-4130-a199-a2c6a63b5929",
+  "created_at": "2026-11-05T11:45:06.388742+00:00",
   "status": "complete",
   "mode": "analysis",
   "version": "0.2.0",
@@ -91,7 +91,7 @@
       "confidence": null,
       "limitations": [],
       "error": null,
-      "duration_ms": 0,
+      "duration_ms": 1,
       "data": {}
     },
     "reverse_image_search": {
@@ -305,7 +305,8 @@
         "en": "Completed",
         "ar": "مكتمل"
       },
-      "summary": "Check when the photo or video was first published; compare that date with the time the post claims.",
+      "summary": "Suggested next steps to verify this claim:",
+      "summary_ar": "الخطوات المقترحة للتحقق من هذا الادعاء:",
       "items": [
         "Check when the photo or video was first published; compare that date with the time the post claims.",
         "Search the official sources listed in this report directly for the event, place and date."

@@ -1,6 +1,6 @@
 {
-  "id": "4a3a89b5-bc47-464a-ad7f-6bc3bfc0403d",
-  "created_at": "2026-11-04T10:46:58.029048+00:00",
+  "id": "9538918d-2484-4680-8b7e-8e4159aa4d3e",
+  "created_at": "2026-11-05T11:45:05.853437+00:00",
   "status": "complete",
   "mode": "analysis",
   "version": "0.2.0",
@@ -306,7 +306,8 @@
         "en": "Completed",
         "ar": "مكتمل"
       },
-      "summary": "Compare landmarks, signs and buildings in the media with earlier coverage of the stated location.",
+      "summary": "Suggested next steps to verify this claim:",
+      "summary_ar": "الخطوات المقترحة للتحقق من هذا الادعاء:",
       "items": [
         "Compare landmarks, signs and buildings in the media with earlier coverage of the stated location.",
         "Consult official channels such as WAM, NCEMA, the relevant police force or emirate media office before acting on or sharing the claim.",

@@ -1,6 +1,6 @@
 {
-  "id": "baa627c8-c3d9-4d77-b81a-fe5cd34082ab",
-  "created_at": "2026-11-04T10:46:56.479673+00:00",
+  "id": "555b18fd-9438-4e0c-8106-56343d4e69aa",
+  "created_at": "2026-11-05T11:45:04.289434+00:00",
   "status": "complete",
   "mode": "analysis",
   "version": "0.2.0",
@@ -173,7 +173,7 @@
         "Evaluated on 286 held-out images: precision 0.813, recall 0.608, false-positive rate on authentic images 0.14."
       ],
       "error": null,
-      "duration_ms": 360,
+      "duration_ms": 325,
       "data": {
         "frames": [
           {
@@ -233,7 +233,7 @@
         "NewsCLIPpings test accuracy 0.6799; see README for independent VERITE results."
       ],
       "error": null,
-      "duration_ms": 66,
+      "duration_ms": 64,
       "data": {
         "decision": "inconclusive",
         "frames": [
@@ -599,7 +599,8 @@
         "en": "Completed",
         "ar": "مكتمل"
       },
-      "summary": "Check when the photo or video was first published; compare that date with the time the post claims.",
+      "summary": "Suggested next steps to verify this claim:",
+      "summary_ar": "الخطوات المقترحة للتحقق من هذا الادعاء:",
       "items": [
         "Check when the photo or video was first published; compare that date with the time the post claims.",
         "Compare landmarks, signs and buildings in the media with earlier coverage of the stated location.",

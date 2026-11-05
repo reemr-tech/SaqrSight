@@ -1,6 +1,6 @@
 {
-  "id": "d9350eca-e226-448b-a393-a25b7f5c958f",
-  "created_at": "2026-11-04T10:46:47.239913+00:00",
+  "id": "5ce1132d-a180-4f0b-a2c2-deb2c2a249e3",
+  "created_at": "2026-11-05T11:44:52.957982+00:00",
   "status": "complete",
   "mode": "analysis",
   "version": "0.2.0",
@@ -100,7 +100,7 @@
         "Dialect, sarcasm, misspellings and transliterated Arabic (Arabizi) may be missed."
       ],
       "error": null,
-      "duration_ms": 8,
+      "duration_ms": 7,
       "data": {
         "indicator_level": "high",
         "categories": [
@@ -182,7 +182,7 @@
         "Evaluated on 286 held-out images: precision 0.813, recall 0.608, false-positive rate on authentic images 0.14."
       ],
       "error": null,
-      "duration_ms": 3533,
+      "duration_ms": 3120,
       "data": {
         "frames": [
           {
@@ -242,7 +242,7 @@
         "NewsCLIPpings test accuracy 0.6799; see README for independent VERITE results."
       ],
       "error": null,
-      "duration_ms": 5389,
+      "duration_ms": 7804,
       "data": {
         "decision": "inconclusive",
         "frames": [
@@ -612,7 +612,8 @@
         "en": "Completed",
         "ar": "مكتمل"
       },
-      "summary": "Check when the photo or video was first published; compare that date with the time the post claims.",
+      "summary": "Suggested next steps to verify this claim:",
+      "summary_ar": "الخطوات المقترحة للتحقق من هذا الادعاء:",
       "items": [
         "Check when the photo or video was first published; compare that date with the time the post claims.",
         "Compare landmarks, signs and buildings in the media with earlier coverage of the stated location.",
