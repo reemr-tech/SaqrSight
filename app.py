@@ -141,6 +141,9 @@ def _view(p: dict) -> dict:
     get the current bilingual wording. Findings, assessment and sources are never changed."""
     if p.get("mode") != "sample" and p.get("modules") is not None:
         p["sections"] = report.build_sections(p)
+        if p.get("assessment"):
+            from saqrsight.plain import plain_summary
+            p["plain"] = plain_summary(p)
     return p
 
 

@@ -136,6 +136,20 @@ public-safety rumour gets high priority while its verdict stays *insufficient ev
 **Confidence** is shown only for individual validated model findings, with their measured metrics.
 No percentage is ever shown for the truth of a claim.
 
+**Plain-language report.** Every report opens with an **"In plain words / باختصار"** summary written
+for the specific claim. For example: "The post is about a fire in Dubai Marina, said to be happening
+right now… Our advice: check official channels before you share it."
+
+* It is assembled by fixed rules in [`saqrsight/plain.py`](saqrsight/plain.py) from the recorded
+  findings only. No language model writes it, so it cannot add anything the checks did not find.
+* A **"How to read this report"** guide explains the three verdicts, review priority and issue type.
+* Reader-facing status names are *Done*, *Not needed*, *Not available* and *Could not finish*.
+  Internally they remain completed, not applicable, not configured and failed.
+* Model scores, thresholds and rule codes are kept in the **Technical details** part of the appendix.
+
+The report can be downloaded in English, Arabic (fully right-to-left) or both side by side. The user
+chooses the language before the download starts.
+
 ## Optional evidence providers
 
 Both providers are off by default. The core assessment works without any API keys. When a key is

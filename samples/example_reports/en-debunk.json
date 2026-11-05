@@ -1,6 +1,6 @@
 {
-  "id": "7b8a6c7c-0423-465f-bc00-7beff7ce7a87",
-  "created_at": "2026-11-05T12:03:04.969127+00:00",
+  "id": "04639076-b843-4adb-b503-ef54ea4c8837",
+  "created_at": "2026-11-05T12:17:13.767217+00:00",
   "status": "complete",
   "mode": "analysis",
   "version": "0.2.0",
@@ -132,8 +132,8 @@
       },
       "status": "completed",
       "status_label": {
-        "en": "Completed",
-        "ar": "مكتمل"
+        "en": "Done",
+        "ar": "تم"
       },
       "summary": "The key claim cannot be assessed from the available inputs, model findings or retrieved sources. Wording indicators describe how the post is written, not whether it is true.",
       "summary_ar": "لا يمكن تقييم الادعاء الأساسي من المدخلات أو النتائج أو المصادر المتاحة. مؤشرات الصياغة تصف أسلوب المنشور لا صحته.",
@@ -152,11 +152,11 @@
       },
       "status": "not_applicable",
       "status_label": {
-        "en": "Not applicable",
-        "ar": "غير منطبق"
+        "en": "Not needed",
+        "ar": "غير مطلوب"
       },
-      "summary": "Confidence applies to individual model findings only. No percentage is given for whether the claim is true.",
-      "summary_ar": "ينطبق مستوى الثقة على نتائج النماذج المنفردة فقط. لا تُعطى نسبة مئوية لصحة الادعاء."
+      "summary": "How reliable are the automatic checks? SaqrSight never gives a percentage for whether the claim is true.",
+      "summary_ar": "ما مدى موثوقية الفحوص الآلية؟ لا يعطي صقر أبداً نسبة مئوية لصحة الادعاء."
     },
     {
       "key": "text_analysis",
@@ -166,8 +166,8 @@
       },
       "status": "completed",
       "status_label": {
-        "en": "Completed",
-        "ar": "مكتمل"
+        "en": "Done",
+        "ar": "تم"
       },
       "summary": "No urgency, fear, manipulation or share-pressure wording from the indicator list was found.",
       "summary_ar": "لم تُرصد أي صياغة استعجال أو تخويف أو تلاعب أو ضغط للنشر من قائمة المؤشرات.",
@@ -205,8 +205,8 @@
       },
       "status": "not_applicable",
       "status_label": {
-        "en": "Not applicable",
-        "ar": "غير منطبق"
+        "en": "Not needed",
+        "ar": "غير مطلوب"
       },
       "summary": "No image or video was supplied.",
       "summary_ar": "لم تُقدَّم صورة أو فيديو.",
@@ -220,8 +220,8 @@
       },
       "status": "not_applicable",
       "status_label": {
-        "en": "Not applicable",
-        "ar": "غير منطبق"
+        "en": "Not needed",
+        "ar": "غير مطلوب"
       },
       "summary": "Both a caption and an image or video are needed.",
       "summary_ar": "يلزم وجود نص وصورة أو فيديو معاً.",
@@ -235,11 +235,11 @@
       },
       "status": "completed",
       "status_label": {
-        "en": "Completed",
-        "ar": "مكتمل"
+        "en": "Done",
+        "ar": "تم"
       },
-      "summary": "No supported issue classification.",
-      "summary_ar": "لا يوجد تصنيف مدعوم للمشكلة."
+      "summary": "None identified: no specific problem (such as a mismatched or reused picture) was proven. This does not mean the post is true.",
+      "summary_ar": "لم يُحدَّد: لم تثبت مشكلة محددة (مثل صورة غير مطابقة أو مُعاد استخدامها). هذا لا يعني أن المنشور صحيح."
     },
     {
       "key": "review_priority",
@@ -249,8 +249,8 @@
       },
       "status": "completed",
       "status_label": {
-        "en": "Completed",
-        "ar": "مكتمل"
+        "en": "Done",
+        "ar": "تم"
       },
       "summary": "Medium priority for human review.",
       "summary_ar": "أولوية متوسطة للمراجعة البشرية.",
@@ -274,11 +274,11 @@
       },
       "status": "completed",
       "status_label": {
-        "en": "Completed",
-        "ar": "مكتمل"
+        "en": "Done",
+        "ar": "تم"
       },
-      "summary": "Indicator level: none. These describe wording that may create urgency or alarm; they do not predict panic or show the claim is false.",
-      "summary_ar": "مستوى المؤشرات: لا يوجد. تصف هذه المؤشرات صياغة قد تثير الاستعجال أو القلق؛ ولا تتنبأ بالذعر ولا تثبت أن الادعاء كاذب.",
+      "summary": "No urgent, alarming or pressuring words from SaqrSight's list were found.",
+      "summary_ar": "لم تُرصد كلمات استعجال أو إثارة أو ضغط من قائمة صقر.",
       "level": "none"
     },
     {
@@ -289,8 +289,8 @@
       },
       "status": "not_applicable",
       "status_label": {
-        "en": "Not applicable",
-        "ar": "غير منطبق"
+        "en": "Not needed",
+        "ar": "غير مطلوب"
       },
       "summary": "No image or video was supplied.",
       "summary_ar": "لم تُقدَّم صورة أو فيديو.",
@@ -304,11 +304,11 @@
       },
       "status": "not_configured",
       "status_label": {
-        "en": "Not configured",
-        "ar": "غير مُفعّل"
+        "en": "Not available",
+        "ar": "غير متاح"
       },
-      "summary": "Official-source search is not configured on this server (no search provider API key).",
-      "summary_ar": "البحث في المصادر الرسمية غير مُفعّل على هذا الخادم (لا يوجد مفتاح خدمة بحث).",
+      "summary": "Not done: searching official UAE sources is not switched on in this version of SaqrSight.",
+      "summary_ar": "لم يُجرَ: البحث في المصادر الرسمية في الدولة غير مُفعّل في هذه النسخة من صقر.",
       "version": "official-sources-v1:brave"
     },
     {
@@ -319,8 +319,8 @@
       },
       "status": "completed",
       "status_label": {
-        "en": "Completed",
-        "ar": "مكتمل"
+        "en": "Done",
+        "ar": "تم"
       },
       "summary": "Suggested next steps to verify this claim:",
       "summary_ar": "الخطوات المقترحة للتحقق من هذا الادعاء:",
@@ -406,5 +406,23 @@
       "en": "Search the official sources listed in this report directly for the event, place and date.",
       "ar": "ابحث مباشرة في المصادر الرسمية المذكورة عن الحدث والمكان والتاريخ."
     }
-  ]
+  ],
+  "plain": {
+    "en": [
+      "The post is about a fire in Dubai Marina.",
+      "The post itself seems to warn against a rumour or discourage sharing, rather than spread the claim.",
+      "With the checks available, we could not confirm it or rule it out.",
+      "The wording itself does not use alarm or pressure tactics.",
+      "We did not search the internet or official sources for this report.",
+      "Our advice: look for reliable, independent reports of the same thing before relying on it."
+    ],
+    "ar": [
+      "يتحدث المنشور عن حريق في دبي مارينا.",
+      "يبدو أن المنشور نفسه يحذّر من شائعة أو ينهى عن النشر، لا أنه ينشر الادعاء.",
+      "بالفحوص المتاحة، لم نتمكن من تأكيده أو نفيه.",
+      "لا تستخدم الصياغة نفسها أساليب إثارة أو ضغط.",
+      "لم نبحث في الإنترنت أو المصادر الرسمية لهذا التقرير.",
+      "نصيحتنا: ابحث عن تغطية موثوقة ومستقلة للأمر نفسه قبل الاعتماد عليه."
+    ]
+  }
 }

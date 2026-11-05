@@ -1,6 +1,6 @@
 {
-  "id": "7c2da361-dba4-4108-83ea-52996a4962a6",
-  "created_at": "2026-11-05T12:02:50.066370+00:00",
+  "id": "776fb376-d4a1-4944-bf56-b2b6448e9e58",
+  "created_at": "2026-11-05T12:16:59.395728+00:00",
   "status": "complete",
   "mode": "analysis",
   "version": "0.2.0",
@@ -182,7 +182,7 @@
         "Evaluated on 286 held-out images: precision 0.813, recall 0.608, false-positive rate on authentic images 0.14."
       ],
       "error": null,
-      "duration_ms": 5183,
+      "duration_ms": 5196,
       "data": {
         "frames": [
           {
@@ -242,7 +242,7 @@
         "NewsCLIPpings test accuracy 0.6799; see README for independent VERITE results."
       ],
       "error": null,
-      "duration_ms": 7705,
+      "duration_ms": 7106,
       "data": {
         "decision": "inconclusive",
         "frames": [
@@ -302,8 +302,8 @@
       },
       "status": "completed",
       "status_label": {
-        "en": "Completed",
-        "ar": "مكتمل"
+        "en": "Done",
+        "ar": "تم"
       },
       "summary": "The key claim cannot be assessed from the available inputs, model findings or retrieved sources. Wording indicators describe how the post is written, not whether it is true.",
       "summary_ar": "لا يمكن تقييم الادعاء الأساسي من المدخلات أو النتائج أو المصادر المتاحة. مؤشرات الصياغة تصف أسلوب المنشور لا صحته.",
@@ -322,18 +322,18 @@
       },
       "status": "completed",
       "status_label": {
-        "en": "Completed",
-        "ar": "مكتمل"
+        "en": "Done",
+        "ar": "تم"
       },
-      "summary": "Confidence applies to individual model findings only. No percentage is given for whether the claim is true.",
-      "summary_ar": "ينطبق مستوى الثقة على نتائج النماذج المنفردة فقط. لا تُعطى نسبة مئوية لصحة الادعاء.",
+      "summary": "How reliable are the automatic checks? SaqrSight never gives a percentage for whether the claim is true.",
+      "summary_ar": "ما مدى موثوقية الفحوص الآلية؟ لا يعطي صقر أبداً نسبة مئوية لصحة الادعاء.",
       "items": [
-        "AI-image detector: evaluated model; output score 0.005 (model output, not the probability that the claim is true). Evaluated on 286 held-out images: precision 0.813, recall 0.608, false-positive rate on authentic images 0.14.",
-        "Caption–media consistency model: evaluated model; output score 0.469 (model output, not the probability that the claim is true). NewsCLIPpings test accuracy 0.6799."
+        "AI-image detector: tested before use. In testing it caught about 6 in 10 AI-made pictures and wrongly flagged about 1 in 7 real photos (more often for screenshots).",
+        "Picture–caption check: tested before use. It only answers when it is confident, and it can tell whether a picture fits a topic – not whether the place or date is right."
       ],
       "items_ar": [
-        "كاشف الصور المولدة: نموذج مُقيَّم؛ درجة المخرج 0.005 (مخرج النموذج، وليست احتمال صحة الادعاء). قُيِّم على 286 صورة اختبار: الدقة 0.813، والاستدعاء 0.608، ومعدل الإنذارات الخاطئة على الصور الأصلية 0.14.",
-        "نموذج اتساق النص والوسائط: نموذج مُقيَّم؛ درجة المخرج 0.469 (مخرج النموذج، وليست احتمال صحة الادعاء). دقة اختبار NewsCLIPpings 0.6799."
+        "كاشف الصور المولدة: اختُبر قبل استخدامه. في الاختبار اكتشف نحو 6 من كل 10 صور مصنوعة بالذكاء الاصطناعي، وأخطأ في نحو 1 من كل 7 صور حقيقية (وأكثر مع لقطات الشاشة).",
+        "فحص تطابق الصورة والنص: اختُبر قبل استخدامه. لا يجيب إلا عندما يكون واثقاً، ويستطيع معرفة ما إذا كانت الصورة تناسب الموضوع، لا ما إذا كان المكان أو التاريخ صحيحاً."
       ]
     },
     {
@@ -344,52 +344,11 @@
       },
       "status": "completed",
       "status_label": {
-        "en": "Completed",
-        "ar": "مكتمل"
+        "en": "Done",
+        "ar": "تم"
       },
-      "summary": "Language indicator level: high. Categories detected: Manipulative framing, Pressure to share, Urgency.",
-      "summary_ar": "مستوى مؤشرات الصياغة: مرتفع. الفئات المرصودة: صياغة تلاعبية، الضغط للنشر، الاستعجال.",
-      "findings": [
-        {
-          "code": "urgency",
-          "message": "Wording that pushes the reader to react immediately.",
-          "message_ar": "صياغة تدفع القارئ إلى التصرف فوراً.",
-          "excerpts": [
-            "URGENT",
-            "right now",
-            "!!",
-            "🚨"
-          ],
-          "frames": [],
-          "sources": [],
-          "label": "Urgency",
-          "label_ar": "الاستعجال"
-        },
-        {
-          "code": "manipulation",
-          "message": "Claims of hidden truth, absolute certainty, or appeals to distrust official information.",
-          "message_ar": "ادعاء وجود حقيقة مخفية أو يقين مطلق أو دعوة إلى عدم الثقة بالمعلومات الرسمية.",
-          "excerpts": [
-            "before they delete"
-          ],
-          "frames": [],
-          "sources": [],
-          "label": "Manipulative framing",
-          "label_ar": "صياغة تلاعبية"
-        },
-        {
-          "code": "share_pressure",
-          "message": "Explicit requests to forward or spread the content.",
-          "message_ar": "طلب صريح لإعادة إرسال المحتوى أو نشره.",
-          "excerpts": [
-            "Share this"
-          ],
-          "frames": [],
-          "sources": [],
-          "label": "Pressure to share",
-          "label_ar": "الضغط للنشر"
-        }
-      ],
+      "summary": "Alarm level of the wording: high. The exact words found are listed under “Panic-Related Language Indicators”.",
+      "summary_ar": "مستوى الإثارة في الصياغة: مرتفع. الكلمات المرصودة مذكورة في قسم «مؤشرات لغة الذعر».",
       "limitations": [
         "Rule-based wording indicators; they describe language, not whether the claim is true.",
         "Does not predict how readers will react.",
@@ -410,16 +369,16 @@
       },
       "status": "completed",
       "status_label": {
-        "en": "Completed",
-        "ar": "مكتمل"
+        "en": "Done",
+        "ar": "تم"
       },
-      "summary": "No AI-generation signal on the image checked.",
-      "summary_ar": "لا توجد إشارة إلى التوليد بالذكاء الاصطناعي في الصورة.",
+      "summary": "No signs of AI generation were found in the picture.",
+      "summary_ar": "لم تُرصد علامات توليد بالذكاء الاصطناعي في الصورة.",
       "findings": [
         {
           "code": "no_synthetic_signal",
-          "message": "The detector did not flag the image as AI-generated at the evaluated threshold. This does not show the media is authentic or unedited.",
-          "message_ar": "لم يصنّف الكاشف الصورة على أنها مولدة بالذكاء الاصطناعي عند العتبة المُقيَّمة. هذا لا يثبت أن الوسائط أصلية أو غير معدّلة.",
+          "message": "The AI-image detector found no signs that this was made by AI. That does not prove it is a real or unedited photo.",
+          "message_ar": "لم يجد كاشف الصور المولدة علامات على أنها مصنوعة بالذكاء الاصطناعي. هذا لا يثبت أنها صورة حقيقية أو غير معدّلة.",
           "excerpts": [],
           "frames": [
             {
@@ -436,8 +395,8 @@
         },
         {
           "code": "editing_not_assessed",
-          "message": "Conventional editing or manipulation (splicing, retouching, cropping) was not assessed; no evaluated method is implemented for it.",
-          "message_ar": "لم يُفحص التعديل التقليدي أو التلاعب (اللصق أو التنقيح أو القص)؛ لا توجد طريقة مُقيَّمة لذلك.",
+          "message": "Normal photo editing (cutting and pasting, retouching, cropping) is not checked by SaqrSight.",
+          "message_ar": "لا يفحص صقر التعديل العادي للصور (القص واللصق أو التنقيح أو الاقتصاص).",
           "excerpts": [],
           "frames": [],
           "sources": [],
@@ -465,16 +424,16 @@
       },
       "status": "completed",
       "status_label": {
-        "en": "Completed",
-        "ar": "مكتمل"
+        "en": "Done",
+        "ar": "تم"
       },
-      "summary": "Agreement between caption and visible content is inconclusive.",
-      "summary_ar": "الاتفاق بين النص والمحتوى المرئي غير حاسم.",
+      "summary": "Not sure: the check could not tell whether the picture matches what the caption describes.",
+      "summary_ar": "غير متأكد: لم يتمكن الفحص من تحديد ما إذا كانت الصورة تطابق ما يصفه النص.",
       "findings": [
         {
           "code": "inconclusive_agreement",
-          "message": "The model could not determine whether the caption and media agree.",
-          "message_ar": "لم يتمكن النموذج من تحديد ما إذا كان النص والوسائط متفقين.",
+          "message": "The check only gives an answer when it is confident. Here it was not, so it gives no answer either way.",
+          "message_ar": "لا يعطي الفحص إجابة إلا عندما يكون واثقاً. لم يكن واثقاً هنا، لذا لا يرجّح أي اتجاه.",
           "excerpts": [],
           "frames": [
             {
@@ -490,8 +449,8 @@
         },
         {
           "code": "needs_external_evidence",
-          "message": "These claim details cannot be assessed from the visible content.",
-          "message_ar": "لا يمكن تقييم تفاصيل الادعاء هذه من المحتوى المرئي.",
+          "message": "What the picture cannot prove on its own:",
+          "message_ar": "ما لا تستطيع الصورة إثباته وحدها:",
           "excerpts": [
             "Location (Dubai, Dubai Marina): the image alone cannot confirm where it was taken.",
             "Time (now): the image alone cannot confirm when it was taken.",
@@ -528,11 +487,11 @@
       },
       "status": "completed",
       "status_label": {
-        "en": "Completed",
-        "ar": "مكتمل"
+        "en": "Done",
+        "ar": "تم"
       },
-      "summary": "No supported issue classification.",
-      "summary_ar": "لا يوجد تصنيف مدعوم للمشكلة."
+      "summary": "None identified: no specific problem (such as a mismatched or reused picture) was proven. This does not mean the post is true.",
+      "summary_ar": "لم يُحدَّد: لم تثبت مشكلة محددة (مثل صورة غير مطابقة أو مُعاد استخدامها). هذا لا يعني أن المنشور صحيح."
     },
     {
       "key": "review_priority",
@@ -542,8 +501,8 @@
       },
       "status": "completed",
       "status_label": {
-        "en": "Completed",
-        "ar": "مكتمل"
+        "en": "Done",
+        "ar": "تم"
       },
       "summary": "High priority for human review.",
       "summary_ar": "أولوية مرتفعة للمراجعة البشرية.",
@@ -573,11 +532,11 @@
       },
       "status": "completed",
       "status_label": {
-        "en": "Completed",
-        "ar": "مكتمل"
+        "en": "Done",
+        "ar": "تم"
       },
-      "summary": "Indicator level: high. These describe wording that may create urgency or alarm; they do not predict panic or show the claim is false.",
-      "summary_ar": "مستوى المؤشرات: مرتفع. تصف هذه المؤشرات صياغة قد تثير الاستعجال أو القلق؛ ولا تتنبأ بالذعر ولا تثبت أن الادعاء كاذب.",
+      "summary": "The words below may create urgency or alarm. They describe how the post is written – they do not show the claim is false or predict panic.",
+      "summary_ar": "قد تثير الكلمات أدناه الاستعجال أو القلق. هي تصف أسلوب كتابة المنشور، ولا تثبت أن الادعاء كاذب ولا تتنبأ بالذعر.",
       "level": "high",
       "findings": [
         {
@@ -629,11 +588,11 @@
       },
       "status": "not_configured",
       "status_label": {
-        "en": "Not configured",
-        "ar": "غير مُفعّل"
+        "en": "Not available",
+        "ar": "غير متاح"
       },
-      "summary": "Reverse image search is not configured on this server (no provider API key).",
-      "summary_ar": "البحث العكسي عن الصور غير مُفعّل على هذا الخادم (لا يوجد مفتاح خدمة).",
+      "summary": "Not done: searching the internet for this picture is not switched on in this version of SaqrSight.",
+      "summary_ar": "لم يُجرَ: البحث عن هذه الصورة على الإنترنت غير مُفعّل في هذه النسخة من صقر.",
       "version": "google-vision-web-detection-v1"
     },
     {
@@ -644,11 +603,11 @@
       },
       "status": "not_configured",
       "status_label": {
-        "en": "Not configured",
-        "ar": "غير مُفعّل"
+        "en": "Not available",
+        "ar": "غير متاح"
       },
-      "summary": "Official-source search is not configured on this server (no search provider API key).",
-      "summary_ar": "البحث في المصادر الرسمية غير مُفعّل على هذا الخادم (لا يوجد مفتاح خدمة بحث).",
+      "summary": "Not done: searching official UAE sources is not switched on in this version of SaqrSight.",
+      "summary_ar": "لم يُجرَ: البحث في المصادر الرسمية في الدولة غير مُفعّل في هذه النسخة من صقر.",
       "version": "official-sources-v1:brave"
     },
     {
@@ -659,8 +618,8 @@
       },
       "status": "completed",
       "status_label": {
-        "en": "Completed",
-        "ar": "مكتمل"
+        "en": "Done",
+        "ar": "تم"
       },
       "summary": "Suggested next steps to verify this claim:",
       "summary_ar": "الخطوات المقترحة للتحقق من هذا الادعاء:",
@@ -788,5 +747,23 @@
       "en": "Search the official sources listed in this report directly for the event, place and date.",
       "ar": "ابحث مباشرة في المصادر الرسمية المذكورة عن الحدث والمكان والتاريخ."
     }
-  ]
+  ],
+  "plain": {
+    "en": [
+      "The post is about a fire in Dubai Marina, said to be happening right now.",
+      "With the checks available, we could not confirm it or rule it out.",
+      "We found no signs that the picture was made by AI, although that does not prove it is real or unedited.",
+      "The wording uses pressure tactics that are common in rumours (urgency, claims of hidden truth, pressure to share), such as “URGENT”, “right now”, “before they delete”.",
+      "We did not search the internet or official sources for this report.",
+      "Our advice: check official channels such as WAM, the police or NCEMA before you share it."
+    ],
+    "ar": [
+      "يتحدث المنشور عن حريق في دبي مارينا، ويُقال إنه يحدث الآن.",
+      "بالفحوص المتاحة، لم نتمكن من تأكيده أو نفيه.",
+      "لم نجد علامات على أن الصورة مصنوعة بالذكاء الاصطناعي، وإن كان ذلك لا يثبت أنها حقيقية أو غير معدّلة.",
+      "تستخدم الصياغة أساليب ضغط شائعة في الشائعات (الاستعجال، ادعاء وجود حقيقة مخفية، الضغط للنشر)، مثل «⁨URGENT⁩»، «⁨right now⁩»، «⁨before they delete⁩».",
+      "لم نبحث في الإنترنت أو المصادر الرسمية لهذا التقرير.",
+      "نصيحتنا: راجع القنوات الرسمية مثل وام أو الشرطة أو الهيئة الوطنية لإدارة الطوارئ قبل أن تنشره."
+    ]
+  }
 }

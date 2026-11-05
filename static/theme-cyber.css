@@ -217,3 +217,15 @@ html[dir=rtl] .langchoice.last::after{letter-spacing:0;font-family:inherit}
 .langdialog-foot{display:flex;justify-content:flex-end;margin-top:16px}
 .langchoice[data-lang=ar]{align-items:flex-start;text-align:right;direction:rtl}
 .langchoice[data-lang=ar].last::after{inset-inline-end:auto;left:14px}
+
+/* report banner: plain words + guide */
+.plainwords{margin:14px 0 6px;padding:12px 16px;border:1px solid var(--line2);border-radius:8px;background:rgba(7,13,24,.65)}
+.plainwords-title{font:600 11px/1 var(--mono);letter-spacing:1.5px;text-transform:uppercase;color:var(--cyan);margin:0 0 8px}
+html[dir=rtl] .plainwords-title{letter-spacing:0;font-family:inherit;font-size:13px}
+.plainwords ul{list-style:none;margin:0;padding:0}
+.plainwords li{position:relative;padding-inline-start:16px;margin:7px 0;font-size:15px;line-height:1.6;color:#eef4ff}
+.plainwords li::before{content:"";position:absolute;inset-inline-start:0;top:.65em;width:6px;height:6px;border-radius:50%;background:var(--cyan)}
+.guide-box{margin-top:10px;font-size:13px;color:var(--muted)}
+.guide-box summary{cursor:pointer;color:var(--cyan);font-weight:600}
+.guide-box p{margin:8px 0;line-height:1.6}
+.guide-box b{color:var(--ink)}

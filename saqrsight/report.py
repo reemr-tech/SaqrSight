@@ -2,20 +2,16 @@
 from __future__ import annotations
 
 import base64
+import re
 import html
 import io
 from functools import lru_cache
 from pathlib import Path
 
 from .i18n_ar import LEVELS, MATCH_TYPES, REASONS, RELATIONS, ar, ar_all
+from .plain import GUIDE, STATUS_PLAIN, plain, plain_summary
 
-STATUS = {
-    "completed": {"en": "Completed", "ar": "مكتمل"},
-    "not_applicable": {"en": "Not applicable", "ar": "غير منطبق"},
-    "not_configured": {"en": "Not configured", "ar": "غير مُفعّل"},
-    "failed": {"en": "Failed", "ar": "تعذّر الإكمال"},
-    "pending": {"en": "Running…", "ar": "قيد التنفيذ…"},
-}
+STATUS = STATUS_PLAIN   # reader-facing names; stored statuses are unchanged
 TITLES = {
     "initial_assessment": {"en": "Initial Assessment", "ar": "التقييم الأولي"},
     "confidence": {"en": "Confidence", "ar": "مستوى الثقة"},
@@ -56,7 +52,9 @@ def _source(src: dict) -> dict:
 def _finding(f: dict) -> dict:
     d = f.get("details") or {}
     excerpts = f.get("excerpts") or []
-    out = {"code": f["code"], "message": f["message"], "message_ar": d.get("explain_ar") or ar(f["message"]),
+    pl = plain(f["message"])
+    out = {"code": f["code"], "message": pl[0] if pl else f["message"],
+           "message_ar": pl[1] if pl else (d.get("explain_ar") or ar(f["message"])),
            "excerpts": excerpts, "frames": f.get("frames") or [],
            "sources": [_source(x) for x in f.get("sources") or []],
            "label": d.get("label_en"), "label_ar": d.get("label_ar")}
@@ -65,17 +63,18 @@ def _finding(f: dict) -> dict:
     return out
 
 
-def _mod_section(key: str, m: dict | None) -> dict:
+def _mod_section(key: str, m: dict | None, keep=None) -> dict:
     if m is None:
         return _section(key, "pending", "This check is still running.")
     summary = m.get("summary") or ""
-    summary_ar = ar(summary)
+    pl = plain(summary)
+    summary, summary_ar = (pl if pl else (summary, ar(summary)))
     if m["status"] == "failed":
         reason = m.get("error") or "unknown error"
         summary = f"{summary} Reason: {reason}"
         summary_ar = f"{summary_ar or ''} السبب: {ar(reason) or reason}".strip()
     return _section(key, m["status"], summary, summary_ar=summary_ar,
-                    findings=[_finding(f) for f in m.get("findings", [])],
+                    findings=[_finding(f) for f in m.get("findings", []) if keep is None or keep(f)],
                     limitations=m.get("limitations"), limitations_ar=ar_all(m.get("limitations")),
                     version=m.get("version"))
 
@@ -92,33 +91,40 @@ def build_sections(p: dict) -> list[dict]:
         sections.append(_section("initial_assessment", "pending", "Waiting for all checks to finish."))
 
     conf_items, conf_ar = [], []
-    for name in ("media_analysis", "consistency_check"):
-        m = mods.get(name)
-        if m and m["status"] == "completed":
-            label = "AI-image detector" if name == "media_analysis" else "Caption–media consistency model"
-            label_ar = "كاشف الصور المولدة" if name == "media_analysis" else "نموذج اتساق النص والوسائط"
-            note = m["data"].get("validation_note", "")
-            if m.get("confidence") == "validated":
-                conf_items.append(f"{label}: evaluated model; output score {m['score']} (model output, not the "
-                                  f"probability that the claim is true). {note}")
-                conf_ar.append(f"{label_ar}: نموذج مُقيَّم؛ درجة المخرج {m['score']} (مخرج النموذج، وليست احتمال "
-                               f"صحة الادعاء). {ar(note) or ''}".strip())
-            else:
-                conf_items.append(f"{label}: not validated for this application; no confidence is reported.")
-                conf_ar.append(f"{label_ar}: لم يُتحقق منه لهذا التطبيق؛ لا يُعرض مستوى ثقة.")
+    vis, cons = mods.get("media_analysis"), mods.get("consistency_check")
+    if vis and vis["status"] == "completed":
+        m = re.search(r"recall (\d+(?:\.\d+)?), false-positive rate on authentic images (\d+(?:\.\d+)?)",
+                      (vis.get("data") or {}).get("validation_note", ""))
+        if vis.get("confidence") == "validated" and m and float(m[2]) > 0:
+            caught, wrong = round(float(m[1]) * 10), round(1 / float(m[2]))   # from the stored test results
+            conf_items.append(f"AI-image detector: tested before use. In testing it caught about {caught} in 10 AI-made "
+                              f"pictures and wrongly flagged about 1 in {wrong} real photos (more often for screenshots).")
+            conf_ar.append(f"كاشف الصور المولدة: اختُبر قبل استخدامه. في الاختبار اكتشف نحو {caught} من كل 10 صور مصنوعة "
+                           f"بالذكاء الاصطناعي، وأخطأ في نحو 1 من كل {wrong} صور حقيقية (وأكثر مع لقطات الشاشة).")
+        else:
+            conf_items.append("AI-image detector: not tested for this use, so its result is shown for information only.")
+            conf_ar.append("كاشف الصور المولدة: لم يُختبر لهذا الاستخدام، لذا تُعرض نتيجته للعلم فقط.")
+    if cons and cons["status"] == "completed":
+        conf_items.append("Picture–caption check: tested before use. It only answers when it is confident, and it can tell "
+                          "whether a picture fits a topic – not whether the place or date is right.")
+        conf_ar.append("فحص تطابق الصورة والنص: اختُبر قبل استخدامه. لا يجيب إلا عندما يكون واثقاً، ويستطيع معرفة ما إذا كانت "
+                       "الصورة تناسب الموضوع، لا ما إذا كان المكان أو التاريخ صحيحاً.")
     sections.append(_section("confidence", "completed" if conf_items else "not_applicable",
-                             "Confidence applies to individual model findings only. No percentage is given for "
-                             "whether the claim is true.",
-                             summary_ar="ينطبق مستوى الثقة على نتائج النماذج المنفردة فقط. لا تُعطى نسبة مئوية لصحة الادعاء.",
+                             "How reliable are the automatic checks? SaqrSight never gives a percentage for whether the claim is true.",
+                             summary_ar="ما مدى موثوقية الفحوص الآلية؟ لا يعطي صقر أبداً نسبة مئوية لصحة الادعاء.",
                              items=conf_items, items_ar=conf_ar))
-    sections.append(_mod_section("text_analysis", mods.get("text_analysis")))
+    sections.append(_mod_section("text_analysis", mods.get("text_analysis"),
+                                 keep=lambda f: f["code"].startswith("context_")))
     sections.append(_mod_section("media_analysis", mods.get("media_analysis")))
     sections.append(_mod_section("consistency_check", mods.get("consistency_check")))
     if a:
         it = a["issue_types"]
         sections.append(_section("issue_type", "completed",
-                                 ", ".join(i["en"] for i in it) if it else "No supported issue classification.",
-                                 summary_ar="، ".join(i["ar"] for i in it) if it else "لا يوجد تصنيف مدعوم للمشكلة.",
+                                 ", ".join(i["en"] for i in it) if it else
+                                 "None identified: no specific problem (such as a mismatched or reused picture) was proven. "
+                                 "This does not mean the post is true.",
+                                 summary_ar="، ".join(i["ar"] for i in it) if it else
+                                 "لم يُحدَّد: لم تثبت مشكلة محددة (مثل صورة غير مطابقة أو مُعاد استخدامها). هذا لا يعني أن المنشور صحيح.",
                                  issues=it))
         pr = a["priority"]
         sections.append(_section("review_priority", "completed", f'{pr["label"]["en"]} priority for human review.',
@@ -135,10 +141,11 @@ def build_sections(p: dict) -> list[dict]:
         panic = [f for f in t["findings"] if f["code"] in ("urgency", "fear", "manipulation", "share_pressure")]
         sections.append(_section(
             "panic_language", "completed",
-            f"Indicator level: {lvl}. These describe wording that may create urgency or "
-            "alarm; they do not predict panic or show the claim is false.",
-            summary_ar=f"مستوى المؤشرات: {LEVELS.get(lvl, lvl)}. تصف هذه المؤشرات صياغة قد تثير الاستعجال أو القلق؛ "
-                       "ولا تتنبأ بالذعر ولا تثبت أن الادعاء كاذب.",
+            ("The words below may create urgency or alarm. They describe how the post is written – they do not "
+             "show the claim is false or predict panic." if panic else
+             "No urgent, alarming or pressuring words from SaqrSight's list were found."),
+            summary_ar=("قد تثير الكلمات أدناه الاستعجال أو القلق. هي تصف أسلوب كتابة المنشور، ولا تثبت أن الادعاء كاذب "
+                        "ولا تتنبأ بالذعر." if panic else "لم تُرصد كلمات استعجال أو إثارة أو ضغط من قائمة صقر."),
             level=lvl, findings=[_finding(f) for f in panic]))
     else:
         sections.append(_mod_section("panic_language", t))
@@ -249,6 +256,18 @@ td .name{font-weight:600;color:#eef4ff}
 footer{margin-top:30px;padding-top:14px;border-top:1px solid var(--line);font-size:12px;color:var(--dim)}
 footer .bi{gap:6px 28px}
 .notice.one,.verdict.one{grid-template-columns:1fr}
+.plainbox{background:rgba(7,13,24,.7);border:1px solid var(--line2);border-radius:8px;padding:12px 18px 8px;margin:6px 0 4px}
+.plainbox .sub-bi{margin-top:2px}
+ul.plain{list-style:none;padding:0;margin:0}
+ul.plain li{position:relative;padding-inline-start:16px;margin:6px 0;font-size:15px;line-height:1.6}
+ul.plain li::before{content:"";position:absolute;inset-inline-start:0;top:.62em;width:6px;height:6px;border-radius:50%;background:var(--cyan)}
+.bi>ul.plain.ar{padding-right:0}
+.guide .g-row{display:grid;grid-template-columns:190px 1fr;gap:6px 18px;padding:9px 0;border-top:1px solid var(--line)}
+.guide .g-row:first-of-type{border-top:0}
+.guide .g-term{font-weight:700;color:#eef4ff;font-size:13.5px}
+.guide .bi{font-size:13px;color:var(--muted)}
+.guide p{margin:0}
+@media(max-width:700px){.guide .g-row{grid-template-columns:1fr}}
 .ar,.ar *,[dir=rtl],[dir=rtl] *{letter-spacing:0!important}
 .mode-ar .lbl,.mode-ar .fact .k,.mode-ar .sub-bi,.mode-ar th,.mode-ar .status,.mode-ar .brand small,.mode-ar .mast-meta,
 .mode-ar .chip,.mode-ar .part h2 span,.mode-ar .card-head .num{font-family:var(--sans);font-size:12.5px;font-weight:700}
@@ -375,8 +394,7 @@ def _finding_html(L: _Lang, f: dict) -> str:
         chips = []
         for fr in f["frames"]:
             ts = f' · {fr["timestamp"]}s' if "timestamp" in fr else ""
-            word = "الدرجة" if L.mode == "ar" else "score"
-            sc = next((f" · {word} {fr[k]}" for k in ("synthetic_score", "agreement_score") if k in fr), "")
+            sc = ""   # model scores are listed in the Technical details appendix
             ref = fr["ref"]
             if L.mode == "ar":
                 ref = "الصورة" if ref == "image" else ref.replace("frame-", "لقطة ")
@@ -412,6 +430,55 @@ def _card(L: _Lang, s: dict, num: str) -> str:
             f'{_status(L, s)}{title_ar}</div>{"".join(body)}</section>')
 
 
+def _guide(L: _Lang) -> str:
+    rows = "".join(
+        f'<div class="g-row"><div class="g-term">{L.pair(en, ar_t)}</div>{L.bi(d_en, d_ar)}</div>'
+        for en, ar_t, d_en, d_ar in GUIDE["verdicts"])
+    rows += (f'<div class="g-row"><div class="g-term">{L.pair("Review priority", "أولوية المراجعة")}</div>'
+             f'{L.bi(*GUIDE["priority"])}</div>'
+             f'<div class="g-row"><div class="g-term">{L.pair("Issue type", "نوع المشكلة")}</div>{L.bi(*GUIDE["issue"])}</div>')
+    return (f'<section class="card guide"><div class="sub-bi">{L.heading("HOW TO READ THIS REPORT", "كيف تقرأ هذا التقرير")}</div>'
+            f"{rows}</section>")
+
+
+def _technical(L: _Lang, p: dict) -> str:
+    """Numbers and rule codes for specialists, kept out of the main report."""
+    a = p.get("assessment") or {}
+    mods = p.get("modules", {})
+    rows = []
+    for key, en, ar_name in CHECKS:
+        m = mods.get(key)
+        if not m or m.get("status") != "completed":
+            continue
+        d = m.get("data") or {}
+        bits = []
+        if m.get("score") is not None:
+            bits.append(f"max score {m['score']}")
+        if "threshold" in d:
+            bits.append(f"threshold {d['threshold']}")
+        if "thresholds" in d:
+            bits.append(f"agree ≥ {d['thresholds']['agree']}, disagree ≤ {d['thresholds']['disagree']}")
+        if d.get("decision"):
+            bits.append(f"decision: {d['decision']}")
+        if d.get("indicator_level"):
+            bits.append(f"indicator level: {d['indicator_level']}")
+        for fr in d.get("frames", []):
+            sc = fr.get("synthetic_score", fr.get("agreement_score"))
+            ts = f" @ {fr['timestamp']}s" if "timestamp" in fr else ""
+            bits.append(f"{fr['ref']}{ts}: {sc}")
+        if d.get("validation_note"):
+            bits.append(d["validation_note"])
+        name = L.pick(en, ar_name)
+        rows.append(f'<tr><td><span class="name">{_e(name)}</span></td><td dir="ltr">{_e(" · ".join(bits))}</td></tr>')
+    rule_en, rule_ar = (a.get("explanation") or {}).get("en", ""), (a.get("explanation") or {}).get("ar", "")
+    return (f'<section class="card appx"><div class="sub-bi">{L.heading("TECHNICAL DETAILS", "تفاصيل تقنية")}</div>'
+            f'<table><tbody>{"".join(rows)}'
+            f'<tr><td><span class="name">{_e(L.pick("Decision rule", "قاعدة القرار"))}</span></td>'
+            f'<td dir="ltr">{_e(a.get("rule", ""))} ({_e(a.get("rules_version", ""))})</td></tr></tbody></table>'
+            + L.bi(rule_en, rule_ar)
+            + "</section>")
+
+
 def _part(L: _Lang, num: str, en: str, ar_title: str) -> str:
     side = f'<div class="ar" dir="rtl">{_e(ar_title)}</div>' if L.mode == "both" else ""
     return f'<div class="part"><h2><span>{_e(num)}</span>{_e(L.pick(en, ar_title))}</h2>{side}</div>'
@@ -436,6 +503,8 @@ def render_html(p: dict, images: list[dict] | None = None, lang: str = "both") -
     pr = a.get("priority") or {}
     prl = pr.get("label") or {"en": "—", "ar": "—"}
     issues = a.get("issue_types") or []
+    ps = plain_summary(p)
+    done = sum(1 for k, _, _ in CHECKS if (mods.get(k) or {}).get("status") == "completed")
     if L.mode == "both":
         verdict_html = (f'<div class="verdict"><div><div class="lbl">INITIAL ASSESSMENT</div><div class="val">{_e(label["en"])}</div></div>'
                         f'<div class="ar" dir="rtl"><div class="lbl">التقييم الأولي</div><div class="val">{_e(label["ar"])}</div></div></div>')
@@ -445,12 +514,15 @@ def render_html(p: dict, images: list[dict] | None = None, lang: str = "both") -
     fact = lambda en, ar_t, v: (f'<div class="fact"><div class="k">{L.heading(en, ar_t)}</div><div class="v">{v}</div></div>')  # noqa: E731
     summary = (
         f'<section class="card summary v-{_e(verdict)}">{verdict_html}'
-        + L.bi((a.get("explanation") or {}).get("en"), (a.get("explanation") or {}).get("ar"))
+        + f'<div class="plainbox"><div class="sub-bi">{L.heading("IN PLAIN WORDS", "باختصار")}</div>'
+        + L.bilist(ps["en"], ps["ar"]).replace("<ul", '<ul class="plain"', 2)
+        + "</div>"
         + '<div class="facts">'
         + fact("REVIEW PRIORITY", "أولوية المراجعة", f'<span class="prio {_e(pr.get("level", ""))}">{L.pair(prl["en"], prl["ar"])}</span>')
         + fact("ISSUE TYPE", "نوع المشكلة", "".join(f"<div>{L.pair(i['en'], i['ar'])}</div>" for i in issues)
                or L.pair("None identified", "لم يُحدَّد"))
-        + fact("DECISION RULE", "قاعدة القرار", f'{_e(a.get("rule", "—"))} · {_e(a.get("rules_version", ""))}')
+        + fact("CHECKS COMPLETED", "الفحوص المكتملة",
+               L.pair(f"{done} of {len(CHECKS)}", f"{done} من {len(CHECKS)}"))
         + "</div>"
         + f'<div class="sub-bi">{L.heading("WHY THIS PRIORITY", "أسباب الأولوية")}</div>'
         + L.bilist([r["en"] for r in pr.get("reasons", [])], [r["ar"] for r in pr.get("reasons", [])])
@@ -515,6 +587,7 @@ def render_html(p: dict, images: list[dict] | None = None, lang: str = "both") -
     appx_head = {"both": '<th>CHECK · VERSION · LIMITATIONS</th><th class="ar">الفحص · الإصدار · القيود</th>',
                  "en": "<th>CHECK · VERSION · LIMITATIONS</th>", "ar": '<th class="ar">الفحص · الإصدار · القيود</th>'}[L.mode]
     rules_v = a.get("rules_version", "")
+    tech = _technical(L, p)
     appendix = (_part(L, "A", "Appendix: methods and limitations", "ملحق: المنهجية والقيود")
                 + f'<section class="card appx"><table><thead><tr>{appx_head}</tr></thead><tbody>' + "".join(appx_rows)
                 + "</tbody></table>"
@@ -522,7 +595,7 @@ def render_html(p: dict, images: list[dict] | None = None, lang: str = "both") -
                        "an AI-generation signal or a failed search can never make a claim misleading on their own.",
                        f"قواعد القرار {rules_v}: لا تُدمج درجات النماذج في درجة صحة واحدة. لا تكفي الصياغة العاجلة أو إشارة "
                        "التوليد بالذكاء الاصطناعي أو فشل البحث وحدها لاعتبار الادعاء مضللاً.")
-                + "</section>")
+                + "</section>" + tech)
 
     consent_en = "permitted by user" if p.get("consent_external") else "not permitted by user"
     consent_ar = "بإذن المستخدم" if p.get("consent_external") else "دون إذن المستخدم"
@@ -549,6 +622,7 @@ def render_html(p: dict, images: list[dict] | None = None, lang: str = "both") -
 {notice}
 {_part(L, "00", "Summary", "الملخص")}
 {summary}
+{_guide(L)}
 <div class="sub-bi">{L.heading("CHECKS PERFORMED", "الفحوص المنفذة")}</div>
 {checks}
 {_part(L, "·", "Submitted content", "المحتوى المرسل")}

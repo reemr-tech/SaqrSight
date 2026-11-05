@@ -119,7 +119,7 @@ def test_exports_escape_and_delete(client):
     url = "/api/reports/" + p["id"]
     html = client.get(url + "/download?format=html")
     assert "<script>alert(1)</script>" not in html.text and "&lt;script&gt;" in html.text and "دبي" in html.text
-    for label in ("INITIAL ASSESSMENT", "التقييم الأولي", "Not configured", "غير مُفعّل", "REVIEW PRIORITY",
+    for label in ("INITIAL ASSESSMENT", "التقييم الأولي", "Not available", "غير متاح", "REVIEW PRIORITY", "IN PLAIN WORDS", "باختصار", "HOW TO READ THIS REPORT", "TECHNICAL DETAILS",
                   "أولوية المراجعة", "Recommended Action", "الإجراء المقترح", "methods and limitations", "المنهجية والقيود"):
         assert label in html.text, label
     assert "data:image/png;base64," in html.text and "data:image/jpeg;base64," in html.text   # logo + submitted image

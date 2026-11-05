@@ -1,6 +1,6 @@
 {
-  "id": "c69b655f-7003-4a17-8b10-0c441c9d577f",
-  "created_at": "2026-11-05T12:03:04.445588+00:00",
+  "id": "8fee44e2-6574-4549-9e71-25cee34a2361",
+  "created_at": "2026-11-05T12:17:13.247557+00:00",
   "status": "complete",
   "mode": "analysis",
   "version": "0.2.0",
@@ -96,7 +96,7 @@
         "Evaluated on 286 held-out images: precision 0.813, recall 0.608, false-positive rate on authentic images 0.14."
       ],
       "error": null,
-      "duration_ms": 316,
+      "duration_ms": 298,
       "data": {
         "frames": [
           {
@@ -154,7 +154,7 @@
         "NewsCLIPpings test accuracy 0.6799; see README for independent VERITE results."
       ],
       "error": null,
-      "duration_ms": 59,
+      "duration_ms": 62,
       "data": {
         "decision": "disagree",
         "frames": [
@@ -212,8 +212,8 @@
       },
       "status": "completed",
       "status_label": {
-        "en": "Completed",
-        "ar": "مكتمل"
+        "en": "Done",
+        "ar": "تم"
       },
       "summary": "A discrepancy was identified: The caption does not appear to match the visible content of the media.",
       "summary_ar": "تم رصد تعارض: لا يبدو أن النص يطابق المحتوى المرئي.",
@@ -232,18 +232,18 @@
       },
       "status": "completed",
       "status_label": {
-        "en": "Completed",
-        "ar": "مكتمل"
+        "en": "Done",
+        "ar": "تم"
       },
-      "summary": "Confidence applies to individual model findings only. No percentage is given for whether the claim is true.",
-      "summary_ar": "ينطبق مستوى الثقة على نتائج النماذج المنفردة فقط. لا تُعطى نسبة مئوية لصحة الادعاء.",
+      "summary": "How reliable are the automatic checks? SaqrSight never gives a percentage for whether the claim is true.",
+      "summary_ar": "ما مدى موثوقية الفحوص الآلية؟ لا يعطي صقر أبداً نسبة مئوية لصحة الادعاء.",
       "items": [
-        "AI-image detector: evaluated model; output score 0.005 (model output, not the probability that the claim is true). Evaluated on 286 held-out images: precision 0.813, recall 0.608, false-positive rate on authentic images 0.14.",
-        "Caption–media consistency model: evaluated model; output score 0.032 (model output, not the probability that the claim is true). NewsCLIPpings test accuracy 0.6799."
+        "AI-image detector: tested before use. In testing it caught about 6 in 10 AI-made pictures and wrongly flagged about 1 in 7 real photos (more often for screenshots).",
+        "Picture–caption check: tested before use. It only answers when it is confident, and it can tell whether a picture fits a topic – not whether the place or date is right."
       ],
       "items_ar": [
-        "كاشف الصور المولدة: نموذج مُقيَّم؛ درجة المخرج 0.005 (مخرج النموذج، وليست احتمال صحة الادعاء). قُيِّم على 286 صورة اختبار: الدقة 0.813، والاستدعاء 0.608، ومعدل الإنذارات الخاطئة على الصور الأصلية 0.14.",
-        "نموذج اتساق النص والوسائط: نموذج مُقيَّم؛ درجة المخرج 0.032 (مخرج النموذج، وليست احتمال صحة الادعاء). دقة اختبار NewsCLIPpings 0.6799."
+        "كاشف الصور المولدة: اختُبر قبل استخدامه. في الاختبار اكتشف نحو 6 من كل 10 صور مصنوعة بالذكاء الاصطناعي، وأخطأ في نحو 1 من كل 7 صور حقيقية (وأكثر مع لقطات الشاشة).",
+        "فحص تطابق الصورة والنص: اختُبر قبل استخدامه. لا يجيب إلا عندما يكون واثقاً، ويستطيع معرفة ما إذا كانت الصورة تناسب الموضوع، لا ما إذا كان المكان أو التاريخ صحيحاً."
       ]
     },
     {
@@ -254,8 +254,8 @@
       },
       "status": "completed",
       "status_label": {
-        "en": "Completed",
-        "ar": "مكتمل"
+        "en": "Done",
+        "ar": "تم"
       },
       "summary": "No urgency, fear, manipulation or share-pressure wording from the indicator list was found.",
       "summary_ar": "لم تُرصد أي صياغة استعجال أو تخويف أو تلاعب أو ضغط للنشر من قائمة المؤشرات.",
@@ -279,16 +279,16 @@
       },
       "status": "completed",
       "status_label": {
-        "en": "Completed",
-        "ar": "مكتمل"
+        "en": "Done",
+        "ar": "تم"
       },
-      "summary": "No AI-generation signal on the image checked.",
-      "summary_ar": "لا توجد إشارة إلى التوليد بالذكاء الاصطناعي في الصورة.",
+      "summary": "No signs of AI generation were found in the picture.",
+      "summary_ar": "لم تُرصد علامات توليد بالذكاء الاصطناعي في الصورة.",
       "findings": [
         {
           "code": "no_synthetic_signal",
-          "message": "The detector did not flag the image as AI-generated at the evaluated threshold. This does not show the media is authentic or unedited.",
-          "message_ar": "لم يصنّف الكاشف الصورة على أنها مولدة بالذكاء الاصطناعي عند العتبة المُقيَّمة. هذا لا يثبت أن الوسائط أصلية أو غير معدّلة.",
+          "message": "The AI-image detector found no signs that this was made by AI. That does not prove it is a real or unedited photo.",
+          "message_ar": "لم يجد كاشف الصور المولدة علامات على أنها مصنوعة بالذكاء الاصطناعي. هذا لا يثبت أنها صورة حقيقية أو غير معدّلة.",
           "excerpts": [],
           "frames": [
             {
@@ -305,8 +305,8 @@
         },
         {
           "code": "editing_not_assessed",
-          "message": "Conventional editing or manipulation (splicing, retouching, cropping) was not assessed; no evaluated method is implemented for it.",
-          "message_ar": "لم يُفحص التعديل التقليدي أو التلاعب (اللصق أو التنقيح أو القص)؛ لا توجد طريقة مُقيَّمة لذلك.",
+          "message": "Normal photo editing (cutting and pasting, retouching, cropping) is not checked by SaqrSight.",
+          "message_ar": "لا يفحص صقر التعديل العادي للصور (القص واللصق أو التنقيح أو الاقتصاص).",
           "excerpts": [],
           "frames": [],
           "sources": [],
@@ -334,16 +334,16 @@
       },
       "status": "completed",
       "status_label": {
-        "en": "Completed",
-        "ar": "مكتمل"
+        "en": "Done",
+        "ar": "تم"
       },
-      "summary": "Caption and visible content appear not to match.",
-      "summary_ar": "يبدو أن النص والمحتوى المرئي غير متطابقين.",
+      "summary": "The picture does not seem to show what the caption describes.",
+      "summary_ar": "لا يبدو أن الصورة تُظهر ما يصفه النص.",
       "findings": [
         {
           "code": "low_agreement",
-          "message": "The visible content does not appear to match what the caption describes. This may indicate miscaptioning; compare the media with the claim.",
-          "message_ar": "لا يبدو أن المحتوى المرئي يطابق ما يصفه النص. قد يشير ذلك إلى وصف غير مطابق؛ قارن الوسائط بالادعاء.",
+          "message": "The picture may have been given a caption that does not belong to it. Look at the picture yourself and compare it with the claim.",
+          "message_ar": "قد تكون الصورة نُشرت مع نص لا يخصها. انظر إلى الصورة بنفسك وقارنها بالادعاء.",
           "excerpts": [],
           "frames": [
             {
@@ -359,8 +359,8 @@
         },
         {
           "code": "needs_external_evidence",
-          "message": "These claim details cannot be assessed from the visible content.",
-          "message_ar": "لا يمكن تقييم تفاصيل الادعاء هذه من المحتوى المرئي.",
+          "message": "What the picture cannot prove on its own:",
+          "message_ar": "ما لا تستطيع الصورة إثباته وحدها:",
           "excerpts": [
             "Location (Al Ain): the image alone cannot confirm where it was taken."
           ],
@@ -393,8 +393,8 @@
       },
       "status": "completed",
       "status_label": {
-        "en": "Completed",
-        "ar": "مكتمل"
+        "en": "Done",
+        "ar": "تم"
       },
       "summary": "Possible miscaptioning",
       "summary_ar": "احتمال وصف غير مطابق للصورة",
@@ -414,8 +414,8 @@
       },
       "status": "completed",
       "status_label": {
-        "en": "Completed",
-        "ar": "مكتمل"
+        "en": "Done",
+        "ar": "تم"
       },
       "summary": "Medium priority for human review.",
       "summary_ar": "أولوية متوسطة للمراجعة البشرية.",
@@ -439,11 +439,11 @@
       },
       "status": "completed",
       "status_label": {
-        "en": "Completed",
-        "ar": "مكتمل"
+        "en": "Done",
+        "ar": "تم"
       },
-      "summary": "Indicator level: none. These describe wording that may create urgency or alarm; they do not predict panic or show the claim is false.",
-      "summary_ar": "مستوى المؤشرات: لا يوجد. تصف هذه المؤشرات صياغة قد تثير الاستعجال أو القلق؛ ولا تتنبأ بالذعر ولا تثبت أن الادعاء كاذب.",
+      "summary": "No urgent, alarming or pressuring words from SaqrSight's list were found.",
+      "summary_ar": "لم تُرصد كلمات استعجال أو إثارة أو ضغط من قائمة صقر.",
       "level": "none"
     },
     {
@@ -454,11 +454,11 @@
       },
       "status": "not_configured",
       "status_label": {
-        "en": "Not configured",
-        "ar": "غير مُفعّل"
+        "en": "Not available",
+        "ar": "غير متاح"
       },
-      "summary": "Reverse image search is not configured on this server (no provider API key).",
-      "summary_ar": "البحث العكسي عن الصور غير مُفعّل على هذا الخادم (لا يوجد مفتاح خدمة).",
+      "summary": "Not done: searching the internet for this picture is not switched on in this version of SaqrSight.",
+      "summary_ar": "لم يُجرَ: البحث عن هذه الصورة على الإنترنت غير مُفعّل في هذه النسخة من صقر.",
       "version": "google-vision-web-detection-v1"
     },
     {
@@ -469,11 +469,11 @@
       },
       "status": "not_configured",
       "status_label": {
-        "en": "Not configured",
-        "ar": "غير مُفعّل"
+        "en": "Not available",
+        "ar": "غير متاح"
       },
-      "summary": "Official-source search is not configured on this server (no search provider API key).",
-      "summary_ar": "البحث في المصادر الرسمية غير مُفعّل على هذا الخادم (لا يوجد مفتاح خدمة بحث).",
+      "summary": "Not done: searching official UAE sources is not switched on in this version of SaqrSight.",
+      "summary_ar": "لم يُجرَ: البحث في المصادر الرسمية في الدولة غير مُفعّل في هذه النسخة من صقر.",
       "version": "official-sources-v1:brave"
     },
     {
@@ -484,8 +484,8 @@
       },
       "status": "completed",
       "status_label": {
-        "en": "Completed",
-        "ar": "مكتمل"
+        "en": "Done",
+        "ar": "تم"
       },
       "summary": "Suggested next steps to verify this claim:",
       "summary_ar": "الخطوات المقترحة للتحقق من هذا الادعاء:",
@@ -581,5 +581,23 @@
       "en": "Run a reverse image search yourself (for example Google Lens or TinEye) to look for earlier appearances.",
       "ar": "أجرِ بحثاً عكسياً عن الصورة بنفسك (مثل Google Lens أو TinEye) للبحث عن ظهور سابق لها."
     }
-  ]
+  ],
+  "plain": {
+    "en": [
+      "The post makes a claim about Al Ain.",
+      "The picture does not seem to show what the caption describes, so the caption may not belong to it.",
+      "We found no signs that the picture was made by AI, although that does not prove it is real or unedited.",
+      "The wording itself does not use alarm or pressure tactics.",
+      "We did not search the internet or official sources for this report.",
+      "Our advice: do not share it until you have checked the points above."
+    ],
+    "ar": [
+      "يقدّم المنشور ادعاءً عن العين.",
+      "لا يبدو أن الصورة تُظهر ما يصفه النص، لذا قد لا يكون النص خاصاً بها.",
+      "لم نجد علامات على أن الصورة مصنوعة بالذكاء الاصطناعي، وإن كان ذلك لا يثبت أنها حقيقية أو غير معدّلة.",
+      "لا تستخدم الصياغة نفسها أساليب إثارة أو ضغط.",
+      "لم نبحث في الإنترنت أو المصادر الرسمية لهذا التقرير.",
+      "نصيحتنا: لا تنشره قبل أن تتحقق من النقاط أعلاه."
+    ]
+  }
 }
