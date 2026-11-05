@@ -1,0 +1,66 @@
+/* SGP2 additions: report states, check statuses, sources, consent, RTL. Builds on style.css tokens. */
+.header-tools{display:flex;gap:10px;align-items:center}
+.langtoggle{border:1px solid #d7bd89;background:#fff;color:var(--ink);border-radius:3px;padding:5px 10px;font-size:12px}
+.detected{font-size:11px;color:var(--muted);margin:-14px 0 18px}
+.consent{border:1px solid var(--line);border-radius:6px;margin:16px 0 0;padding:10px 14px;font-size:12px}
+.consent label{display:flex;gap:8px;align-items:center;font-weight:600}
+.consent p{margin:6px 0 0;color:var(--muted);font-size:11px;line-height:1.6}
+#preview video{width:96px;height:62px;object-fit:cover;border-radius:4px;background:#000}
+.checklist{list-style:none;padding:0;margin:8px 0 0;display:grid;gap:6px}
+.checklist li{display:flex;justify-content:space-between;gap:10px;font-size:12px;padding:6px 10px;border-radius:4px;background:#f3f4ec}
+.checklist em{font-style:normal;font-weight:600;font-size:11px}
+.checklist .on em,.checklist .completed em{color:#2f6b47}
+.checklist .off em,.checklist .not_configured em{color:#8a7440}
+.checklist .failed em{color:#a1452f}
+.checklist .not_applicable em{color:#8a948b}
+.checklist .pending em{color:#5c6e8a}
+.checks{margin-bottom:18px;padding:20px}
+.checks .checklist{grid-template-columns:repeat(auto-fit,minmax(220px,1fr))}
+.report-banner .pill{display:inline-block}
+.report-banner h2{font:500 20px/1.4 Georgia,serif;margin-top:14px}
+.report-banner.potentially_misleading{background:#fbeee6;border-color:#e7c7b5}
+.report-banner.apparently_consistent{background:#e6f0e3;border-color:#c5d9bf}
+.report-banner.insufficient_evidence{background:#f4f0e2;border-color:#e0d6b6}
+.report-banner.processing{background:#eef1f4;border-color:#d6dde4}
+.report-banner.sample{background:#fff1d8;border-color:#e2c690}
+.priority{display:inline-block;font-weight:700;font-size:12px;padding:3px 10px;border-radius:99px;background:#eceee6;margin:4px 0}
+.priority.high{background:#f6d9cf;color:#8f3a24}.priority.medium{background:#f3e6c3;color:#6e5317}.priority.low{background:#dfeadb;color:#2f5b3a}
+.section .section-top{display:flex;justify-content:space-between;gap:12px;align-items:flex-start}
+.status-chip{font-size:10px;font-weight:700;letter-spacing:.5px;padding:3px 8px;border-radius:99px;background:#eef1ea;white-space:nowrap}
+.status-chip.failed{background:#fde4e0;color:#a1452f}.status-chip.not_configured{background:#f2ecd9;color:#7c6324}
+.status-chip.pending{background:#e6ebf2;color:#4c5d78}.status-chip.not_applicable{color:#8a948b}
+.resultgrid .wide{grid-column:1/-1}
+.resultgrid .summary{color:var(--ink)}
+.resultgrid ul{font-size:12px;padding-inline-start:18px;color:var(--ink)}
+.finding{border-top:1px solid var(--line);padding-top:8px;margin-top:8px}
+.finding p{margin:4px 0}
+.excerpts q{background:#fff3cf;color:#4f3d0f;padding:1px 5px;border-radius:3px;quotes:none;font-size:12px;line-height:2}
+.frames{display:flex;flex-wrap:wrap;gap:6px}
+.chip{font-size:11px;background:#eef1ea;border-radius:3px;padding:2px 7px}
+.source{font-size:12px;border-inline-start:3px solid #c9b88a;padding:4px 10px;margin:6px 0}
+.source a{color:var(--green);font-weight:600;word-break:break-word}
+.source small{display:block;color:var(--muted)}
+.source q{display:block;font-style:italic;color:#555;margin-top:3px}
+.limits{font-size:11px;color:var(--muted);margin-top:10px}
+.limits summary{cursor:pointer}
+.framestrip{display:flex;flex-wrap:wrap;gap:10px;margin:8px 0}
+.framestrip figure{margin:0}
+.framestrip img{max-height:200px;max-width:100%;border-radius:6px;display:block}
+.framestrip figcaption,.framestrip .note{font-size:11px;color:var(--muted)}
+.framestrip .note{flex-basis:100%;margin:0}
+.guide-note ul{margin-top:8px}
+/* Right-to-left layout for the Arabic interface */
+html[dir=rtl] .sidebar{inset:0 0 0 auto}
+html[dir=rtl] main{margin-left:0;margin-right:245px}
+html[dir=rtl] .nav{text-align:right}
+html[dir=rtl] .nav span#count{float:left}
+html[dir=rtl] .example{text-align:right}
+html[dir=rtl] .example span{float:left}
+html[dir=rtl] .primary span{padding-left:0;padding-right:15px}
+html[dir=rtl] .notice{border-left:0;border-right:3px solid #b69b66}
+html[dir=rtl] .falcon-scene img{transform:scaleX(-1)}
+@media(max-width:1050px){html[dir=rtl] main{margin-right:210px}}
+@media(max-width:650px){html[dir=rtl] main{margin-right:0}.checks .checklist{grid-template-columns:1fr}}
+.nav .ico{float:none;background:none;padding:0;font-size:inherit}
+.nav b{font-weight:inherit}
+html[dir=rtl] .resultgrid p,html[dir=rtl] .resultgrid li,html[dir=rtl] .report-banner h2,html[dir=rtl] .checklist li span{unicode-bidi:plaintext}

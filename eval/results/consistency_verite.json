@@ -1,0 +1,136 @@
+{
+  "usable_pairs": 691,
+  "class_counts": {
+    "out-of-context": 245,
+    "miscaptioned": 223,
+    "true": 223
+  },
+  "thresholds": {
+    "agree": 0.81,
+    "disagree": 0.23
+  },
+  "encoders": {
+    "openai": {
+      "binary_true_vs_false": {
+        "auc": 0.66,
+        "accuracy": 0.504,
+        "true": {
+          "precision": 0.379,
+          "recall": 0.843,
+          "f1": 0.523
+        },
+        "false": {
+          "precision": 0.821,
+          "recall": 0.342,
+          "f1": 0.483
+        }
+      },
+      "true_vs_miscaptioned_auc": 0.568,
+      "true_vs_out_of_context_auc": 0.744,
+      "three_way": {
+        "agree_precision": 0.491,
+        "disagree_precision": 0.9,
+        "coverage": 0.323
+      },
+      "decision_by_class": {
+        "true": {
+          "agree": 0.359,
+          "disagree": 0.027,
+          "inconclusive": 0.614
+        },
+        "miscaptioned": {
+          "agree": 0.274,
+          "disagree": 0.031,
+          "inconclusive": 0.695
+        },
+        "out-of-context": {
+          "agree": 0.09,
+          "disagree": 0.192,
+          "inconclusive": 0.718
+        }
+      },
+      "wrongly_supported_rate": {
+        "miscaptioned": 0.274,
+        "out-of-context": 0.09
+      },
+      "verdict_by_class": {
+        "true": {
+          "apparently_consistent": 0.099,
+          "potentially_misleading": 0.027,
+          "insufficient_evidence": 0.874
+        },
+        "miscaptioned": {
+          "apparently_consistent": 0.135,
+          "potentially_misleading": 0.031,
+          "insufficient_evidence": 0.834
+        },
+        "out-of-context": {
+          "apparently_consistent": 0.016,
+          "potentially_misleading": 0.192,
+          "insufficient_evidence": 0.792
+        }
+      }
+    },
+    "multi": {
+      "binary_true_vs_false": {
+        "auc": 0.617,
+        "accuracy": 0.505,
+        "true": {
+          "precision": 0.374,
+          "recall": 0.794,
+          "f1": 0.509
+        },
+        "false": {
+          "precision": 0.789,
+          "recall": 0.368,
+          "f1": 0.501
+        }
+      },
+      "true_vs_miscaptioned_auc": 0.537,
+      "true_vs_out_of_context_auc": 0.689,
+      "three_way": {
+        "agree_precision": 0.43,
+        "disagree_precision": 0.833,
+        "coverage": 0.307
+      },
+      "decision_by_class": {
+        "true": {
+          "agree": 0.305,
+          "disagree": 0.04,
+          "inconclusive": 0.655
+        },
+        "miscaptioned": {
+          "agree": 0.291,
+          "disagree": 0.045,
+          "inconclusive": 0.664
+        },
+        "out-of-context": {
+          "agree": 0.102,
+          "disagree": 0.143,
+          "inconclusive": 0.755
+        }
+      },
+      "wrongly_supported_rate": {
+        "miscaptioned": 0.291,
+        "out-of-context": 0.102
+      },
+      "verdict_by_class": {
+        "true": {
+          "apparently_consistent": 0.112,
+          "potentially_misleading": 0.04,
+          "insufficient_evidence": 0.848
+        },
+        "miscaptioned": {
+          "apparently_consistent": 0.148,
+          "potentially_misleading": 0.045,
+          "insufficient_evidence": 0.807
+        },
+        "out-of-context": {
+          "apparently_consistent": 0.016,
+          "potentially_misleading": 0.143,
+          "insufficient_evidence": 0.841
+        }
+      }
+    }
+  }
+}

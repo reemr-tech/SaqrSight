@@ -1,0 +1,2 @@
+id,language,caption,image_file,image_source,image_licence,label,label_basis,wrong_detail,reviewer_1,reviewer_2,agreed
+uae-001,ar,,images/uae-001.jpg,,,true|miscaptioned|wrong_place|wrong_date|unrelated,,,,,

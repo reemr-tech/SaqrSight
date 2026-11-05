@@ -1,0 +1,200 @@
+{
+  "dataset": "ELSA_D3 validation shard 0",
+  "pairs": {
+    "dev": 142,
+    "test": 143
+  },
+  "generators": [
+    "CompVis/stable-diffusion-v1-4",
+    "DeepFloyd/IF-II-L-v1.0",
+    "stabilityai/stable-diffusion-2-1-base",
+    "stabilityai/stable-diffusion-xl-base-1.0"
+  ],
+  "candidates": {
+    "Organika/sdxl-detector": {
+      "threshold": 0.96,
+      "dev": {
+        "precision": 0.849,
+        "recall": 0.514,
+        "f1": 0.64,
+        "fpr": 0.092,
+        "tp": 73,
+        "fp": 13,
+        "fn": 69,
+        "tn": 129
+      },
+      "test": {
+        "standard": {
+          "precision": 0.845,
+          "recall": 0.497,
+          "f1": 0.626,
+          "fpr": 0.091,
+          "tp": 71,
+          "fp": 13,
+          "fn": 72,
+          "tn": 130
+        },
+        "jpeg_q50": {
+          "precision": 0.785,
+          "recall": 0.357,
+          "f1": 0.49,
+          "fpr": 0.098,
+          "tp": 51,
+          "fp": 14,
+          "fn": 92,
+          "tn": 129
+        },
+        "resized_50": {
+          "precision": 0.868,
+          "recall": 0.231,
+          "f1": 0.365,
+          "fpr": 0.035,
+          "tp": 33,
+          "fp": 5,
+          "fn": 110,
+          "tn": 138
+        },
+        "screenshot": {
+          "precision": 0.838,
+          "recall": 0.217,
+          "f1": 0.344,
+          "fpr": 0.042,
+          "tp": 31,
+          "fp": 6,
+          "fn": 112,
+          "tn": 137
+        }
+      },
+      "test_recall_by_generator": {
+        "CompVis/stable-diffusion-v1-4": 0.531,
+        "DeepFloyd/IF-II-L-v1.0": 0.306,
+        "stabilityai/stable-diffusion-2-1-base": 0.529,
+        "stabilityai/stable-diffusion-xl-base-1.0": 0.61
+      }
+    },
+    "haywoodsloan/ai-image-detector-deploy": {
+      "threshold": 0.14,
+      "dev": {
+        "precision": 0.861,
+        "recall": 0.613,
+        "f1": 0.716,
+        "fpr": 0.099,
+        "tp": 87,
+        "fp": 14,
+        "fn": 55,
+        "tn": 128
+      },
+      "test": {
+        "standard": {
+          "precision": 0.813,
+          "recall": 0.608,
+          "f1": 0.696,
+          "fpr": 0.14,
+          "tp": 87,
+          "fp": 20,
+          "fn": 56,
+          "tn": 123
+        },
+        "jpeg_q50": {
+          "precision": 0.849,
+          "recall": 0.434,
+          "f1": 0.574,
+          "fpr": 0.077,
+          "tp": 62,
+          "fp": 11,
+          "fn": 81,
+          "tn": 132
+        },
+        "resized_50": {
+          "precision": 0.819,
+          "recall": 0.538,
+          "f1": 0.65,
+          "fpr": 0.119,
+          "tp": 77,
+          "fp": 17,
+          "fn": 66,
+          "tn": 126
+        },
+        "screenshot": {
+          "precision": 0.745,
+          "recall": 0.531,
+          "f1": 0.62,
+          "fpr": 0.182,
+          "tp": 76,
+          "fp": 26,
+          "fn": 67,
+          "tn": 117
+        }
+      },
+      "test_recall_by_generator": {
+        "CompVis/stable-diffusion-v1-4": 0.562,
+        "DeepFloyd/IF-II-L-v1.0": 0.611,
+        "stabilityai/stable-diffusion-2-1-base": 0.647,
+        "stabilityai/stable-diffusion-xl-base-1.0": 0.61
+      }
+    },
+    "Ateeqq/ai-vs-human-image-detector": {
+      "threshold": 0.5,
+      "dev": {
+        "precision": 0.53,
+        "recall": 0.81,
+        "f1": 0.641,
+        "fpr": 0.718,
+        "tp": 115,
+        "fp": 102,
+        "fn": 27,
+        "tn": 40
+      },
+      "test": {
+        "standard": {
+          "precision": 0.585,
+          "recall": 0.846,
+          "f1": 0.691,
+          "fpr": 0.601,
+          "tp": 121,
+          "fp": 86,
+          "fn": 22,
+          "tn": 57
+        },
+        "jpeg_q50": {
+          "precision": 0.581,
+          "recall": 0.678,
+          "f1": 0.626,
+          "fpr": 0.49,
+          "tp": 97,
+          "fp": 70,
+          "fn": 46,
+          "tn": 73
+        },
+        "resized_50": {
+          "precision": 0.581,
+          "recall": 0.776,
+          "f1": 0.665,
+          "fpr": 0.559,
+          "tp": 111,
+          "fp": 80,
+          "fn": 32,
+          "tn": 63
+        },
+        "screenshot": {
+          "precision": 0.519,
+          "recall": 0.951,
+          "f1": 0.672,
+          "fpr": 0.881,
+          "tp": 136,
+          "fp": 126,
+          "fn": 7,
+          "tn": 17
+        }
+      },
+      "test_recall_by_generator": {
+        "CompVis/stable-diffusion-v1-4": 0.75,
+        "DeepFloyd/IF-II-L-v1.0": 0.778,
+        "stabilityai/stable-diffusion-2-1-base": 0.824,
+        "stabilityai/stable-diffusion-xl-base-1.0": 1.0
+      }
+    }
+  },
+  "selected": "haywoodsloan/ai-image-detector-deploy",
+  "acceptance_rule": "test standard: precision >= 0.80 and FPR <= 0.15; rank by dev F1"
+}

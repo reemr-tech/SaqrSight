@@ -1,0 +1,523 @@
+{
+  "model": "text-lexicon-1.0",
+  "dev": {
+    "en": {
+      "n": 20,
+      "metrics": {
+        "urgency": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "tp": 5,
+          "fp": 0,
+          "fn": 0
+        },
+        "fear": {
+          "precision": 0.8,
+          "recall": 1.0,
+          "f1": 0.889,
+          "tp": 4,
+          "fp": 1,
+          "fn": 0
+        },
+        "manipulation": {
+          "precision": 1.0,
+          "recall": 0.8,
+          "f1": 0.889,
+          "tp": 4,
+          "fp": 0,
+          "fn": 1
+        },
+        "share_pressure": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "tp": 4,
+          "fp": 0,
+          "fn": 0
+        },
+        "micro": {
+          "precision": 0.944,
+          "recall": 0.944,
+          "f1": 0.944,
+          "tp": 17,
+          "fp": 1,
+          "fn": 1
+        },
+        "false_alarm_rate_negation": {
+          "rate": 0.333,
+          "n": 3
+        },
+        "false_alarm_rate_quote": {
+          "rate": 0.0,
+          "n": 2
+        },
+        "false_alarm_rate_debunk": {
+          "rate": 0.0,
+          "n": 1
+        },
+        "false_alarm_rate_warning": {
+          "rate": 0.0,
+          "n": 3
+        },
+        "false_alarm_rate_neutral": {
+          "rate": 0.0,
+          "n": 1
+        }
+      },
+      "errors": [
+        {
+          "id": "d-en-01",
+          "phenomenon": "indicator",
+          "text": "URGENT: share this with everyone before it gets deleted!",
+          "missed": [
+            "manipulation"
+          ],
+          "extra": []
+        },
+        {
+          "id": "d-en-14",
+          "phenomenon": "negation",
+          "text": "Please don't forward messages about the outbreak unless they come from MOHAP.",
+          "missed": [],
+          "extra": [
+            "fear"
+          ]
+        }
+      ]
+    },
+    "ar": {
+      "n": 20,
+      "metrics": {
+        "urgency": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "tp": 4,
+          "fp": 0,
+          "fn": 0
+        },
+        "fear": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "tp": 4,
+          "fp": 0,
+          "fn": 0
+        },
+        "manipulation": {
+          "precision": 1.0,
+          "recall": 0.8,
+          "f1": 0.889,
+          "tp": 4,
+          "fp": 0,
+          "fn": 1
+        },
+        "share_pressure": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "tp": 4,
+          "fp": 0,
+          "fn": 0
+        },
+        "micro": {
+          "precision": 1.0,
+          "recall": 0.941,
+          "f1": 0.97,
+          "tp": 16,
+          "fp": 0,
+          "fn": 1
+        },
+        "false_alarm_rate_negation": {
+          "rate": 0.0,
+          "n": 3
+        },
+        "false_alarm_rate_quote": {
+          "rate": 0.0,
+          "n": 2
+        },
+        "false_alarm_rate_debunk": {
+          "rate": 0.0,
+          "n": 1
+        },
+        "false_alarm_rate_warning": {
+          "rate": 0.0,
+          "n": 2
+        },
+        "false_alarm_rate_neutral": {
+          "rate": 0.0,
+          "n": 1
+        }
+      },
+      "errors": [
+        {
+          "id": "d-ar-14",
+          "phenomenon": "dialect",
+          "text": "مؤكد 100% المدارس بتسكر بكرة، انشر",
+          "missed": [
+            "manipulation"
+          ],
+          "extra": []
+        }
+      ]
+    },
+    "all": {
+      "n": 40,
+      "metrics": {
+        "urgency": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "tp": 9,
+          "fp": 0,
+          "fn": 0
+        },
+        "fear": {
+          "precision": 0.889,
+          "recall": 1.0,
+          "f1": 0.941,
+          "tp": 8,
+          "fp": 1,
+          "fn": 0
+        },
+        "manipulation": {
+          "precision": 1.0,
+          "recall": 0.8,
+          "f1": 0.889,
+          "tp": 8,
+          "fp": 0,
+          "fn": 2
+        },
+        "share_pressure": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "tp": 8,
+          "fp": 0,
+          "fn": 0
+        },
+        "micro": {
+          "precision": 0.971,
+          "recall": 0.943,
+          "f1": 0.957,
+          "tp": 33,
+          "fp": 1,
+          "fn": 2
+        },
+        "false_alarm_rate_negation": {
+          "rate": 0.167,
+          "n": 6
+        },
+        "false_alarm_rate_quote": {
+          "rate": 0.0,
+          "n": 4
+        },
+        "false_alarm_rate_debunk": {
+          "rate": 0.0,
+          "n": 2
+        },
+        "false_alarm_rate_warning": {
+          "rate": 0.0,
+          "n": 5
+        },
+        "false_alarm_rate_neutral": {
+          "rate": 0.0,
+          "n": 2
+        }
+      }
+    }
+  },
+  "test": {
+    "en": {
+      "n": 25,
+      "metrics": {
+        "urgency": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "tp": 4,
+          "fp": 0,
+          "fn": 0
+        },
+        "fear": {
+          "precision": 1.0,
+          "recall": 0.5,
+          "f1": 0.667,
+          "tp": 3,
+          "fp": 0,
+          "fn": 3
+        },
+        "manipulation": {
+          "precision": 1.0,
+          "recall": 0.75,
+          "f1": 0.857,
+          "tp": 3,
+          "fp": 0,
+          "fn": 1
+        },
+        "share_pressure": {
+          "precision": 1.0,
+          "recall": 0.8,
+          "f1": 0.889,
+          "tp": 4,
+          "fp": 0,
+          "fn": 1
+        },
+        "micro": {
+          "precision": 1.0,
+          "recall": 0.737,
+          "f1": 0.848,
+          "tp": 14,
+          "fp": 0,
+          "fn": 5
+        },
+        "false_alarm_rate_negation": {
+          "rate": 0.0,
+          "n": 3
+        },
+        "false_alarm_rate_quote": {
+          "rate": 0.0,
+          "n": 2
+        },
+        "false_alarm_rate_debunk": {
+          "rate": 0.0,
+          "n": 2
+        },
+        "false_alarm_rate_warning": {
+          "rate": 0.0,
+          "n": 3
+        },
+        "false_alarm_rate_neutral": {
+          "rate": 0.0,
+          "n": 3
+        }
+      },
+      "errors": [
+        {
+          "id": "t-en-01",
+          "phenomenon": "indicator",
+          "text": "ALERT!!! Massive blast in Mussafah, act now and tell everyone you know.",
+          "missed": [
+            "fear"
+          ],
+          "extra": []
+        },
+        {
+          "id": "t-en-02",
+          "phenomenon": "indicator",
+          "text": "Pass this on: the government is hiding the real numbers.",
+          "missed": [
+            "manipulation"
+          ],
+          "extra": []
+        },
+        {
+          "id": "t-en-08",
+          "phenomenon": "indicator",
+          "text": "Go to the supermarket immediately, shelves will be empty by tonight!",
+          "missed": [
+            "fear"
+          ],
+          "extra": []
+        },
+        {
+          "id": "t-en-18",
+          "phenomenon": "indicator",
+          "text": "You won't believe what happened in Dubai Marina tonight — RT before it disappears!",
+          "missed": [
+            "share_pressure"
+          ],
+          "extra": []
+        },
+        {
+          "id": "t-en-21",
+          "phenomenon": "indicator",
+          "text": "Hurry, last chance to leave the city before the storm hits!",
+          "missed": [
+            "fear"
+          ],
+          "extra": []
+        }
+      ]
+    },
+    "ar": {
+      "n": 25,
+      "metrics": {
+        "urgency": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "tp": 4,
+          "fp": 0,
+          "fn": 0
+        },
+        "fear": {
+          "precision": 1.0,
+          "recall": 0.667,
+          "f1": 0.8,
+          "tp": 4,
+          "fp": 0,
+          "fn": 2
+        },
+        "manipulation": {
+          "precision": 1.0,
+          "recall": 0.5,
+          "f1": 0.667,
+          "tp": 2,
+          "fp": 0,
+          "fn": 2
+        },
+        "share_pressure": {
+          "precision": 1.0,
+          "recall": 0.6,
+          "f1": 0.75,
+          "tp": 3,
+          "fp": 0,
+          "fn": 2
+        },
+        "micro": {
+          "precision": 1.0,
+          "recall": 0.684,
+          "f1": 0.813,
+          "tp": 13,
+          "fp": 0,
+          "fn": 6
+        },
+        "false_alarm_rate_negation": {
+          "rate": 0.0,
+          "n": 3
+        },
+        "false_alarm_rate_quote": {
+          "rate": 0.0,
+          "n": 2
+        },
+        "false_alarm_rate_debunk": {
+          "rate": 0.0,
+          "n": 2
+        },
+        "false_alarm_rate_warning": {
+          "rate": 0.0,
+          "n": 3
+        },
+        "false_alarm_rate_neutral": {
+          "rate": 0.0,
+          "n": 3
+        }
+      },
+      "errors": [
+        {
+          "id": "t-ar-02",
+          "phenomenon": "dialect",
+          "text": "طرشوها لكل القروبات، الحكومة تخفي الأرقام الحقيقية",
+          "missed": [
+            "manipulation",
+            "share_pressure"
+          ],
+          "extra": []
+        },
+        {
+          "id": "t-ar-08",
+          "phenomenon": "dialect",
+          "text": "روحوا السوبرماركت فوراً، الرفوف بتفضى الليلة!",
+          "missed": [
+            "fear"
+          ],
+          "extra": []
+        },
+        {
+          "id": "t-ar-10",
+          "phenomenon": "indicator",
+          "text": "ما لا يقولونه لكم عن إصابات الفيروس في العين",
+          "missed": [
+            "manipulation"
+          ],
+          "extra": []
+        },
+        {
+          "id": "t-ar-11",
+          "phenomenon": "dialect",
+          "text": "خلوها تنتشر عشان المسؤولين يتحركون بخصوص السيول في الفجيرة",
+          "missed": [
+            "share_pressure"
+          ],
+          "extra": []
+        },
+        {
+          "id": "t-ar-21",
+          "phenomenon": "dialect",
+          "text": "الحقوا اطلعوا من المدينة قبل وصول العاصفة!",
+          "missed": [
+            "fear"
+          ],
+          "extra": []
+        }
+      ]
+    },
+    "all": {
+      "n": 50,
+      "metrics": {
+        "urgency": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "tp": 8,
+          "fp": 0,
+          "fn": 0
+        },
+        "fear": {
+          "precision": 1.0,
+          "recall": 0.583,
+          "f1": 0.737,
+          "tp": 7,
+          "fp": 0,
+          "fn": 5
+        },
+        "manipulation": {
+          "precision": 1.0,
+          "recall": 0.625,
+          "f1": 0.769,
+          "tp": 5,
+          "fp": 0,
+          "fn": 3
+        },
+        "share_pressure": {
+          "precision": 1.0,
+          "recall": 0.7,
+          "f1": 0.824,
+          "tp": 7,
+          "fp": 0,
+          "fn": 3
+        },
+        "micro": {
+          "precision": 1.0,
+          "recall": 0.711,
+          "f1": 0.831,
+          "tp": 27,
+          "fp": 0,
+          "fn": 11
+        },
+        "false_alarm_rate_negation": {
+          "rate": 0.0,
+          "n": 6
+        },
+        "false_alarm_rate_quote": {
+          "rate": 0.0,
+          "n": 4
+        },
+        "false_alarm_rate_debunk": {
+          "rate": 0.0,
+          "n": 4
+        },
+        "false_alarm_rate_warning": {
+          "rate": 0.0,
+          "n": 6
+        },
+        "false_alarm_rate_neutral": {
+          "rate": 0.0,
+          "n": 6
+        }
+      }
+    }
+  }
+}
