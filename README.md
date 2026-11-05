@@ -394,8 +394,10 @@ cannot execute code.
    consistency finding with step 3.
 5. **Video.** Attach `samples/demo_pan.mp4`. The report lists the 5 timestamps analysed and states
    that the findings apply only to those frames.
-6. **Exports and history.** Download HTML and JSON, open *Saved reports*, reopen a report, then
-   delete it and confirm it is gone.
+6. **Exports and history.** Click *Download HTML report*; a window asks for the report language
+   (English, العربية — fully right-to-left — or both side by side) and then downloads it. Download
+   the JSON too, open *Saved reports*, reopen a report, then delete it and confirm it is gone.
+   The same choice is available directly as `/api/reports/{id}/download?format=html&lang=en|ar|both`.
 7. **Optional.** Set a provider key, restart, tick the consent box and submit. Then show the
    difference with the box unticked.
 

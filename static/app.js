@@ -383,15 +383,33 @@ $('drop').addEventListener('drop', e => {
   $('media').files = e.dataTransfer.files;
   preview();
 });
-try { const saved = localStorage.getItem('saqr-report-lang'); if (saved) $('reportlang').value = saved; } catch (e) { /* ignore */ }
-$('reportlang').onchange = () => { try { localStorage.setItem('saqr-report-lang', $('reportlang').value); } catch (e) { /* ignore */ } };
-for (const format of ['html', 'json']) {
-  $('download' + format).onclick = () => {
-    if (!current) return;
-    const extra = format === 'html' ? '&lang=' + encodeURIComponent($('reportlang').value) : '';
-    window.location.href = '/api/reports/' + encodeURIComponent(current.id) + '/download?format=' + format + extra;
-  };
+// HTML download: ask for the report language first, then download in that language.
+function lastReportLang() { try { return localStorage.getItem('saqr-report-lang'); } catch (e) { return null; } }
+function downloadReport(format, reportLang) {
+  if (!current) return;
+  const extra = format === 'html' ? '&lang=' + encodeURIComponent(reportLang || 'both') : '';
+  window.location.href = '/api/reports/' + encodeURIComponent(current.id) + '/download?format=' + format + extra;
 }
+$('downloadhtml').onclick = () => {
+  if (!current) return;
+  const last = lastReportLang();
+  document.querySelectorAll('.langchoice').forEach(b => {
+    b.classList.toggle('last', b.dataset.lang === last);
+    b.dataset.lastLabel = t('lastUsed');
+  });
+  $('langdialog').showModal();
+  if (window.Motion && Motion.ok) gsap.fromTo('.langdialog form > *', { y: 12, opacity: 0 }, { y: 0, opacity: 1, duration: 0.45, stagger: 0.05, ease: 'power3.out', overwrite: true });
+  (document.querySelector('.langchoice.last') || document.querySelector('.langchoice')).focus();
+};
+document.querySelectorAll('.langchoice').forEach(b => {
+  b.onclick = () => {
+    try { localStorage.setItem('saqr-report-lang', b.dataset.lang); } catch (e) { /* ignore */ }
+    $('langdialog').close();
+    downloadReport('html', b.dataset.lang);
+  };
+});
+$('langdialog').addEventListener('click', e => { if (e.target === $('langdialog')) $('langdialog').close(); });   // click outside
+$('downloadjson').onclick = () => downloadReport('json');
 $('delete').onclick = async () => {
   if (!current || !confirm(t('confirmDelete'))) return;
   try {
