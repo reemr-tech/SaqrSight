@@ -5,11 +5,11 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>SaqrSight | A sharper view of the truth</title>
 <link rel="icon" type="image/png" href="/static/favicon.png">
-<link rel="stylesheet" href="/static/style.css">
-<link rel="stylesheet" href="/static/report.css">
+<link rel="stylesheet" href="/static/style.css?v=0.2.7">
+<link rel="stylesheet" href="/static/report.css?v=0.2.7">
 <link rel="stylesheet" href="/static/vendor/lenis.css">
-<link rel="stylesheet" href="/static/motion.css">
-<link rel="stylesheet" href="/static/theme-cyber.css">
+<link rel="stylesheet" href="/static/motion.css?v=0.2.7">
+<link rel="stylesheet" href="/static/theme-cyber.css?v=0.2.7">
 </head>
 <body>
 <aside class="sidebar">
@@ -134,13 +134,26 @@
 <footer><span>SAQRSIGHT / صقر</span><span data-i18n="footer">Designed to support informed judgment.</span></footer>
 </div>
 </main>
+<dialog id="langdialog" class="langdialog" aria-labelledby="langdialog-title">
+  <form method="dialog">
+    <p class="eyebrow" data-i18n="dlStep">DOWNLOAD REPORT</p>
+    <h2 id="langdialog-title" data-i18n="dlChoose">Choose the report language</h2>
+    <p class="langdialog-sub" data-i18n="dlChooseSub">The report is created in the language you choose, then downloaded.</p>
+    <div class="langchoices">
+      <button type="button" class="langchoice" data-lang="en"><b>English</b><span data-i18n="rlEnDesc">Full report in English</span></button>
+      <button type="button" class="langchoice" data-lang="ar"><b dir="rtl">العربية</b><span data-i18n="rlArDesc">التقرير كاملاً باللغة العربية</span></button>
+      <button type="button" class="langchoice" data-lang="both"><b>English + العربية</b><span data-i18n="rlBothDesc">Both languages side by side</span></button>
+    </div>
+    <div class="langdialog-foot"><button type="submit" class="secondary" value="cancel" data-i18n="cancel">Cancel</button></div>
+  </form>
+</dialog>
 <!-- Motion: GSAP 3.13.0 (+ScrollTrigger, SplitText) and Lenis 1.3.4, vendored locally so the app works offline -->
 <script src="/static/vendor/gsap.min.js"></script>
 <script src="/static/vendor/ScrollTrigger.min.js"></script>
 <script src="/static/vendor/SplitText.min.js"></script>
 <script src="/static/vendor/lenis.min.js"></script>
-<script src="/static/motion.js"></script>
-<script src="/static/i18n.js"></script>
-<script src="/static/app.js"></script>
+<script src="/static/motion.js?v=0.2.7"></script>
+<script src="/static/i18n.js?v=0.2.7"></script>
+<script src="/static/app.js?v=0.2.7"></script>
 </body>
 </html>

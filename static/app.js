@@ -187,9 +187,13 @@ function renderFinding(f) {
   const box = el('div', 'finding');
   const head = el('p');
   if (f.label) head.append(el('b', null, (lang === 'ar' && f.label_ar ? f.label_ar : f.label) + ': '));
-  head.append(document.createTextNode(f.message));
+  head.append(document.createTextNode(lang === 'ar' && f.message_ar ? f.message_ar : f.message));
   box.append(head);
-  if (f.excerpts && f.excerpts.length) {
+  if (lang === 'ar' && f.excerpts_ar && f.excerpts_ar.length) {
+    const ul = el('ul');
+    for (const x of f.excerpts_ar) ul.append(el('li', null, x));
+    box.append(ul);
+  } else if (f.excerpts && f.excerpts.length) {
     const ex = el('p', 'excerpts');
     for (const x of f.excerpts) { const q = el('q', null, x); q.dir = 'auto'; ex.append(q, ' '); }
     box.append(ex);
@@ -197,8 +201,9 @@ function renderFinding(f) {
   if (f.frames && f.frames.length) {
     const fr = el('p', 'frames');
     for (const x of f.frames) {
-      const score = x.synthetic_score ?? x.agreement_score;
-      const label = (x.timestamp !== undefined ? t('frameAt', { t: x.timestamp }) : x.ref) +
+      const score = undefined;   // raw model scores are kept for the Technical details in the downloaded report
+      const ref = lang === 'ar' && x.ref === 'image' ? 'الصورة' : x.ref;
+      const label = (x.timestamp !== undefined ? t('frameAt', { t: x.timestamp }) : ref) +
         (score !== undefined ? ' · ' + t('score') + ' ' + score : '');
       fr.append(el('span', 'chip', label));
     }
@@ -207,10 +212,13 @@ function renderFinding(f) {
   for (const s of f.sources || []) {
     const src = el('div', 'source');
     src.append(safeLink(s.url, s.title || s.url));
-    const meta = [s.source, s.date || t('noDate'), s.match_type, s.relation].filter(Boolean).join(' · ');
+    const meta = (lang === 'ar'
+      ? [s.source, s.date || t('noDate'), s.match_type_ar || s.match_type, s.relation_ar || s.relation]
+      : [s.source, s.date || t('noDate'), s.match_type, s.relation]).filter(Boolean).join(' · ');
     src.append(el('small', null, meta));
     if (s.excerpt) { const q = el('q', null, s.excerpt); q.dir = 'auto'; src.append(q); }
-    if (s.notes && s.notes.length) src.append(el('small', 'note', s.notes.join('; ')));
+    const notes = lang === 'ar' && s.notes_ar && s.notes_ar.length ? s.notes_ar.join('؛ ') : (s.notes || []).join('; ');
+    if (notes) src.append(el('small', 'note', notes));
     box.append(src);
   }
   return box;
@@ -232,10 +240,11 @@ function renderSection(s) {
     card.append(ul);
   }
   for (const f of s.findings || []) card.append(renderFinding(f));
-  if (s.limitations && s.limitations.length) {
+  const lims = lang === 'ar' && s.limitations_ar && s.limitations_ar.length ? s.limitations_ar : s.limitations;
+  if (lims && lims.length) {
     const d = el('details', 'limits');
     d.append(el('summary', null, t('limitations')));
-    for (const x of s.limitations) d.append(el('p', null, x));
+    for (const x of lims) d.append(el('p', null, x));
     card.append(d);
   }
   return card;
@@ -295,9 +304,23 @@ function showReport(p, keepView) {
   banner.className = 'report-banner ' + (a ? a.verdict : 'processing');
   banner.replaceChildren();
   if (a) {
-    banner.append(el('span', 'pill', L(a.label)), el('h2', null, L(a.explanation)));
-    const pr = el('p', 'priority ' + a.priority.level, t('priority') + ': ' + L(a.priority.label));
-    banner.append(pr, el('small', null, t('rule') + ' ' + a.rule + ' · ' + a.rules_version));
+    banner.append(el('span', 'pill', L(a.label)));
+    const plainList = p.plain ? (lang === 'ar' ? p.plain.ar : p.plain.en) : [L(a.explanation)];
+    const box = el('div', 'plainwords');
+    box.append(el('p', 'plainwords-title', t('inPlain')));
+    const ul = el('ul');
+    for (const line of plainList) ul.append(el('li', null, line));
+    box.append(ul);
+    banner.append(box);
+    banner.append(el('p', 'priority ' + a.priority.level, t('priority') + ': ' + L(a.priority.label)));
+    const guide = el('details', 'guide-box');
+    guide.append(el('summary', null, t('howToRead')));
+    for (const k of ['misleading', 'insufficient', 'consistent', 'priority', 'issue']) {
+      const row = el('p');
+      row.append(el('b', null, t('g_' + k) + ': '), document.createTextNode(t('g_' + k + '_d')));
+      guide.append(row);
+    }
+    banner.append(guide);
   } else {
     banner.append(el('span', 'pill', '…'), el('h2', null, t('processing')));
   }
@@ -309,9 +332,7 @@ function showReport(p, keepView) {
     const m = (p.modules || {})[k];
     const status = m ? m.status : 'pending';
     const li = el('li', status);
-    const statusLabel = { completed: lang === 'ar' ? 'مكتمل' : 'Completed', not_applicable: lang === 'ar' ? 'غير منطبق' : 'Not applicable',
-      not_configured: lang === 'ar' ? 'غير مُفعّل' : 'Not configured', failed: lang === 'ar' ? 'تعذّر الإكمال' : 'Failed',
-      pending: lang === 'ar' ? 'قيد التنفيذ…' : 'Running…' }[status];
+    const statusLabel = t('st_' + status);
     li.append(el('span', null, t('mod_' + k)), el('em', null, statusLabel));
     if (m && m.summary) li.title = m.summary;
     if (prev && prev.__modules && (prev.__modules[k] || 'pending') !== status) li.dataset.changed = '1';
@@ -374,9 +395,33 @@ $('drop').addEventListener('drop', e => {
   $('media').files = e.dataTransfer.files;
   preview();
 });
-for (const format of ['html', 'json']) {
-  $('download' + format).onclick = () => { if (current) window.location.href = '/api/reports/' + encodeURIComponent(current.id) + '/download?format=' + format; };
+// HTML download: ask for the report language first, then download in that language.
+function lastReportLang() { try { return localStorage.getItem('saqr-report-lang'); } catch (e) { return null; } }
+function downloadReport(format, reportLang) {
+  if (!current) return;
+  const extra = format === 'html' ? '&lang=' + encodeURIComponent(reportLang || 'both') : '';
+  window.location.href = '/api/reports/' + encodeURIComponent(current.id) + '/download?format=' + format + extra;
 }
+$('downloadhtml').onclick = () => {
+  if (!current) return;
+  const last = lastReportLang();
+  document.querySelectorAll('.langchoice').forEach(b => {
+    b.classList.toggle('last', b.dataset.lang === last);
+    b.dataset.lastLabel = t('lastUsed');
+  });
+  $('langdialog').showModal();
+  if (window.Motion && Motion.ok) gsap.fromTo('.langdialog form > *', { y: 12, opacity: 0 }, { y: 0, opacity: 1, duration: 0.45, stagger: 0.05, ease: 'power3.out', overwrite: true });
+  (document.querySelector('.langchoice.last') || document.querySelector('.langchoice')).focus();
+};
+document.querySelectorAll('.langchoice').forEach(b => {
+  b.onclick = () => {
+    try { localStorage.setItem('saqr-report-lang', b.dataset.lang); } catch (e) { /* ignore */ }
+    $('langdialog').close();
+    downloadReport('html', b.dataset.lang);
+  };
+});
+$('langdialog').addEventListener('click', e => { if (e.target === $('langdialog')) $('langdialog').close(); });   // click outside
+$('downloadjson').onclick = () => downloadReport('json');
 $('delete').onclick = async () => {
   if (!current || !confirm(t('confirmDelete'))) return;
   try {

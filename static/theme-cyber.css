@@ -196,3 +196,36 @@ footer{color:var(--dim);border-top-color:var(--line);font-family:var(--mono)}
 /* new falcon logo */
 .brand-mark{width:54px;height:54px;object-fit:contain;filter:drop-shadow(0 0 10px rgba(34,211,238,.35))}
 @media(max-width:720px){.brand-mark{width:40px;height:40px}}
+
+/* report download: language choice window */
+.langdialog{border:1px solid rgba(34,211,238,.35);border-radius:12px;padding:0;background:linear-gradient(180deg,#101b2f,#0a1222);
+  color:var(--ink);width:min(560px,calc(100vw - 32px));box-shadow:0 30px 80px -20px rgba(0,0,0,.9),0 0 60px -20px rgba(34,211,238,.45)}
+.langdialog::backdrop{background:rgba(3,6,12,.72);backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px)}
+.langdialog form{padding:26px 26px 20px}
+.langdialog h2{font-size:22px;margin:8px 0 6px;color:#f1f6ff}
+.langdialog-sub{color:var(--muted);font-size:13px;margin:0 0 18px}
+.langchoices{display:grid;gap:10px}
+.langchoice{position:relative;display:flex;flex-direction:column;align-items:flex-start;gap:3px;text-align:start;width:100%;
+  padding:14px 16px;border-radius:8px;border:1px solid var(--line2);background:rgba(7,13,24,.7);color:var(--ink);
+  transition:border-color .2s,background .2s,transform .2s}
+.langchoice b{font-size:16px}
+.langchoice span{font-size:12.5px;color:var(--muted)}
+.langchoice:hover,.langchoice:focus-visible{border-color:var(--cyan);background:rgba(34,211,238,.08);transform:translateY(-1px);outline:none}
+.langchoice.last::after{content:attr(data-last-label);position:absolute;top:12px;inset-inline-end:14px;font:600 10px var(--mono);
+  letter-spacing:1px;color:var(--cyan);background:rgba(34,211,238,.12);padding:3px 7px;border-radius:99px}
+html[dir=rtl] .langchoice.last::after{letter-spacing:0;font-family:inherit}
+.langdialog-foot{display:flex;justify-content:flex-end;margin-top:16px}
+.langchoice[data-lang=ar]{align-items:flex-start;text-align:right;direction:rtl}
+.langchoice[data-lang=ar].last::after{inset-inline-end:auto;left:14px}
+
+/* report banner: plain words + guide */
+.plainwords{margin:14px 0 6px;padding:12px 16px;border:1px solid var(--line2);border-radius:8px;background:rgba(7,13,24,.65)}
+.plainwords-title{font:600 11px/1 var(--mono);letter-spacing:1.5px;text-transform:uppercase;color:var(--cyan);margin:0 0 8px}
+html[dir=rtl] .plainwords-title{letter-spacing:0;font-family:inherit;font-size:13px}
+.plainwords ul{list-style:none;margin:0;padding:0}
+.plainwords li{position:relative;padding-inline-start:16px;margin:7px 0;font-size:15px;line-height:1.6;color:#eef4ff}
+.plainwords li::before{content:"";position:absolute;inset-inline-start:0;top:.65em;width:6px;height:6px;border-radius:50%;background:var(--cyan)}
+.guide-box{margin-top:10px;font-size:13px;color:var(--muted)}
+.guide-box summary{cursor:pointer;color:var(--cyan);font-weight:600}
+.guide-box p{margin:8px 0;line-height:1.6}
+.guide-box b{color:var(--ink)}

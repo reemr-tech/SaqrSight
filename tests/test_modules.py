@@ -262,3 +262,24 @@ def test_official_sources_no_result_failure_and_not_searchable(cfg):
     assert r.status == "not_applicable"
     r = official_sources.analyze("x", d, False, cfg)
     assert r.status == "not_applicable" and "Skipped" in r.summary
+
+
+# ---------------- Arabic report wording ------------------------------------------------------
+def test_every_module_message_has_arabic():
+    """All messages produced by the modules in these scenarios have an Arabic version."""
+    from saqrsight.i18n_ar import ar
+    results = [
+        text_indicators.analyze("URGENT!!! Share this now, explosion in Dubai", "en"),
+        text_indicators.analyze("Do not share. Rumours of a lockdown are false. According to NCM, dangerous fog.", "en"),
+        text_indicators.analyze("Nice weather today", "en"),
+        text_indicators.analyze("", "en"),
+    ]
+    texts = []
+    for r in results:
+        texts += [r.summary] + r.limitations + [f.message for f in r.findings]
+    for t in ["Reverse image search: no matches.", "3 page(s) contain the same or a near-identical image.",
+              "No relevant result was found in the sources searched (wam.ae). This does not show the claim is false.",
+              "Location (Dubai): the image alone cannot confirm where it was taken.", "Timed out after 120s."]:
+        texts.append(t)
+    missing = [t for t in texts if t and ar(t) is None]
+    assert missing == []
