@@ -1,6 +1,6 @@
 {
-  "id": "ab50a473-f2af-44e9-869a-c7aac0153366",
-  "created_at": "2026-11-05T11:45:05.336285+00:00",
+  "id": "c69b655f-7003-4a17-8b10-0c441c9d577f",
+  "created_at": "2026-11-05T12:03:04.445588+00:00",
   "status": "complete",
   "mode": "analysis",
   "version": "0.2.0",
@@ -96,7 +96,7 @@
         "Evaluated on 286 held-out images: precision 0.813, recall 0.608, false-positive rate on authentic images 0.14."
       ],
       "error": null,
-      "duration_ms": 296,
+      "duration_ms": 316,
       "data": {
         "frames": [
           {
@@ -154,7 +154,7 @@
         "NewsCLIPpings test accuracy 0.6799; see README for independent VERITE results."
       ],
       "error": null,
-      "duration_ms": 58,
+      "duration_ms": 59,
       "data": {
         "decision": "disagree",
         "frames": [
@@ -236,9 +236,14 @@
         "ar": "مكتمل"
       },
       "summary": "Confidence applies to individual model findings only. No percentage is given for whether the claim is true.",
+      "summary_ar": "ينطبق مستوى الثقة على نتائج النماذج المنفردة فقط. لا تُعطى نسبة مئوية لصحة الادعاء.",
       "items": [
         "AI-image detector: evaluated model; output score 0.005 (model output, not the probability that the claim is true). Evaluated on 286 held-out images: precision 0.813, recall 0.608, false-positive rate on authentic images 0.14.",
         "Caption–media consistency model: evaluated model; output score 0.032 (model output, not the probability that the claim is true). NewsCLIPpings test accuracy 0.6799."
+      ],
+      "items_ar": [
+        "كاشف الصور المولدة: نموذج مُقيَّم؛ درجة المخرج 0.005 (مخرج النموذج، وليست احتمال صحة الادعاء). قُيِّم على 286 صورة اختبار: الدقة 0.813، والاستدعاء 0.608، ومعدل الإنذارات الخاطئة على الصور الأصلية 0.14.",
+        "نموذج اتساق النص والوسائط: نموذج مُقيَّم؛ درجة المخرج 0.032 (مخرج النموذج، وليست احتمال صحة الادعاء). دقة اختبار NewsCLIPpings 0.6799."
       ]
     },
     {
@@ -253,10 +258,16 @@
         "ar": "مكتمل"
       },
       "summary": "No urgency, fear, manipulation or share-pressure wording from the indicator list was found.",
+      "summary_ar": "لم تُرصد أي صياغة استعجال أو تخويف أو تلاعب أو ضغط للنشر من قائمة المؤشرات.",
       "limitations": [
         "Rule-based wording indicators; they describe language, not whether the claim is true.",
         "Does not predict how readers will react.",
         "Dialect, sarcasm, misspellings and transliterated Arabic (Arabizi) may be missed."
+      ],
+      "limitations_ar": [
+        "مؤشرات صياغة قائمة على قواعد؛ تصف اللغة لا صحة الادعاء.",
+        "لا تتنبأ بردة فعل القراء.",
+        "قد لا تُرصد اللهجات والسخرية والأخطاء الإملائية والعربية المكتوبة بحروف لاتينية (العربيزي)."
       ],
       "version": "text-lexicon-1.0"
     },
@@ -272,10 +283,12 @@
         "ar": "مكتمل"
       },
       "summary": "No AI-generation signal on the image checked.",
+      "summary_ar": "لا توجد إشارة إلى التوليد بالذكاء الاصطناعي في الصورة.",
       "findings": [
         {
           "code": "no_synthetic_signal",
           "message": "The detector did not flag the image as AI-generated at the evaluated threshold. This does not show the media is authentic or unedited.",
+          "message_ar": "لم يصنّف الكاشف الصورة على أنها مولدة بالذكاء الاصطناعي عند العتبة المُقيَّمة. هذا لا يثبت أن الوسائط أصلية أو غير معدّلة.",
           "excerpts": [],
           "frames": [
             {
@@ -293,6 +306,7 @@
         {
           "code": "editing_not_assessed",
           "message": "Conventional editing or manipulation (splicing, retouching, cropping) was not assessed; no evaluated method is implemented for it.",
+          "message_ar": "لم يُفحص التعديل التقليدي أو التلاعب (اللصق أو التنقيح أو القص)؛ لا توجد طريقة مُقيَّمة لذلك.",
           "excerpts": [],
           "frames": [],
           "sources": [],
@@ -304,6 +318,11 @@
         "Detects possible AI generation only; it does not detect conventional photo editing.",
         "Performance drops on screenshots, heavy compression and generators absent from its training data.",
         "Evaluated on 286 held-out images: precision 0.813, recall 0.608, false-positive rate on authentic images 0.14."
+      ],
+      "limitations_ar": [
+        "يرصد احتمال التوليد بالذكاء الاصطناعي فقط؛ ولا يرصد التعديل التقليدي للصور.",
+        "ينخفض الأداء مع لقطات الشاشة والضغط الشديد والمولّدات غير الموجودة في بيانات تدريبه.",
+        "قُيِّم على 286 صورة اختبار: الدقة 0.813، والاستدعاء 0.608، ومعدل الإنذارات الخاطئة على الصور الأصلية 0.14."
       ],
       "version": "ai-image-detector:haywoodsloan/ai-image-detector-deploy"
     },
@@ -319,10 +338,12 @@
         "ar": "مكتمل"
       },
       "summary": "Caption and visible content appear not to match.",
+      "summary_ar": "يبدو أن النص والمحتوى المرئي غير متطابقين.",
       "findings": [
         {
           "code": "low_agreement",
           "message": "The visible content does not appear to match what the caption describes. This may indicate miscaptioning; compare the media with the claim.",
+          "message_ar": "لا يبدو أن المحتوى المرئي يطابق ما يصفه النص. قد يشير ذلك إلى وصف غير مطابق؛ قارن الوسائط بالادعاء.",
           "excerpts": [],
           "frames": [
             {
@@ -339,19 +360,28 @@
         {
           "code": "needs_external_evidence",
           "message": "These claim details cannot be assessed from the visible content.",
+          "message_ar": "لا يمكن تقييم تفاصيل الادعاء هذه من المحتوى المرئي.",
           "excerpts": [
             "Location (Al Ain): the image alone cannot confirm where it was taken."
           ],
           "frames": [],
           "sources": [],
           "label": null,
-          "label_ar": null
+          "label_ar": null,
+          "excerpts_ar": [
+            "المكان (العين): لا يمكن للصورة وحدها تأكيد مكان التقاطها."
+          ]
         }
       ],
       "limitations": [
         "Trained on English news image–caption pairs (NewsCLIPpings); Arabic captions rely on a multilingual text encoder aligned to CLIP and were not part of training.",
         "Estimates topic agreement only. It cannot confirm date, location, or that the image is from the described event, and does not detect out-of-context reuse on its own.",
         "NewsCLIPpings test accuracy 0.6799; see README for independent VERITE results."
+      ],
+      "limitations_ar": [
+        "دُرِّب على أزواج صور وتعليقات إخبارية باللغة الإنجليزية (NewsCLIPpings)؛ وتعتمد النصوص العربية على مُرمِّز نصوص متعدد اللغات متوافق مع CLIP ولم تكن ضمن التدريب.",
+        "يقدّر الاتفاق في الموضوع فقط. لا يمكنه تأكيد التاريخ أو المكان أو أن الصورة من الحدث الموصوف، ولا يرصد وحده إعادة الاستخدام خارج السياق.",
+        "دقة اختبار NewsCLIPpings 0.6799؛ راجع ملف README لنتائج VERITE المستقلة."
       ],
       "version": "clip-b32-multilingual+logreg:nc-logreg-1.0"
     },
@@ -367,8 +397,13 @@
         "ar": "مكتمل"
       },
       "summary": "Possible miscaptioning",
-      "items_ar": [
-        "احتمال وصف غير مطابق للصورة"
+      "summary_ar": "احتمال وصف غير مطابق للصورة",
+      "issues": [
+        {
+          "code": "possible_miscaptioning",
+          "en": "Possible miscaptioning",
+          "ar": "احتمال وصف غير مطابق للصورة"
+        }
       ]
     },
     {
@@ -383,6 +418,7 @@
         "ar": "مكتمل"
       },
       "summary": "Medium priority for human review.",
+      "summary_ar": "أولوية متوسطة للمراجعة البشرية.",
       "level": "medium",
       "label": {
         "en": "Medium",
@@ -406,7 +442,9 @@
         "en": "Completed",
         "ar": "مكتمل"
       },
-      "summary": "Indicator level: none. These describe wording that may create urgency or alarm; they do not predict panic or show the claim is false."
+      "summary": "Indicator level: none. These describe wording that may create urgency or alarm; they do not predict panic or show the claim is false.",
+      "summary_ar": "مستوى المؤشرات: لا يوجد. تصف هذه المؤشرات صياغة قد تثير الاستعجال أو القلق؛ ولا تتنبأ بالذعر ولا تثبت أن الادعاء كاذب.",
+      "level": "none"
     },
     {
       "key": "previous_media",
@@ -420,6 +458,7 @@
         "ar": "غير مُفعّل"
       },
       "summary": "Reverse image search is not configured on this server (no provider API key).",
+      "summary_ar": "البحث العكسي عن الصور غير مُفعّل على هذا الخادم (لا يوجد مفتاح خدمة).",
       "version": "google-vision-web-detection-v1"
     },
     {
@@ -434,6 +473,7 @@
         "ar": "غير مُفعّل"
       },
       "summary": "Official-source search is not configured on this server (no search provider API key).",
+      "summary_ar": "البحث في المصادر الرسمية غير مُفعّل على هذا الخادم (لا يوجد مفتاح خدمة بحث).",
       "version": "official-sources-v1:brave"
     },
     {

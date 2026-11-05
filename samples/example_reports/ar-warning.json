@@ -1,6 +1,6 @@
 {
-  "id": "7380d11f-d3c6-4130-a199-a2c6a63b5929",
-  "created_at": "2026-11-05T11:45:06.388742+00:00",
+  "id": "503f1884-ff37-45e6-a0df-d1cb99f49f21",
+  "created_at": "2026-11-05T12:03:05.491267+00:00",
   "status": "complete",
   "mode": "analysis",
   "version": "0.2.0",
@@ -154,7 +154,8 @@
         "en": "Not applicable",
         "ar": "غير منطبق"
       },
-      "summary": "Confidence applies to individual model findings only. No percentage is given for whether the claim is true."
+      "summary": "Confidence applies to individual model findings only. No percentage is given for whether the claim is true.",
+      "summary_ar": "ينطبق مستوى الثقة على نتائج النماذج المنفردة فقط. لا تُعطى نسبة مئوية لصحة الادعاء."
     },
     {
       "key": "text_analysis",
@@ -168,10 +169,12 @@
         "ar": "مكتمل"
       },
       "summary": "No urgency, fear, manipulation or share-pressure wording from the indicator list was found.",
+      "summary_ar": "لم تُرصد أي صياغة استعجال أو تخويف أو تلاعب أو ضغط للنشر من قائمة المؤشرات.",
       "findings": [
         {
           "code": "context_attributed_warning",
           "message": "Alarming wording attributed to an authority – may be a legitimate warning; confirm the authority actually issued it.",
+          "message_ar": "صياغة مقلقة منسوبة إلى جهة رسمية – قد تكون تحذيراً مشروعاً؛ تأكد من أن الجهة أصدرته فعلاً.",
           "excerpts": [
             "وخطير"
           ],
@@ -185,6 +188,11 @@
         "Rule-based wording indicators; they describe language, not whether the claim is true.",
         "Does not predict how readers will react.",
         "Dialect, sarcasm, misspellings and transliterated Arabic (Arabizi) may be missed."
+      ],
+      "limitations_ar": [
+        "مؤشرات صياغة قائمة على قواعد؛ تصف اللغة لا صحة الادعاء.",
+        "لا تتنبأ بردة فعل القراء.",
+        "قد لا تُرصد اللهجات والسخرية والأخطاء الإملائية والعربية المكتوبة بحروف لاتينية (العربيزي)."
       ],
       "version": "text-lexicon-1.0"
     },
@@ -200,6 +208,7 @@
         "ar": "غير منطبق"
       },
       "summary": "No image or video was supplied.",
+      "summary_ar": "لم تُقدَّم صورة أو فيديو.",
       "version": "ai-image-detector:haywoodsloan/ai-image-detector-deploy"
     },
     {
@@ -214,6 +223,7 @@
         "ar": "غير منطبق"
       },
       "summary": "Both a caption and an image or video are needed.",
+      "summary_ar": "يلزم وجود نص وصورة أو فيديو معاً.",
       "version": "clip-b32-multilingual+logreg:nc-logreg-1.0"
     },
     {
@@ -227,7 +237,8 @@
         "en": "Completed",
         "ar": "مكتمل"
       },
-      "summary": "No supported issue classification."
+      "summary": "No supported issue classification.",
+      "summary_ar": "لا يوجد تصنيف مدعوم للمشكلة."
     },
     {
       "key": "review_priority",
@@ -241,6 +252,7 @@
         "ar": "مكتمل"
       },
       "summary": "Low priority for human review.",
+      "summary_ar": "أولوية منخفضة للمراجعة البشرية.",
       "level": "low",
       "label": {
         "en": "Low",
@@ -264,7 +276,9 @@
         "en": "Completed",
         "ar": "مكتمل"
       },
-      "summary": "Indicator level: none. These describe wording that may create urgency or alarm; they do not predict panic or show the claim is false."
+      "summary": "Indicator level: none. These describe wording that may create urgency or alarm; they do not predict panic or show the claim is false.",
+      "summary_ar": "مستوى المؤشرات: لا يوجد. تصف هذه المؤشرات صياغة قد تثير الاستعجال أو القلق؛ ولا تتنبأ بالذعر ولا تثبت أن الادعاء كاذب.",
+      "level": "none"
     },
     {
       "key": "previous_media",
@@ -278,6 +292,7 @@
         "ar": "غير منطبق"
       },
       "summary": "No image or video was supplied.",
+      "summary_ar": "لم تُقدَّم صورة أو فيديو.",
       "version": "google-vision-web-detection-v1"
     },
     {
@@ -292,6 +307,7 @@
         "ar": "غير مُفعّل"
       },
       "summary": "Official-source search is not configured on this server (no search provider API key).",
+      "summary_ar": "البحث في المصادر الرسمية غير مُفعّل على هذا الخادم (لا يوجد مفتاح خدمة بحث).",
       "version": "official-sources-v1:brave"
     },
     {

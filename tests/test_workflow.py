@@ -72,7 +72,8 @@ def test_video_frames(client, tmp_path):
     for v in media["visuals"]:
         assert client.get(f"/api/reports/{p['id']}/media/{v['ref']}").status_code == 200
     html = client.get(f"/api/reports/{p['id']}/download?format=html").text
-    assert "findings apply to sampled frames" in html
+    assert "Findings apply only to the sampled frames" in html and "تنطبق النتائج على اللقطات المأخوذة فقط" in html
+    assert html.count("data:image/jpeg;base64,") == 5          # the sampled frames are embedded in the export
     # the original video bytes are not kept
     folder = client.app_module.MEDIA / p["id"]
     assert sorted(f.name for f in folder.iterdir()) == [f"frame-{i}.jpg" for i in range(1, 6)]
@@ -118,8 +119,18 @@ def test_exports_escape_and_delete(client):
     url = "/api/reports/" + p["id"]
     html = client.get(url + "/download?format=html")
     assert "<script>alert(1)</script>" not in html.text and "&lt;script&gt;" in html.text and "دبي" in html.text
-    for label in ("Initial Assessment", "التقييم الأولي", "Not configured", "Review Priority", "Recommended Action"):
-        assert label in html.text
+    for label in ("INITIAL ASSESSMENT", "التقييم الأولي", "Not configured", "غير مُفعّل", "REVIEW PRIORITY",
+                  "أولوية المراجعة", "Recommended Action", "الإجراء المقترح", "methods and limitations", "المنهجية والقيود"):
+        assert label in html.text, label
+    assert "data:image/png;base64," in html.text and "data:image/jpeg;base64," in html.text   # logo + submitted image
+    en = client.get(url + "/download?format=html&lang=en")
+    ar = client.get(url + "/download?format=html&lang=ar")
+    assert "Recommended Action" in en.text and "الإجراء المقترح" not in en.text and 'lang="en"' in en.text
+    assert 'dir="rtl"' in ar.text.split("<head>")[0][:200] or '<html lang="ar" dir="rtl">' in ar.text
+    assert "الإجراء المقترح" in ar.text and "Recommended Action" not in ar.text
+    assert "-ar.html" in ar.headers["content-disposition"]
+    assert "&lt;script&gt;" in ar.text and "<script>alert(1)</script>" not in ar.text
+    assert client.get(url + "/download?format=html&lang=fr").status_code == 422
     assert "attachment" in html.headers["content-disposition"]
     assert client.get(url + "/download?format=json").json() == p
     assert client.get(url + "/download?format=exe").status_code == 422

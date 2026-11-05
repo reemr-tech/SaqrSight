@@ -136,9 +136,37 @@ def history():
     return store.list(100)
 
 
+def _view(p: dict) -> dict:
+    """Rebuild display sections from the stored module results, so reports saved by earlier versions
+    get the current bilingual wording. Findings, assessment and sources are never changed."""
+    if p.get("mode") != "sample" and p.get("modules") is not None:
+        p["sections"] = report.build_sections(p)
+    return p
+
+
+def _thumbnails(report_id: str, p: dict) -> list[dict]:
+    """Small JPEG copies of the stored image / frames, embedded in the HTML export."""
+    import base64
+    from io import BytesIO
+    from PIL import Image
+    out = []
+    for v in ((p.get("media") or {}).get("visuals") or [])[:6]:
+        path = store.visual_path(report_id, v["ref"])
+        if path is None:
+            continue
+        with Image.open(path) as im:
+            im = im.convert("RGB")
+            im.thumbnail((520, 360))
+            buf = BytesIO()
+            im.save(buf, "JPEG", quality=80)
+        out.append({"ref": v["ref"], "timestamp": v.get("timestamp"),
+                    "uri": "data:image/jpeg;base64," + base64.b64encode(buf.getvalue()).decode()})
+    return out
+
+
 @app.get("/api/reports/{report_id}")
 def read_report(report_id: str):
-    return JSONResponse(_record(report_id), headers=NO_STORE)
+    return JSONResponse(_view(_record(report_id)), headers=NO_STORE)
 
 
 @app.get("/api/reports/{report_id}/media/{ref}")
@@ -158,15 +186,17 @@ def read_image(report_id: str):
 
 
 @app.get("/api/reports/{report_id}/download")
-def download(report_id: str, format: str = "html"):
-    p = _record(report_id)
-    name = f"SaqrSight-{report_id}"
+def download(report_id: str, format: str = "html", lang: str = "both"):
+    p = _view(_record(report_id))
+    if lang not in ("en", "ar", "both"):
+        raise HTTPException(422, "Supported report languages: en, ar, both.")
+    name = f"SaqrSight-{report_id}" + ("" if lang == "both" else f"-{lang}")
     if format == "json":
         return Response(json.dumps(p, ensure_ascii=False, indent=2), media_type="application/json",
                         headers={"Content-Disposition": f'attachment; filename="{name}.json"'})
     if format != "html":
         raise HTTPException(422, "Supported formats: html, json.")
-    return Response(report.render_html(p), media_type="text/html",
+    return Response(report.render_html(p, _thumbnails(report_id, p), lang), media_type="text/html",
                     headers={"Content-Disposition": f'attachment; filename="{name}.html"'})
 
 

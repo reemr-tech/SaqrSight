@@ -187,9 +187,13 @@ function renderFinding(f) {
   const box = el('div', 'finding');
   const head = el('p');
   if (f.label) head.append(el('b', null, (lang === 'ar' && f.label_ar ? f.label_ar : f.label) + ': '));
-  head.append(document.createTextNode(f.message));
+  head.append(document.createTextNode(lang === 'ar' && f.message_ar ? f.message_ar : f.message));
   box.append(head);
-  if (f.excerpts && f.excerpts.length) {
+  if (lang === 'ar' && f.excerpts_ar && f.excerpts_ar.length) {
+    const ul = el('ul');
+    for (const x of f.excerpts_ar) ul.append(el('li', null, x));
+    box.append(ul);
+  } else if (f.excerpts && f.excerpts.length) {
     const ex = el('p', 'excerpts');
     for (const x of f.excerpts) { const q = el('q', null, x); q.dir = 'auto'; ex.append(q, ' '); }
     box.append(ex);
@@ -198,7 +202,8 @@ function renderFinding(f) {
     const fr = el('p', 'frames');
     for (const x of f.frames) {
       const score = x.synthetic_score ?? x.agreement_score;
-      const label = (x.timestamp !== undefined ? t('frameAt', { t: x.timestamp }) : x.ref) +
+      const ref = lang === 'ar' && x.ref === 'image' ? 'الصورة' : x.ref;
+      const label = (x.timestamp !== undefined ? t('frameAt', { t: x.timestamp }) : ref) +
         (score !== undefined ? ' · ' + t('score') + ' ' + score : '');
       fr.append(el('span', 'chip', label));
     }
@@ -207,10 +212,13 @@ function renderFinding(f) {
   for (const s of f.sources || []) {
     const src = el('div', 'source');
     src.append(safeLink(s.url, s.title || s.url));
-    const meta = [s.source, s.date || t('noDate'), s.match_type, s.relation].filter(Boolean).join(' · ');
+    const meta = (lang === 'ar'
+      ? [s.source, s.date || t('noDate'), s.match_type_ar || s.match_type, s.relation_ar || s.relation]
+      : [s.source, s.date || t('noDate'), s.match_type, s.relation]).filter(Boolean).join(' · ');
     src.append(el('small', null, meta));
     if (s.excerpt) { const q = el('q', null, s.excerpt); q.dir = 'auto'; src.append(q); }
-    if (s.notes && s.notes.length) src.append(el('small', 'note', s.notes.join('; ')));
+    const notes = lang === 'ar' && s.notes_ar && s.notes_ar.length ? s.notes_ar.join('؛ ') : (s.notes || []).join('; ');
+    if (notes) src.append(el('small', 'note', notes));
     box.append(src);
   }
   return box;
@@ -232,10 +240,11 @@ function renderSection(s) {
     card.append(ul);
   }
   for (const f of s.findings || []) card.append(renderFinding(f));
-  if (s.limitations && s.limitations.length) {
+  const lims = lang === 'ar' && s.limitations_ar && s.limitations_ar.length ? s.limitations_ar : s.limitations;
+  if (lims && lims.length) {
     const d = el('details', 'limits');
     d.append(el('summary', null, t('limitations')));
-    for (const x of s.limitations) d.append(el('p', null, x));
+    for (const x of lims) d.append(el('p', null, x));
     card.append(d);
   }
   return card;
@@ -374,8 +383,14 @@ $('drop').addEventListener('drop', e => {
   $('media').files = e.dataTransfer.files;
   preview();
 });
+try { const saved = localStorage.getItem('saqr-report-lang'); if (saved) $('reportlang').value = saved; } catch (e) { /* ignore */ }
+$('reportlang').onchange = () => { try { localStorage.setItem('saqr-report-lang', $('reportlang').value); } catch (e) { /* ignore */ } };
 for (const format of ['html', 'json']) {
-  $('download' + format).onclick = () => { if (current) window.location.href = '/api/reports/' + encodeURIComponent(current.id) + '/download?format=' + format; };
+  $('download' + format).onclick = () => {
+    if (!current) return;
+    const extra = format === 'html' ? '&lang=' + encodeURIComponent($('reportlang').value) : '';
+    window.location.href = '/api/reports/' + encodeURIComponent(current.id) + '/download?format=' + format + extra;
+  };
 }
 $('delete').onclick = async () => {
   if (!current || !confirm(t('confirmDelete'))) return;

@@ -196,3 +196,13 @@ footer{color:var(--dim);border-top-color:var(--line);font-family:var(--mono)}
 /* new falcon logo */
 .brand-mark{width:54px;height:54px;object-fit:contain;filter:drop-shadow(0 0 10px rgba(34,211,238,.35))}
 @media(max-width:720px){.brand-mark{width:40px;height:40px}}
+
+/* report download: language picker */
+.dlgroup{display:inline-flex;align-items:stretch;border-radius:4px;box-shadow:0 0 0 1px rgba(34,211,238,.4)}
+.dlgroup .primary{border-radius:4px 0 0 4px;box-shadow:none}
+html[dir=rtl] .dlgroup .primary{border-radius:0 4px 4px 0}
+.dllang{display:flex;align-items:center;gap:8px;padding:0 10px;background:#0a1222;border-radius:0 4px 4px 0;font:600 11px var(--mono);color:var(--muted)}
+html[dir=rtl] .dllang{border-radius:4px 0 0 4px}
+.dllang select{background:#070d18;color:var(--ink);border:1px solid var(--line2);border-radius:3px;padding:5px 6px;font:12px var(--sans)}
+.dllang select:focus{outline:2px solid rgba(34,211,238,.6)}
+@media(max-width:720px){.dlgroup{flex-direction:column;width:100%}.dlgroup .primary,.dllang{border-radius:4px}.dllang{padding:8px 10px}}
