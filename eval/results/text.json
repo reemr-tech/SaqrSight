@@ -1,5 +1,5 @@
 {
-  "model": "text-lexicon-1.1",
+  "model": "text-lexicon-1.1.1",
   "dev": {
     "en": {
       "n": 20,

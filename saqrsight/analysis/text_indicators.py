@@ -22,7 +22,7 @@ from ..textutil import TASHKEEL_RE, TATWEEL, normalize_with_map
 from . import lexicon as L
 
 MODULE = "text_analysis"
-VERSION = "text-lexicon-1.1"
+VERSION = "text-lexicon-1.1.1"   # 1.1.1: negation across or/أو lists; distrust is not an official warning
 AR_PREFIX = r"(?:و|ف|ب|ل|ال|وال|فال|بال|لل)?"
 AR_SUFFIX = r"(?:ها|هم|ه|وا)?"
 CLAUSE_SPLIT = re.compile(r"[.!?؟؛;\n،,:]")
@@ -58,14 +58,30 @@ def _span_bounds(text: str, pos: int, splitter: re.Pattern) -> tuple[int, int]:
     return start, (m.start() if m else len(text))
 
 
+COORDINATOR = re.compile(r"(?<![\w'])(?:or|nor)(?![\w'])|(?<!\w)(?:او|ولا)(?!\w)")
+CONTRAST = re.compile(r"(?<![\w'])(?:but|so|then|instead)(?![\w'])|(?<!\w)(?:لكن|بس|عشان|لذلك|بل)(?!\w)")
+
+
+def _negated(before_clause: str, negators: re.Pattern) -> bool:
+    """A negator among the last four tokens of the clause, or earlier in the clause when the match
+    is joined to it by "or" / "أو" / "ولا" ("no need to panic or to stock up", "لا داعي للهلع أو التخزين")."""
+    tokens = before_clause.split()
+    if negators.search(" ".join(tokens[-4:])):
+        return True
+    window = " ".join(tokens[-10:])
+    hits = list(negators.finditer(window))
+    if not hits:
+        return False
+    between = window[hits[-1].end():]
+    return bool(COORDINATOR.search(between)) and not CONTRAST.search(between)
+
+
 def _context(norm: str, start: int, end: int, category: str) -> str:
-    _, negators, reported, attribution, debunk = _compiled()
+    cats, negators, reported, attribution, debunk = _compiled()
     c_start, _ = _span_bounds(norm, start, CLAUSE_SPLIT)
     s_start, s_end = _span_bounds(norm, start, SENTENCE_SPLIT)
     before_clause = norm[c_start:start]
-    # Negation: a negator among the last four tokens of the same clause.
-    window = " ".join(before_clause.split()[-4:])
-    if negators.search(window):
+    if _negated(before_clause, negators):
         return "negated"
     # Quotation: an odd number of quote marks before the match, with a closing one after it.
     if norm[:start].count('"') % 2 == 1 and '"' in norm[end:]:
@@ -75,7 +91,10 @@ def _context(norm: str, start: int, end: int, category: str) -> str:
     sentence = norm[s_start:s_end]
     if debunk.search(sentence) and category != "share_pressure":
         return "debunk"
-    if category in ("fear", "urgency") and attribution.search(sentence):
+    # An authority mentioned in a sentence that also distrusts it ("the government is hiding…") is not an
+    # official warning.
+    distrust = any(p.search(sentence) for p in cats["manipulation"])
+    if category in ("fear", "urgency") and attribution.search(sentence) and not distrust:
         return "attributed_warning"
     return "active"
 

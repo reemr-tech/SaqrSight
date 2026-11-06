@@ -24,6 +24,13 @@ Target: **150–300 posts**, about half Arabic (including Gulf dialect) and half
 
 Do not choose posts because SaqrSight does or does not detect them – collect first, test later.
 
+**Include long posts too.** Aim for about **one third paragraph-length posts** (three or more sentences),
+for example long WhatsApp forwards, Telegram messages, or official statements. Short captions behave
+differently from paragraphs: a paragraph can mix a rumour, a denial and advice in one post. Label a
+category `1` if **any part** of the post itself uses that kind of wording towards the reader; quoted or
+denied parts still count as `0`. In the `notes` column write `long` for these posts so results can be
+compared for short and long posts.
+
 ## 3. Fill in the spreadsheet
 Use `eval/annotation/template.csv` (opens in Excel or Numbers; save as CSV, UTF-8).
 

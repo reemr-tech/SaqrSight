@@ -237,6 +237,13 @@ first.
 * **Weakest category: fear/alarm** (F1 0.40 for the rules). On fear only, the machine-learning
   model did better (0.55), because fear is phrased in very varied ways. A combined approach is
   planned for Senior Project 2.
+* **Paragraph-length posts** are analysed sentence by sentence (negation, quotation, debunk and
+  official-warning context are judged per sentence), and are covered by regression tests in
+  `tests/test_modules.py`. Version 1.1.1 fixed two context errors that only showed up in longer
+  posts: negation across "or"/"أو" lists ("no need to panic or to stock up"), and a sentence that
+  distrusts an authority ("the government is hiding…") no longer counts as an official warning.
+  Neither changed the evaluation numbers above, because the test sets contain only short posts.
+  Long real posts should be part of the real-data collection.
 * **Rules beat machine learning overall.** With so little training data, the transparent rules
   found more indicators. They also show the exact words behind each finding.
 * **Caveats.**

@@ -283,3 +283,46 @@ def test_every_module_message_has_arabic():
         texts.append(t)
     missing = [t for t in texts if t and ar(t) is None]
     assert missing == []
+
+
+# ---------------- paragraph-length posts -----------------------------------------------------
+PARAGRAPHS = {
+    "alarming_en": ("URGENT!!! I just got a message from a friend who works at the port. There was a huge explosion "
+                    "near Jebel Ali this morning and people are trapped inside the warehouses. The media is completely "
+                    "silent and nobody is reporting it. They don't want you to know how bad it is. Stock up on water and "
+                    "food tonight because shortages are coming. Share this with everyone you know before they delete it!",
+                    "high"),
+    "debunk_en": ("Over the past two days a message has been circulating on WhatsApp claiming that \"Dubai will go into "
+                  "total lockdown tomorrow, share this immediately\". Dubai Police confirmed that this is a rumour and "
+                  "that there are no plans for any lockdown. Residents are asked not to share unverified messages and to "
+                  "follow official channels only. There is no need to panic or to stock up on food.", "none"),
+    "advisory_en": ("The National Centre of Meteorology has issued an orange alert for heavy rain across the northern "
+                    "emirates from Thursday evening. According to NCM, dangerous driving conditions are expected and "
+                    "flooding may occur in low-lying areas. Authorities advise residents to avoid wadis and to stay "
+                    "indoors where possible.", "none"),
+    "alarming_ar": ("عاجل!! وصلتني رسالة من واحد يشتغل في المستشفى، يقول إن في انفجار كبير صار في جبل علي الصبح والناس "
+                    "محاصرين داخل المستودعات. الإعلام ساكت ومحد قاعد يتكلم عن الموضوع، وما يبونكم تعرفون الحقيقة. خزنوا "
+                    "ماي وأكل الليلة لأن بيصير نقص حاد. دزوها لكل القروبات قبل لا يمسحونها!", "high"),
+    "debunk_ar": ("تداولت بعض الحسابات خلال اليومين الماضيين رسالة تقول \"دبي بتدخل حظر تجول كامل بكرة، انشروها فوراً\". "
+                  "وأكدت شرطة دبي أن هذا الخبر شائعة ولا صحة له، ولا توجد أي خطط لحظر التجول. ويُطلب من السكان عدم نشر "
+                  "الرسائل غير الموثقة ومتابعة القنوات الرسمية فقط، ولا داعي للهلع أو تخزين المواد الغذائية.", "none"),
+    "advisory_ar": ("أصدر المركز الوطني للأرصاد تنبيهاً برتقالياً لهطول أمطار غزيرة على الإمارات الشمالية بدءاً من مساء "
+                    "الخميس. وحسب المركز، من المتوقع أن تكون ظروف القيادة خطيرة وقد تحدث فيضانات في المناطق المنخفضة.",
+                    "none"),
+}
+
+
+@pytest.mark.parametrize("name", PARAGRAPHS)
+def test_paragraph_posts(name):
+    text, level = PARAGRAPHS[name]
+    r = text_indicators.analyze(text, "")
+    assert r.data["indicator_level"] == level, [(m["excerpt"], m["context"]) for m in r.data["matches"]]
+    if level == "high":
+        assert set(r.data["categories"]) == {"urgency", "fear", "manipulation", "share_pressure"}
+
+
+def test_negation_scope_and_distrust():
+    assert ctx("There is no need to panic or to stock up on food.") == {("fear", "negated")}
+    assert ("share_pressure", "active") in ctx("They will not tell you the truth so share this now!")
+    assert ("fear", "active") in ctx("The government is hiding the real numbers, people are trapped!")
+    assert ctx("According to NCM, dangerous conditions are expected.") == {("fear", "attributed_warning")}
