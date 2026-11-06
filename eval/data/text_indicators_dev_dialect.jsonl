@@ -1,0 +1,50 @@
+{"id":"dd-ar-01","lang":"ar","text":"دزها لربعك بسرعة، الوضع مب طبيعي في الشارقة","labels":["share_pressure","urgency"],"phenomenon":"dialect"}
+{"id":"dd-ar-02","lang":"ar","text":"طرشوها للكل قبل لا يمسحونها","labels":["share_pressure","manipulation"],"phenomenon":"dialect"}
+{"id":"dd-ar-03","lang":"ar","text":"حطوها في كل القروبات الله يخليكم","labels":["share_pressure"],"phenomenon":"dialect"}
+{"id":"dd-ar-04","lang":"ar","text":"نزلوها في السنابات خل الكل يشوف","labels":["share_pressure"],"phenomenon":"dialect"}
+{"id":"dd-ar-05","lang":"ar","text":"عيدوا التغريد وسووا منشن للكل","labels":["share_pressure"],"phenomenon":"dialect"}
+{"id":"dd-ar-06","lang":"ar","text":"طوارئ!! اطلعوا من المبنى","labels":["urgency"],"phenomenon":"dialect"}
+{"id":"dd-ar-07","lang":"ar","text":"مصيبة صارت في ديرة، الله يستر","labels":["fear"],"phenomenon":"dialect"}
+{"id":"dd-ar-08","lang":"ar","text":"وفيات كثيرة والمستشفيات ما تلحق على المرضى","labels":["fear"],"phenomenon":"dialect"}
+{"id":"dd-ar-09","lang":"ar","text":"منظر يخوف، الدخان مغطي السما","labels":["fear"],"phenomenon":"dialect"}
+{"id":"dd-ar-10","lang":"ar","text":"الناس مرعوبة والوضع ما يطمن","labels":["fear"],"phenomenon":"dialect"}
+{"id":"dd-ar-11","lang":"ar","text":"الرفوف فاضية والناس قاعدة تخزن كل شي","labels":["fear"],"phenomenon":"dialect"}
+{"id":"dd-ar-12","lang":"ar","text":"الإعلام ساكت عن اللي صار البارحة","labels":["manipulation"],"phenomenon":"dialect"}
+{"id":"dd-ar-13","lang":"ar","text":"ما يبونكم تعرفون الحقيقة عن الحادث","labels":["manipulation"],"phenomenon":"dialect"}
+{"id":"dd-ar-14","lang":"ar","text":"الحكومة مخبية الأرقام الحقيقية","labels":["manipulation"],"phenomenon":"dialect"}
+{"id":"dd-ar-15","lang":"ar","text":"معلومة أكيدة مية بالمية من مصدر خاص","labels":["manipulation"],"phenomenon":"dialect"}
+{"id":"dd-ar-16","lang":"ar","text":"محد بيقولكم هالكلام بس أنا بقولكم","labels":["manipulation"],"phenomenon":"dialect"}
+{"id":"dd-ar-17","lang":"ar","text":"يغطون على الموضوع وما حد يتكلم","labels":["manipulation"],"phenomenon":"dialect"}
+{"id":"dd-ar-18","lang":"ar","text":"لا تدزون أي رسالة ما تعرفون مصدرها","labels":[],"phenomenon":"negation"}
+{"id":"dd-ar-19","lang":"ar","text":"ما في شي يخوف، الوضع طبيعي في الشارقة","labels":[],"phenomenon":"negation"}
+{"id":"dd-ar-20","lang":"ar","text":"لا تطرشون الإشاعات الله يهداكم","labels":[],"phenomenon":"negation"}
+{"id":"dd-ar-21","lang":"ar","text":"واحد في تويتر يقول \"دزوها للكل\" بس الخبر قديم","labels":[],"phenomenon":"quote"}
+{"id":"dd-ar-22","lang":"ar","text":"الإشاعة عن الوفيات في المستشفى غير صحيحة حسب الوزارة","labels":[],"phenomenon":"debunk"}
+{"id":"dd-ar-23","lang":"ar","text":"تحذير من المركز الوطني للأرصاد: رياح قوية وخطيرة على الطرق","labels":[],"phenomenon":"warning"}
+{"id":"dd-ar-24","lang":"ar","text":"الحين رايحة الدوام والزحمة عادية","labels":[],"phenomenon":"neutral"}
+{"id":"dd-ar-25","lang":"ar","text":"بنروح البحر الجمعة إن شاء الله","labels":[],"phenomenon":"neutral"}
+{"id":"dd-ar-26","lang":"ar","text":"اطلعوا من الحين قبل لا تسكر الطرق، الوضع خطير","labels":["urgency","fear"],"phenomenon":"dialect"}
+{"id":"dd-ar-27","lang":"ar","text":"علموا الكل إن المدارس بتسكر بكرة","labels":["share_pressure"],"phenomenon":"dialect"}
+{"id":"dd-ar-28","lang":"ar","text":"انسخ الرسالة وانشرها في كل مكان","labels":["share_pressure"],"phenomenon":"indicator"}
+{"id":"dd-ar-29","lang":"ar","text":"الوضع مرعب والناس محاصرين داخل المول","labels":["fear"],"phenomenon":"dialect"}
+{"id":"dd-ar-30","lang":"ar","text":"اصحوا يا ناس، كل شي مخطط له","labels":["manipulation"],"phenomenon":"dialect"}
+{"id":"dd-en-01","lang":"en","text":"Emergency in Deira, leave the area now!","labels":["urgency"],"phenomenon":"indicator"}
+{"id":"dd-en-02","lang":"en","text":"Get out of the building right away, it's not safe.","labels":["urgency","fear"],"phenomenon":"indicator"}
+{"id":"dd-en-03","lang":"en","text":"RT and tag your friends so they see this.","labels":["share_pressure"],"phenomenon":"indicator"}
+{"id":"dd-en-04","lang":"en","text":"Copy and paste this everywhere you can.","labels":["share_pressure"],"phenomenon":"indicator"}
+{"id":"dd-en-05","lang":"en","text":"Spread this so people know the truth.","labels":["share_pressure"],"phenomenon":"indicator"}
+{"id":"dd-en-06","lang":"en","text":"The government is hiding the real numbers.","labels":["manipulation"],"phenomenon":"indicator"}
+{"id":"dd-en-07","lang":"en","text":"They're covering it up again, as usual.","labels":["manipulation"],"phenomenon":"indicator"}
+{"id":"dd-en-08","lang":"en","text":"Mainstream media won't report this story.","labels":["manipulation"],"phenomenon":"indicator"}
+{"id":"dd-en-09","lang":"en","text":"Nobody is reporting what happened at the port.","labels":["manipulation"],"phenomenon":"indicator"}
+{"id":"dd-en-10","lang":"en","text":"Absolutely confirmed from an insider: offices close tomorrow.","labels":["manipulation"],"phenomenon":"indicator"}
+{"id":"dd-en-11","lang":"en","text":"Bodies everywhere, it is a massacre.","labels":["fear"],"phenomenon":"indicator"}
+{"id":"dd-en-12","lang":"en","text":"People are trapped inside the tower.","labels":["fear"],"phenomenon":"indicator"}
+{"id":"dd-en-13","lang":"en","text":"Scary scenes, hospitals are overwhelmed.","labels":["fear"],"phenomenon":"indicator"}
+{"id":"dd-en-14","lang":"en","text":"It's a nightmare out there, total meltdown.","labels":["fear"],"phenomenon":"indicator"}
+{"id":"dd-en-15","lang":"en","text":"No need to forward this message to anyone.","labels":[],"phenomenon":"negation"}
+{"id":"dd-en-16","lang":"en","text":"Don't be scared, the situation is under control, police say.","labels":[],"phenomenon":"negation"}
+{"id":"dd-en-17","lang":"en","text":"I'm at the mall now, lovely day with the family.","labels":[],"phenomenon":"neutral"}
+{"id":"dd-en-18","lang":"en","text":"Police advise avoiding the area because of an emergency drill.","labels":[],"phenomenon":"warning"}
+{"id":"dd-en-19","lang":"en","text":"Reports of empty shelves in Ajman are fake, the ministry said.","labels":[],"phenomenon":"debunk"}
+{"id":"dd-en-20","lang":"en","text":"A forwarded message says “repost to save lives” – it is spam.","labels":[],"phenomenon":"quote"}

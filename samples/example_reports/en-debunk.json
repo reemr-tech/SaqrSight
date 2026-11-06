@@ -1,6 +1,6 @@
 {
-  "id": "04639076-b843-4adb-b503-ef54ea4c8837",
-  "created_at": "2026-11-05T12:17:13.767217+00:00",
+  "id": "49c6db20-97eb-4231-afa8-a3ffaddcc856",
+  "created_at": "2026-11-06T16:33:13.370746+00:00",
   "status": "complete",
   "mode": "analysis",
   "version": "0.2.0",
@@ -26,7 +26,7 @@
     "text_analysis": {
       "module": "text_analysis",
       "status": "completed",
-      "version": "text-lexicon-1.0",
+      "version": "text-lexicon-1.1",
       "findings": [
         {
           "code": "context_negated",
@@ -195,7 +195,7 @@
         "لا تتنبأ بردة فعل القراء.",
         "قد لا تُرصد اللهجات والسخرية والأخطاء الإملائية والعربية المكتوبة بحروف لاتينية (العربيزي)."
       ],
-      "version": "text-lexicon-1.0"
+      "version": "text-lexicon-1.1"
     },
     {
       "key": "media_analysis",

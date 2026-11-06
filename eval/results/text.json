@@ -1,5 +1,5 @@
 {
-  "model": "text-lexicon-1.0",
+  "model": "text-lexicon-1.1",
   "dev": {
     "en": {
       "n": 20,
@@ -228,6 +228,205 @@
       }
     }
   },
+  "dev_dialect": {
+    "en": {
+      "n": 20,
+      "metrics": {
+        "urgency": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "tp": 2,
+          "fp": 0,
+          "fn": 0
+        },
+        "fear": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "tp": 5,
+          "fp": 0,
+          "fn": 0
+        },
+        "manipulation": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "tp": 5,
+          "fp": 0,
+          "fn": 0
+        },
+        "share_pressure": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "tp": 3,
+          "fp": 0,
+          "fn": 0
+        },
+        "micro": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "tp": 15,
+          "fp": 0,
+          "fn": 0
+        },
+        "false_alarm_rate_negation": {
+          "rate": 0.0,
+          "n": 2
+        },
+        "false_alarm_rate_quote": {
+          "rate": 0.0,
+          "n": 1
+        },
+        "false_alarm_rate_debunk": {
+          "rate": 0.0,
+          "n": 1
+        },
+        "false_alarm_rate_warning": {
+          "rate": 0.0,
+          "n": 1
+        },
+        "false_alarm_rate_neutral": {
+          "rate": 0.0,
+          "n": 1
+        }
+      },
+      "errors": []
+    },
+    "ar": {
+      "n": 30,
+      "metrics": {
+        "urgency": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "tp": 3,
+          "fp": 0,
+          "fn": 0
+        },
+        "fear": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "tp": 7,
+          "fp": 0,
+          "fn": 0
+        },
+        "manipulation": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "tp": 8,
+          "fp": 0,
+          "fn": 0
+        },
+        "share_pressure": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "tp": 7,
+          "fp": 0,
+          "fn": 0
+        },
+        "micro": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "tp": 25,
+          "fp": 0,
+          "fn": 0
+        },
+        "false_alarm_rate_negation": {
+          "rate": 0.0,
+          "n": 3
+        },
+        "false_alarm_rate_quote": {
+          "rate": 0.0,
+          "n": 1
+        },
+        "false_alarm_rate_debunk": {
+          "rate": 0.0,
+          "n": 1
+        },
+        "false_alarm_rate_warning": {
+          "rate": 0.0,
+          "n": 1
+        },
+        "false_alarm_rate_neutral": {
+          "rate": 0.0,
+          "n": 2
+        }
+      },
+      "errors": []
+    },
+    "all": {
+      "n": 50,
+      "metrics": {
+        "urgency": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "tp": 5,
+          "fp": 0,
+          "fn": 0
+        },
+        "fear": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "tp": 12,
+          "fp": 0,
+          "fn": 0
+        },
+        "manipulation": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "tp": 13,
+          "fp": 0,
+          "fn": 0
+        },
+        "share_pressure": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "tp": 10,
+          "fp": 0,
+          "fn": 0
+        },
+        "micro": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "tp": 40,
+          "fp": 0,
+          "fn": 0
+        },
+        "false_alarm_rate_negation": {
+          "rate": 0.0,
+          "n": 5
+        },
+        "false_alarm_rate_quote": {
+          "rate": 0.0,
+          "n": 2
+        },
+        "false_alarm_rate_debunk": {
+          "rate": 0.0,
+          "n": 2
+        },
+        "false_alarm_rate_warning": {
+          "rate": 0.0,
+          "n": 2
+        },
+        "false_alarm_rate_neutral": {
+          "rate": 0.0,
+          "n": 3
+        }
+      }
+    }
+  },
   "test": {
     "en": {
       "n": 25,
@@ -250,27 +449,27 @@
         },
         "manipulation": {
           "precision": 1.0,
-          "recall": 0.75,
-          "f1": 0.857,
-          "tp": 3,
+          "recall": 1.0,
+          "f1": 1.0,
+          "tp": 4,
           "fp": 0,
-          "fn": 1
+          "fn": 0
         },
         "share_pressure": {
           "precision": 1.0,
-          "recall": 0.8,
-          "f1": 0.889,
-          "tp": 4,
+          "recall": 1.0,
+          "f1": 1.0,
+          "tp": 5,
           "fp": 0,
-          "fn": 1
+          "fn": 0
         },
         "micro": {
           "precision": 1.0,
-          "recall": 0.737,
-          "f1": 0.848,
-          "tp": 14,
+          "recall": 0.842,
+          "f1": 0.914,
+          "tp": 16,
           "fp": 0,
-          "fn": 5
+          "fn": 3
         },
         "false_alarm_rate_negation": {
           "rate": 0.0,
@@ -304,29 +503,11 @@
           "extra": []
         },
         {
-          "id": "t-en-02",
-          "phenomenon": "indicator",
-          "text": "Pass this on: the government is hiding the real numbers.",
-          "missed": [
-            "manipulation"
-          ],
-          "extra": []
-        },
-        {
           "id": "t-en-08",
           "phenomenon": "indicator",
           "text": "Go to the supermarket immediately, shelves will be empty by tonight!",
           "missed": [
             "fear"
-          ],
-          "extra": []
-        },
-        {
-          "id": "t-en-18",
-          "phenomenon": "indicator",
-          "text": "You won't believe what happened in Dubai Marina tonight — RT before it disappears!",
-          "missed": [
-            "share_pressure"
           ],
           "extra": []
         },
@@ -370,19 +551,19 @@
         },
         "share_pressure": {
           "precision": 1.0,
-          "recall": 0.6,
-          "f1": 0.75,
-          "tp": 3,
+          "recall": 0.8,
+          "f1": 0.889,
+          "tp": 4,
           "fp": 0,
-          "fn": 2
+          "fn": 1
         },
         "micro": {
           "precision": 1.0,
-          "recall": 0.684,
-          "f1": 0.813,
-          "tp": 13,
+          "recall": 0.737,
+          "f1": 0.848,
+          "tp": 14,
           "fp": 0,
-          "fn": 6
+          "fn": 5
         },
         "false_alarm_rate_negation": {
           "rate": 0.0,
@@ -411,8 +592,7 @@
           "phenomenon": "dialect",
           "text": "طرشوها لكل القروبات، الحكومة تخفي الأرقام الحقيقية",
           "missed": [
-            "manipulation",
-            "share_pressure"
+            "manipulation"
           ],
           "extra": []
         },
@@ -475,27 +655,27 @@
         },
         "manipulation": {
           "precision": 1.0,
-          "recall": 0.625,
-          "f1": 0.769,
-          "tp": 5,
+          "recall": 0.75,
+          "f1": 0.857,
+          "tp": 6,
           "fp": 0,
-          "fn": 3
+          "fn": 2
         },
         "share_pressure": {
           "precision": 1.0,
-          "recall": 0.7,
-          "f1": 0.824,
-          "tp": 7,
+          "recall": 0.9,
+          "f1": 0.947,
+          "tp": 9,
           "fp": 0,
-          "fn": 3
+          "fn": 1
         },
         "micro": {
           "precision": 1.0,
-          "recall": 0.711,
-          "f1": 0.831,
-          "tp": 27,
+          "recall": 0.789,
+          "f1": 0.882,
+          "tp": 30,
           "fp": 0,
-          "fn": 11
+          "fn": 8
         },
         "false_alarm_rate_negation": {
           "rate": 0.0,
@@ -516,6 +696,370 @@
         "false_alarm_rate_neutral": {
           "rate": 0.0,
           "n": 6
+        }
+      }
+    }
+  },
+  "test_v2": {
+    "en": {
+      "n": 30,
+      "metrics": {
+        "urgency": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "tp": 6,
+          "fp": 0,
+          "fn": 0
+        },
+        "fear": {
+          "precision": 1.0,
+          "recall": 0.25,
+          "f1": 0.4,
+          "tp": 2,
+          "fp": 0,
+          "fn": 6
+        },
+        "manipulation": {
+          "precision": 1.0,
+          "recall": 0.667,
+          "f1": 0.8,
+          "tp": 4,
+          "fp": 0,
+          "fn": 2
+        },
+        "share_pressure": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "tp": 5,
+          "fp": 0,
+          "fn": 0
+        },
+        "micro": {
+          "precision": 1.0,
+          "recall": 0.68,
+          "f1": 0.81,
+          "tp": 17,
+          "fp": 0,
+          "fn": 8
+        },
+        "false_alarm_rate_negation": {
+          "rate": 0.0,
+          "n": 3
+        },
+        "false_alarm_rate_quote": {
+          "rate": 0.0,
+          "n": 3
+        },
+        "false_alarm_rate_debunk": {
+          "rate": 0.0,
+          "n": 3
+        },
+        "false_alarm_rate_warning": {
+          "rate": 0.0,
+          "n": 3
+        },
+        "false_alarm_rate_neutral": {
+          "rate": 0.0,
+          "n": 4
+        }
+      },
+      "errors": [
+        {
+          "id": "t2-en-01",
+          "phenomenon": "indicator",
+          "text": "EMERGENCY: gas leak spreading across JLT, get out NOW and forward this to every group!",
+          "missed": [
+            "fear"
+          ],
+          "extra": []
+        },
+        {
+          "id": "t2-en-09",
+          "phenomenon": "indicator",
+          "text": "Share before it's deleted: secret documents show schools will stay closed all year.",
+          "missed": [
+            "manipulation"
+          ],
+          "extra": []
+        },
+        {
+          "id": "t2-en-10",
+          "phenomenon": "indicator",
+          "text": "Breaking: earthquake felt in Fujairah, buildings shaking, run outside immediately!",
+          "missed": [
+            "fear"
+          ],
+          "extra": []
+        },
+        {
+          "id": "t2-en-11",
+          "phenomenon": "indicator",
+          "text": "Nobody is reporting this but hospitals in Dubai are overflowing with patients.",
+          "missed": [
+            "fear"
+          ],
+          "extra": []
+        },
+        {
+          "id": "t2-en-18",
+          "phenomenon": "indicator",
+          "text": "ACT FAST!!! Fuel stations are running dry across Sharjah!!",
+          "missed": [
+            "fear"
+          ],
+          "extra": []
+        },
+        {
+          "id": "t2-en-21",
+          "phenomenon": "indicator",
+          "text": "Spread this everywhere, the media won't show you the flooding in Al Ain!",
+          "missed": [
+            "manipulation"
+          ],
+          "extra": []
+        },
+        {
+          "id": "t2-en-25",
+          "phenomenon": "indicator",
+          "text": "Wake up! This virus is far worse than they admit.",
+          "missed": [
+            "fear"
+          ],
+          "extra": []
+        },
+        {
+          "id": "t2-en-29",
+          "phenomenon": "indicator",
+          "text": "Get your kids home immediately, something bad is happening near the port.",
+          "missed": [
+            "fear"
+          ],
+          "extra": []
+        }
+      ]
+    },
+    "ar": {
+      "n": 30,
+      "metrics": {
+        "urgency": {
+          "precision": 1.0,
+          "recall": 0.833,
+          "f1": 0.909,
+          "tp": 5,
+          "fp": 0,
+          "fn": 1
+        },
+        "fear": {
+          "precision": 1.0,
+          "recall": 0.25,
+          "f1": 0.4,
+          "tp": 2,
+          "fp": 0,
+          "fn": 6
+        },
+        "manipulation": {
+          "precision": 1.0,
+          "recall": 0.5,
+          "f1": 0.667,
+          "tp": 3,
+          "fp": 0,
+          "fn": 3
+        },
+        "share_pressure": {
+          "precision": 1.0,
+          "recall": 0.8,
+          "f1": 0.889,
+          "tp": 4,
+          "fp": 0,
+          "fn": 1
+        },
+        "micro": {
+          "precision": 1.0,
+          "recall": 0.56,
+          "f1": 0.718,
+          "tp": 14,
+          "fp": 0,
+          "fn": 11
+        },
+        "false_alarm_rate_negation": {
+          "rate": 0.0,
+          "n": 3
+        },
+        "false_alarm_rate_quote": {
+          "rate": 0.0,
+          "n": 3
+        },
+        "false_alarm_rate_debunk": {
+          "rate": 0.0,
+          "n": 3
+        },
+        "false_alarm_rate_warning": {
+          "rate": 0.0,
+          "n": 3
+        },
+        "false_alarm_rate_neutral": {
+          "rate": 0.0,
+          "n": 4
+        }
+      },
+      "errors": [
+        {
+          "id": "t2-ar-01",
+          "phenomenon": "dialect",
+          "text": "طوارئ: تسرب غاز في الجميرا، اطلعوا من بيوتكم الحين ودزوها لكل الأهل",
+          "missed": [
+            "fear"
+          ],
+          "extra": []
+        },
+        {
+          "id": "t2-ar-09",
+          "phenomenon": "dialect",
+          "text": "نزلوها قبل ما تنحذف: وثائق سرية تقول المدارس بتسكر طول السنة",
+          "missed": [
+            "manipulation"
+          ],
+          "extra": []
+        },
+        {
+          "id": "t2-ar-10",
+          "phenomenon": "indicator",
+          "text": "عاجل: هزة أرضية في الفجيرة والعمارات تهتز، اطلعوا برا فوراً",
+          "missed": [
+            "fear"
+          ],
+          "extra": []
+        },
+        {
+          "id": "t2-ar-11",
+          "phenomenon": "dialect",
+          "text": "محد قاعد يتكلم بس مستشفيات دبي مليانة مرضى وما في مكان",
+          "missed": [
+            "fear",
+            "manipulation"
+          ],
+          "extra": []
+        },
+        {
+          "id": "t2-ar-14",
+          "phenomenon": "dialect",
+          "text": "انسخوها والصقوها لكل اللي عندكم عشان المسؤولين يسمعونا",
+          "missed": [
+            "share_pressure"
+          ],
+          "extra": []
+        },
+        {
+          "id": "t2-ar-18",
+          "phenomenon": "dialect",
+          "text": "الحقوا!!! محطات البترول في الشارقة خلصت",
+          "missed": [
+            "fear"
+          ],
+          "extra": []
+        },
+        {
+          "id": "t2-ar-21",
+          "phenomenon": "dialect",
+          "text": "انشروها في كل مكان، الإعلام ما بيوريكم الغرق في العين",
+          "missed": [
+            "manipulation"
+          ],
+          "extra": []
+        },
+        {
+          "id": "t2-ar-22",
+          "phenomenon": "dialect",
+          "text": "مشاهد مخيفة في دبي مول الحين، فوضى وصراخ",
+          "missed": [
+            "urgency"
+          ],
+          "extra": []
+        },
+        {
+          "id": "t2-ar-25",
+          "phenomenon": "dialect",
+          "text": "اصحوا! الفيروس أخطر بكثير من اللي يقولونه",
+          "missed": [
+            "fear"
+          ],
+          "extra": []
+        },
+        {
+          "id": "t2-ar-29",
+          "phenomenon": "dialect",
+          "text": "رجعوا عيالكم البيت فوراً، في شي خايس قاعد يصير جنب الميناء",
+          "missed": [
+            "fear"
+          ],
+          "extra": []
+        }
+      ]
+    },
+    "all": {
+      "n": 60,
+      "metrics": {
+        "urgency": {
+          "precision": 1.0,
+          "recall": 0.917,
+          "f1": 0.957,
+          "tp": 11,
+          "fp": 0,
+          "fn": 1
+        },
+        "fear": {
+          "precision": 1.0,
+          "recall": 0.25,
+          "f1": 0.4,
+          "tp": 4,
+          "fp": 0,
+          "fn": 12
+        },
+        "manipulation": {
+          "precision": 1.0,
+          "recall": 0.583,
+          "f1": 0.737,
+          "tp": 7,
+          "fp": 0,
+          "fn": 5
+        },
+        "share_pressure": {
+          "precision": 1.0,
+          "recall": 0.9,
+          "f1": 0.947,
+          "tp": 9,
+          "fp": 0,
+          "fn": 1
+        },
+        "micro": {
+          "precision": 1.0,
+          "recall": 0.62,
+          "f1": 0.765,
+          "tp": 31,
+          "fp": 0,
+          "fn": 19
+        },
+        "false_alarm_rate_negation": {
+          "rate": 0.0,
+          "n": 6
+        },
+        "false_alarm_rate_quote": {
+          "rate": 0.0,
+          "n": 6
+        },
+        "false_alarm_rate_debunk": {
+          "rate": 0.0,
+          "n": 6
+        },
+        "false_alarm_rate_warning": {
+          "rate": 0.0,
+          "n": 6
+        },
+        "false_alarm_rate_neutral": {
+          "rate": 0.0,
+          "n": 8
         }
       }
     }

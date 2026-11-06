@@ -1,5 +1,15 @@
 # Evaluation data
 
+## Text indicator sets
+
+| File | Use |
+|---|---|
+| `text_indicators_dev.jsonl` | development – lexicon 1.0 written from it |
+| `text_indicators_dev_dialect.jsonl` | development – Gulf-dialect / everyday-English additions for lexicon 1.1 |
+| `text_indicators_test.jsonl` | test v1 – blind for 1.0 only (its misses were seen before 1.1) |
+| `text_indicators_test_v2.jsonl` | **test v2 – blind**: written and committed (7ed7538) before lexicon 1.1 |
+| `text_indicators_real_dev.jsonl` / `_real_test.jsonl` | created by `eval/annotation/import_real.py` from reviewed real posts |
+
 ## `text_indicators_dev.jsonl` / `text_indicators_test.jsonl`
 
 Developer-written short social-media-style posts about the UAE, in English and Arabic (MSA and some

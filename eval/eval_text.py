@@ -17,7 +17,7 @@ from saqrsight.analysis import text_indicators  # noqa: E402
 from saqrsight.analysis.lexicon import CATEGORIES  # noqa: E402
 
 
-SPLITS = [x for x in ("dev", "dev_dialect", "test", "test_v2")
+SPLITS = [x for x in ("dev", "dev_dialect", "real_dev", "test", "test_v2", "real_test")
           if (ROOT / "eval" / "data" / f"text_indicators_{x}.jsonl").exists()]
 
 
