@@ -1,6 +1,6 @@
 {
-  "id": "8fee44e2-6574-4549-9e71-25cee34a2361",
-  "created_at": "2026-11-05T12:17:13.247557+00:00",
+  "id": "98a03a4f-bae4-4701-9339-e6f97a6167f6",
+  "created_at": "2026-11-06T16:33:12.851017+00:00",
   "status": "complete",
   "mode": "analysis",
   "version": "0.2.0",
@@ -35,7 +35,7 @@
     "text_analysis": {
       "module": "text_analysis",
       "status": "completed",
-      "version": "text-lexicon-1.0",
+      "version": "text-lexicon-1.1",
       "findings": [],
       "summary": "No urgency, fear, manipulation or share-pressure wording from the indicator list was found.",
       "score": null,
@@ -96,7 +96,7 @@
         "Evaluated on 286 held-out images: precision 0.813, recall 0.608, false-positive rate on authentic images 0.14."
       ],
       "error": null,
-      "duration_ms": 298,
+      "duration_ms": 309,
       "data": {
         "frames": [
           {
@@ -154,7 +154,7 @@
         "NewsCLIPpings test accuracy 0.6799; see README for independent VERITE results."
       ],
       "error": null,
-      "duration_ms": 62,
+      "duration_ms": 59,
       "data": {
         "decision": "disagree",
         "frames": [
@@ -269,7 +269,7 @@
         "لا تتنبأ بردة فعل القراء.",
         "قد لا تُرصد اللهجات والسخرية والأخطاء الإملائية والعربية المكتوبة بحروف لاتينية (العربيزي)."
       ],
-      "version": "text-lexicon-1.0"
+      "version": "text-lexicon-1.1"
     },
     {
       "key": "media_analysis",

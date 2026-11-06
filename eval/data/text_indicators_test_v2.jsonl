@@ -1,0 +1,60 @@
+{"id":"t2-en-01","lang":"en","text":"EMERGENCY: gas leak spreading across JLT, get out NOW and forward this to every group!","labels":["urgency","fear","share_pressure"],"phenomenon":"indicator"}
+{"id":"t2-en-02","lang":"en","text":"They are covering up the real cause of the power cut in Ajman. Don't believe the official story.","labels":["manipulation"],"phenomenon":"indicator"}
+{"id":"t2-en-03","lang":"en","text":"Please stop forwarding the audio about kidnappers in Sharjah malls, police say it is fake.","labels":[],"phenomenon":"debunk"}
+{"id":"t2-en-04","lang":"en","text":"There is no need to stockpile food, supermarkets in Abu Dhabi are fully supplied.","labels":[],"phenomenon":"negation"}
+{"id":"t2-en-05","lang":"en","text":"An Instagram story claims “the metro is shutting down forever, tell everyone”. RTA says this is false.","labels":[],"phenomenon":"quote"}
+{"id":"t2-en-06","lang":"en","text":"Dubai Police urge drivers to avoid Al Khail Road after a serious accident this morning.","labels":[],"phenomenon":"warning"}
+{"id":"t2-en-07","lang":"en","text":"Huge fire in Al Quoz industrial area, it's spreading fast, people are trapped!!","labels":["fear","urgency"],"phenomenon":"indicator"}
+{"id":"t2-en-08","lang":"en","text":"Lovely morning walk along the Al Majaz waterfront.","labels":[],"phenomenon":"neutral"}
+{"id":"t2-en-09","lang":"en","text":"Share before it's deleted: secret documents show schools will stay closed all year.","labels":["share_pressure","manipulation"],"phenomenon":"indicator"}
+{"id":"t2-en-10","lang":"en","text":"Breaking: earthquake felt in Fujairah, buildings shaking, run outside immediately!","labels":["urgency","fear"],"phenomenon":"indicator"}
+{"id":"t2-en-11","lang":"en","text":"Nobody is reporting this but hospitals in Dubai are overflowing with patients.","labels":["manipulation","fear"],"phenomenon":"indicator"}
+{"id":"t2-en-12","lang":"en","text":"Don't panic about the rain alerts – just follow NCM updates and drive slowly.","labels":[],"phenomenon":"negation"}
+{"id":"t2-en-13","lang":"en","text":"The ministry has published new visa rules for freelancers.","labels":[],"phenomenon":"neutral"}
+{"id":"t2-en-14","lang":"en","text":"Copy and paste this to all your contacts so the authorities hear us!","labels":["share_pressure"],"phenomenon":"indicator"}
+{"id":"t2-en-15","lang":"en","text":"The rumour that tap water in Ajman is poisoned is false, according to the utility.","labels":[],"phenomenon":"debunk"}
+{"id":"t2-en-16","lang":"en","text":"Absolutely confirmed, my cousin works there: the airport will close tonight.","labels":["manipulation"],"phenomenon":"indicator"}
+{"id":"t2-en-17","lang":"en","text":"NCEMA advises residents in low areas of Ras Al Khaimah to stay indoors during the storm.","labels":[],"phenomenon":"warning"}
+{"id":"t2-en-18","lang":"en","text":"ACT FAST!!! Fuel stations are running dry across Sharjah!!","labels":["urgency","fear"],"phenomenon":"indicator"}
+{"id":"t2-en-19","lang":"en","text":"A tweet says “people are dying in the streets” but the photo is from a film set.","labels":[],"phenomenon":"quote"}
+{"id":"t2-en-20","lang":"en","text":"Traffic update: minor delays on Emirates Road due to roadworks.","labels":[],"phenomenon":"neutral"}
+{"id":"t2-en-21","lang":"en","text":"Spread this everywhere, the media won't show you the flooding in Al Ain!","labels":["share_pressure","manipulation"],"phenomenon":"indicator"}
+{"id":"t2-en-22","lang":"en","text":"Terrible scenes at Dubai Mall right now, total chaos and screaming.","labels":["fear","urgency"],"phenomenon":"indicator"}
+{"id":"t2-en-23","lang":"en","text":"We will never share unverified clips from accidents on this page.","labels":[],"phenomenon":"negation"}
+{"id":"t2-en-24","lang":"en","text":"Abu Dhabi Civil Defence warned of a dangerous fire risk in parked cars during the heatwave.","labels":[],"phenomenon":"warning"}
+{"id":"t2-en-25","lang":"en","text":"Wake up! This virus is far worse than they admit.","labels":["manipulation","fear"],"phenomenon":"indicator"}
+{"id":"t2-en-26","lang":"en","text":"Tag your friends and repost so everyone in Ajman knows!","labels":["share_pressure"],"phenomenon":"indicator"}
+{"id":"t2-en-27","lang":"en","text":"Viral claims of a curfew in Dubai are misleading, the Media Office said.","labels":[],"phenomenon":"debunk"}
+{"id":"t2-en-28","lang":"en","text":"The new park in Khalifa City opens to families next week.","labels":[],"phenomenon":"neutral"}
+{"id":"t2-en-29","lang":"en","text":"Get your kids home immediately, something bad is happening near the port.","labels":["urgency","fear"],"phenomenon":"indicator"}
+{"id":"t2-en-30","lang":"en","text":"Someone posted “share this or you'll regret it” under the video – it is a scam account.","labels":[],"phenomenon":"quote"}
+{"id":"t2-ar-01","lang":"ar","text":"طوارئ: تسرب غاز في الجميرا، اطلعوا من بيوتكم الحين ودزوها لكل الأهل","labels":["urgency","fear","share_pressure"],"phenomenon":"dialect"}
+{"id":"t2-ar-02","lang":"ar","text":"يغطون على السبب الحقيقي لانقطاع الكهرباء في عجمان، لا تصدقون الرواية الرسمية","labels":["manipulation"],"phenomenon":"dialect"}
+{"id":"t2-ar-03","lang":"ar","text":"رجاءً وقفوا نشر التسجيل عن الخطف في مولات الشارقة، الشرطة قالت إنه كذب","labels":[],"phenomenon":"debunk"}
+{"id":"t2-ar-04","lang":"ar","text":"ما في داعي تخزنون أكل، المحلات في أبوظبي مليانة","labels":[],"phenomenon":"negation"}
+{"id":"t2-ar-05","lang":"ar","text":"قصة في انستغرام تقول \"المترو بيوقف للأبد، علموا الكل\" وهيئة الطرق تقول غير صحيح","labels":[],"phenomenon":"quote"}
+{"id":"t2-ar-06","lang":"ar","text":"شرطة دبي تدعو السائقين إلى تجنب شارع الخيل بعد حادث بليغ صباح اليوم","labels":[],"phenomenon":"warning"}
+{"id":"t2-ar-07","lang":"ar","text":"حريق كبير في القوز الصناعية والنار تنتشر بسرعة وفي ناس محاصرين!!","labels":["fear","urgency"],"phenomenon":"dialect"}
+{"id":"t2-ar-08","lang":"ar","text":"مشي صباحي جميل على واجهة المجاز المائية","labels":[],"phenomenon":"neutral"}
+{"id":"t2-ar-09","lang":"ar","text":"نزلوها قبل ما تنحذف: وثائق سرية تقول المدارس بتسكر طول السنة","labels":["share_pressure","manipulation"],"phenomenon":"dialect"}
+{"id":"t2-ar-10","lang":"ar","text":"عاجل: هزة أرضية في الفجيرة والعمارات تهتز، اطلعوا برا فوراً","labels":["urgency","fear"],"phenomenon":"indicator"}
+{"id":"t2-ar-11","lang":"ar","text":"محد قاعد يتكلم بس مستشفيات دبي مليانة مرضى وما في مكان","labels":["manipulation","fear"],"phenomenon":"dialect"}
+{"id":"t2-ar-12","lang":"ar","text":"لا تخافون من تنبيهات المطر، تابعوا المركز الوطني للأرصاد وسوقوا على مهل","labels":[],"phenomenon":"negation"}
+{"id":"t2-ar-13","lang":"ar","text":"نشرت الوزارة قواعد جديدة لتأشيرات العمل الحر","labels":[],"phenomenon":"neutral"}
+{"id":"t2-ar-14","lang":"ar","text":"انسخوها والصقوها لكل اللي عندكم عشان المسؤولين يسمعونا","labels":["share_pressure"],"phenomenon":"dialect"}
+{"id":"t2-ar-15","lang":"ar","text":"الشائعة عن تسمم مياه الشرب في عجمان غير صحيحة حسب هيئة الكهرباء والماء","labels":[],"phenomenon":"debunk"}
+{"id":"t2-ar-16","lang":"ar","text":"أكيد مية بالمية، ولد عمي يشتغل هناك: المطار بيسكر الليلة","labels":["manipulation"],"phenomenon":"dialect"}
+{"id":"t2-ar-17","lang":"ar","text":"الهيئة الوطنية لإدارة الطوارئ تنصح سكان المناطق المنخفضة في رأس الخيمة بالبقاء في المنازل خلال العاصفة","labels":[],"phenomenon":"warning"}
+{"id":"t2-ar-18","lang":"ar","text":"الحقوا!!! محطات البترول في الشارقة خلصت","labels":["urgency","fear"],"phenomenon":"dialect"}
+{"id":"t2-ar-19","lang":"ar","text":"تغريدة تقول \"الناس تموت في الشوارع\" لكن الصورة من موقع تصوير فيلم","labels":[],"phenomenon":"quote"}
+{"id":"t2-ar-20","lang":"ar","text":"تحديث مروري: تأخير بسيط على شارع الإمارات بسبب أعمال الطرق","labels":[],"phenomenon":"neutral"}
+{"id":"t2-ar-21","lang":"ar","text":"انشروها في كل مكان، الإعلام ما بيوريكم الغرق في العين","labels":["share_pressure","manipulation"],"phenomenon":"dialect"}
+{"id":"t2-ar-22","lang":"ar","text":"مشاهد مخيفة في دبي مول الحين، فوضى وصراخ","labels":["fear","urgency"],"phenomenon":"dialect"}
+{"id":"t2-ar-23","lang":"ar","text":"لن ننشر أي مقاطع غير موثقة للحوادث في هذه الصفحة","labels":[],"phenomenon":"negation"}
+{"id":"t2-ar-24","lang":"ar","text":"حذر الدفاع المدني في أبوظبي من خطر اشتعال السيارات المتوقفة خلال موجة الحر","labels":[],"phenomenon":"warning"}
+{"id":"t2-ar-25","lang":"ar","text":"اصحوا! الفيروس أخطر بكثير من اللي يقولونه","labels":["manipulation","fear"],"phenomenon":"dialect"}
+{"id":"t2-ar-26","lang":"ar","text":"منشنوا ربعكم وعيدوا النشر عشان كل عجمان تدري","labels":["share_pressure"],"phenomenon":"dialect"}
+{"id":"t2-ar-27","lang":"ar","text":"أكد المكتب الإعلامي لحكومة دبي أن الادعاءات المتداولة عن حظر التجول مضللة","labels":[],"phenomenon":"debunk"}
+{"id":"t2-ar-28","lang":"ar","text":"الحديقة الجديدة في مدينة خليفة تفتح للعائلات الأسبوع الجاي","labels":[],"phenomenon":"neutral"}
+{"id":"t2-ar-29","lang":"ar","text":"رجعوا عيالكم البيت فوراً، في شي خايس قاعد يصير جنب الميناء","labels":["urgency","fear"],"phenomenon":"dialect"}
+{"id":"t2-ar-30","lang":"ar","text":"واحد كتب \"انشرها ولا بتندم\" تحت الفيديو، وهو حساب احتيال","labels":[],"phenomenon":"quote"}

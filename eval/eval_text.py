@@ -17,6 +17,10 @@ from saqrsight.analysis import text_indicators  # noqa: E402
 from saqrsight.analysis.lexicon import CATEGORIES  # noqa: E402
 
 
+SPLITS = [x for x in ("dev", "dev_dialect", "real_dev", "test", "test_v2", "real_test")
+          if (ROOT / "eval" / "data" / f"text_indicators_{x}.jsonl").exists()]
+
+
 def predict(text):
     r = text_indicators.analyze(text, "")
     return set(r.data["categories"])
@@ -54,7 +58,7 @@ def evaluate(rows):
 
 def main():
     results = {"model": text_indicators.VERSION}
-    for split in ("dev", "test"):
+    for split in SPLITS:
         rows = [json.loads(line) for line in open(ROOT / "eval" / "data" / f"text_indicators_{split}.jsonl", encoding="utf-8")]
         results[split] = {}
         for lang in ("en", "ar", "all"):
@@ -66,7 +70,7 @@ def main():
     out = ROOT / "eval" / "results" / "text.json"
     out.parent.mkdir(exist_ok=True)
     out.write_text(json.dumps(results, indent=2, ensure_ascii=False))
-    for split in ("dev", "test"):
+    for split in SPLITS:
         for lang in ("en", "ar"):
             r = results[split][lang]
             line = "  ".join(f"{c[:6]} P{r['metrics'][c]['precision']} R{r['metrics'][c]['recall']} F{r['metrics'][c]['f1']}"

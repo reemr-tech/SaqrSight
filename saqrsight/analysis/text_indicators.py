@@ -22,7 +22,7 @@ from ..textutil import TASHKEEL_RE, TATWEEL, normalize_with_map
 from . import lexicon as L
 
 MODULE = "text_analysis"
-VERSION = "text-lexicon-1.0"
+VERSION = "text-lexicon-1.1"
 AR_PREFIX = r"(?:و|ف|ب|ل|ال|وال|فال|بال|لل)?"
 AR_SUFFIX = r"(?:ها|هم|ه|وا)?"
 CLAUSE_SPLIT = re.compile(r"[.!?؟؛;\n،,:]")

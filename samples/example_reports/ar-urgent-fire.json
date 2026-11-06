@@ -1,6 +1,6 @@
 {
-  "id": "82ef361a-1b36-481e-8f32-a2a5277355f4",
-  "created_at": "2026-11-05T12:17:12.192742+00:00",
+  "id": "8f78f853-54d1-427b-8f8d-040fcf6b11dd",
+  "created_at": "2026-11-06T16:33:11.788881+00:00",
   "status": "complete",
   "mode": "analysis",
   "version": "0.2.0",
@@ -40,7 +40,7 @@
     "text_analysis": {
       "module": "text_analysis",
       "status": "completed",
-      "version": "text-lexicon-1.0",
+      "version": "text-lexicon-1.1",
       "findings": [
         {
           "code": "urgency",
@@ -173,7 +173,7 @@
         "Evaluated on 286 held-out images: precision 0.813, recall 0.608, false-positive rate on authentic images 0.14."
       ],
       "error": null,
-      "duration_ms": 319,
+      "duration_ms": 315,
       "data": {
         "frames": [
           {
@@ -233,7 +233,7 @@
         "NewsCLIPpings test accuracy 0.6799; see README for independent VERITE results."
       ],
       "error": null,
-      "duration_ms": 57,
+      "duration_ms": 58,
       "data": {
         "decision": "inconclusive",
         "frames": [
@@ -350,7 +350,7 @@
         "لا تتنبأ بردة فعل القراء.",
         "قد لا تُرصد اللهجات والسخرية والأخطاء الإملائية والعربية المكتوبة بحروف لاتينية (العربيزي)."
       ],
-      "version": "text-lexicon-1.0"
+      "version": "text-lexicon-1.1"
     },
     {
       "key": "media_analysis",

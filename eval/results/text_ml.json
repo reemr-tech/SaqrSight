@@ -1,0 +1,746 @@
+{
+  "model": "tfidf-char2-5+logreg (one per category)",
+  "train_size": 90,
+  "test_v2": {
+    "en": {
+      "n": 30,
+      "metrics": {
+        "urgency": {
+          "precision": 1.0,
+          "recall": 0.5,
+          "f1": 0.667,
+          "tp": 3,
+          "fp": 0,
+          "fn": 3
+        },
+        "fear": {
+          "precision": 1.0,
+          "recall": 0.375,
+          "f1": 0.545,
+          "tp": 3,
+          "fp": 0,
+          "fn": 5
+        },
+        "manipulation": {
+          "precision": 1.0,
+          "recall": 0.667,
+          "f1": 0.8,
+          "tp": 4,
+          "fp": 0,
+          "fn": 2
+        },
+        "share_pressure": {
+          "precision": 1.0,
+          "recall": 0.6,
+          "f1": 0.75,
+          "tp": 3,
+          "fp": 0,
+          "fn": 2
+        },
+        "micro": {
+          "precision": 1.0,
+          "recall": 0.52,
+          "f1": 0.684,
+          "tp": 13,
+          "fp": 0,
+          "fn": 12
+        },
+        "false_alarm_rate_negation": {
+          "rate": 0.0,
+          "n": 3
+        },
+        "false_alarm_rate_quote": {
+          "rate": 0.0,
+          "n": 3
+        },
+        "false_alarm_rate_debunk": {
+          "rate": 0.0,
+          "n": 3
+        },
+        "false_alarm_rate_warning": {
+          "rate": 0.0,
+          "n": 3
+        },
+        "false_alarm_rate_neutral": {
+          "rate": 0.0,
+          "n": 4
+        }
+      },
+      "errors": [
+        {
+          "id": "t2-en-01",
+          "phenomenon": "indicator",
+          "text": "EMERGENCY: gas leak spreading across JLT, get out NOW and forward this to every group!",
+          "missed": [
+            "fear",
+            "share_pressure"
+          ],
+          "extra": []
+        },
+        {
+          "id": "t2-en-07",
+          "phenomenon": "indicator",
+          "text": "Huge fire in Al Quoz industrial area, it's spreading fast, people are trapped!!",
+          "missed": [
+            "urgency"
+          ],
+          "extra": []
+        },
+        {
+          "id": "t2-en-11",
+          "phenomenon": "indicator",
+          "text": "Nobody is reporting this but hospitals in Dubai are overflowing with patients.",
+          "missed": [
+            "fear"
+          ],
+          "extra": []
+        },
+        {
+          "id": "t2-en-18",
+          "phenomenon": "indicator",
+          "text": "ACT FAST!!! Fuel stations are running dry across Sharjah!!",
+          "missed": [
+            "fear",
+            "urgency"
+          ],
+          "extra": []
+        },
+        {
+          "id": "t2-en-21",
+          "phenomenon": "indicator",
+          "text": "Spread this everywhere, the media won't show you the flooding in Al Ain!",
+          "missed": [
+            "manipulation",
+            "share_pressure"
+          ],
+          "extra": []
+        },
+        {
+          "id": "t2-en-22",
+          "phenomenon": "indicator",
+          "text": "Terrible scenes at Dubai Mall right now, total chaos and screaming.",
+          "missed": [
+            "urgency"
+          ],
+          "extra": []
+        },
+        {
+          "id": "t2-en-25",
+          "phenomenon": "indicator",
+          "text": "Wake up! This virus is far worse than they admit.",
+          "missed": [
+            "fear",
+            "manipulation"
+          ],
+          "extra": []
+        },
+        {
+          "id": "t2-en-29",
+          "phenomenon": "indicator",
+          "text": "Get your kids home immediately, something bad is happening near the port.",
+          "missed": [
+            "fear"
+          ],
+          "extra": []
+        }
+      ]
+    },
+    "ar": {
+      "n": 30,
+      "metrics": {
+        "urgency": {
+          "precision": 1.0,
+          "recall": 0.333,
+          "f1": 0.5,
+          "tp": 2,
+          "fp": 0,
+          "fn": 4
+        },
+        "fear": {
+          "precision": 1.0,
+          "recall": 0.375,
+          "f1": 0.545,
+          "tp": 3,
+          "fp": 0,
+          "fn": 5
+        },
+        "manipulation": {
+          "precision": 1.0,
+          "recall": 0.5,
+          "f1": 0.667,
+          "tp": 3,
+          "fp": 0,
+          "fn": 3
+        },
+        "share_pressure": {
+          "precision": 1.0,
+          "recall": 0.8,
+          "f1": 0.889,
+          "tp": 4,
+          "fp": 0,
+          "fn": 1
+        },
+        "micro": {
+          "precision": 1.0,
+          "recall": 0.48,
+          "f1": 0.649,
+          "tp": 12,
+          "fp": 0,
+          "fn": 13
+        },
+        "false_alarm_rate_negation": {
+          "rate": 0.0,
+          "n": 3
+        },
+        "false_alarm_rate_quote": {
+          "rate": 0.0,
+          "n": 3
+        },
+        "false_alarm_rate_debunk": {
+          "rate": 0.0,
+          "n": 3
+        },
+        "false_alarm_rate_warning": {
+          "rate": 0.0,
+          "n": 3
+        },
+        "false_alarm_rate_neutral": {
+          "rate": 0.0,
+          "n": 4
+        }
+      },
+      "errors": [
+        {
+          "id": "t2-ar-01",
+          "phenomenon": "dialect",
+          "text": "طوارئ: تسرب غاز في الجميرا، اطلعوا من بيوتكم الحين ودزوها لكل الأهل",
+          "missed": [
+            "fear",
+            "share_pressure"
+          ],
+          "extra": []
+        },
+        {
+          "id": "t2-ar-07",
+          "phenomenon": "dialect",
+          "text": "حريق كبير في القوز الصناعية والنار تنتشر بسرعة وفي ناس محاصرين!!",
+          "missed": [
+            "urgency"
+          ],
+          "extra": []
+        },
+        {
+          "id": "t2-ar-09",
+          "phenomenon": "dialect",
+          "text": "نزلوها قبل ما تنحذف: وثائق سرية تقول المدارس بتسكر طول السنة",
+          "missed": [
+            "manipulation"
+          ],
+          "extra": []
+        },
+        {
+          "id": "t2-ar-11",
+          "phenomenon": "dialect",
+          "text": "محد قاعد يتكلم بس مستشفيات دبي مليانة مرضى وما في مكان",
+          "missed": [
+            "fear",
+            "manipulation"
+          ],
+          "extra": []
+        },
+        {
+          "id": "t2-ar-18",
+          "phenomenon": "dialect",
+          "text": "الحقوا!!! محطات البترول في الشارقة خلصت",
+          "missed": [
+            "fear",
+            "urgency"
+          ],
+          "extra": []
+        },
+        {
+          "id": "t2-ar-22",
+          "phenomenon": "dialect",
+          "text": "مشاهد مخيفة في دبي مول الحين، فوضى وصراخ",
+          "missed": [
+            "urgency"
+          ],
+          "extra": []
+        },
+        {
+          "id": "t2-ar-25",
+          "phenomenon": "dialect",
+          "text": "اصحوا! الفيروس أخطر بكثير من اللي يقولونه",
+          "missed": [
+            "fear",
+            "manipulation"
+          ],
+          "extra": []
+        },
+        {
+          "id": "t2-ar-29",
+          "phenomenon": "dialect",
+          "text": "رجعوا عيالكم البيت فوراً، في شي خايس قاعد يصير جنب الميناء",
+          "missed": [
+            "fear",
+            "urgency"
+          ],
+          "extra": []
+        }
+      ]
+    },
+    "all": {
+      "n": 60,
+      "metrics": {
+        "urgency": {
+          "precision": 1.0,
+          "recall": 0.417,
+          "f1": 0.588,
+          "tp": 5,
+          "fp": 0,
+          "fn": 7
+        },
+        "fear": {
+          "precision": 1.0,
+          "recall": 0.375,
+          "f1": 0.545,
+          "tp": 6,
+          "fp": 0,
+          "fn": 10
+        },
+        "manipulation": {
+          "precision": 1.0,
+          "recall": 0.583,
+          "f1": 0.737,
+          "tp": 7,
+          "fp": 0,
+          "fn": 5
+        },
+        "share_pressure": {
+          "precision": 1.0,
+          "recall": 0.7,
+          "f1": 0.824,
+          "tp": 7,
+          "fp": 0,
+          "fn": 3
+        },
+        "micro": {
+          "precision": 1.0,
+          "recall": 0.5,
+          "f1": 0.667,
+          "tp": 25,
+          "fp": 0,
+          "fn": 25
+        },
+        "false_alarm_rate_negation": {
+          "rate": 0.0,
+          "n": 6
+        },
+        "false_alarm_rate_quote": {
+          "rate": 0.0,
+          "n": 6
+        },
+        "false_alarm_rate_debunk": {
+          "rate": 0.0,
+          "n": 6
+        },
+        "false_alarm_rate_warning": {
+          "rate": 0.0,
+          "n": 6
+        },
+        "false_alarm_rate_neutral": {
+          "rate": 0.0,
+          "n": 8
+        }
+      }
+    }
+  },
+  "test": {
+    "en": {
+      "n": 25,
+      "metrics": {
+        "urgency": {
+          "precision": null,
+          "recall": 0.0,
+          "f1": null,
+          "tp": 0,
+          "fp": 0,
+          "fn": 4
+        },
+        "fear": {
+          "precision": 1.0,
+          "recall": 0.167,
+          "f1": 0.286,
+          "tp": 1,
+          "fp": 0,
+          "fn": 5
+        },
+        "manipulation": {
+          "precision": 0.8,
+          "recall": 1.0,
+          "f1": 0.889,
+          "tp": 4,
+          "fp": 1,
+          "fn": 0
+        },
+        "share_pressure": {
+          "precision": null,
+          "recall": 0.0,
+          "f1": null,
+          "tp": 0,
+          "fp": 0,
+          "fn": 5
+        },
+        "micro": {
+          "precision": 0.833,
+          "recall": 0.263,
+          "f1": 0.4,
+          "tp": 5,
+          "fp": 1,
+          "fn": 14
+        },
+        "false_alarm_rate_negation": {
+          "rate": 0.0,
+          "n": 3
+        },
+        "false_alarm_rate_quote": {
+          "rate": 0.0,
+          "n": 2
+        },
+        "false_alarm_rate_debunk": {
+          "rate": 0.0,
+          "n": 2
+        },
+        "false_alarm_rate_warning": {
+          "rate": 0.0,
+          "n": 3
+        },
+        "false_alarm_rate_neutral": {
+          "rate": 0.333,
+          "n": 3
+        }
+      },
+      "errors": [
+        {
+          "id": "t-en-01",
+          "phenomenon": "indicator",
+          "text": "ALERT!!! Massive blast in Mussafah, act now and tell everyone you know.",
+          "missed": [
+            "fear",
+            "share_pressure",
+            "urgency"
+          ],
+          "extra": []
+        },
+        {
+          "id": "t-en-02",
+          "phenomenon": "indicator",
+          "text": "Pass this on: the government is hiding the real numbers.",
+          "missed": [
+            "share_pressure"
+          ],
+          "extra": []
+        },
+        {
+          "id": "t-en-08",
+          "phenomenon": "indicator",
+          "text": "Go to the supermarket immediately, shelves will be empty by tonight!",
+          "missed": [
+            "fear",
+            "urgency"
+          ],
+          "extra": []
+        },
+        {
+          "id": "t-en-11",
+          "phenomenon": "indicator",
+          "text": "Make this viral so the authorities act on the flooding in Fujairah.",
+          "missed": [
+            "share_pressure"
+          ],
+          "extra": []
+        },
+        {
+          "id": "t-en-14",
+          "phenomenon": "indicator",
+          "text": "Just in: power outage reported in parts of Sharjah.",
+          "missed": [
+            "urgency"
+          ],
+          "extra": []
+        },
+        {
+          "id": "t-en-18",
+          "phenomenon": "indicator",
+          "text": "You won't believe what happened in Dubai Marina tonight — RT before it disappears!",
+          "missed": [
+            "share_pressure"
+          ],
+          "extra": []
+        },
+        {
+          "id": "t-en-19",
+          "phenomenon": "neutral",
+          "text": "Officials confirmed the Corniche road will reopen on Saturday.",
+          "missed": [],
+          "extra": [
+            "manipulation"
+          ]
+        },
+        {
+          "id": "t-en-20",
+          "phenomenon": "indicator",
+          "text": "Everyone is in a total panic at the airport, it's the end of the world.",
+          "missed": [
+            "fear"
+          ],
+          "extra": []
+        },
+        {
+          "id": "t-en-21",
+          "phenomenon": "indicator",
+          "text": "Hurry, last chance to leave the city before the storm hits!",
+          "missed": [
+            "fear",
+            "urgency"
+          ],
+          "extra": []
+        },
+        {
+          "id": "t-en-24",
+          "phenomenon": "indicator",
+          "text": "Send it to all your groups: no one is safe in Deira tonight.",
+          "missed": [
+            "fear",
+            "share_pressure"
+          ],
+          "extra": []
+        }
+      ]
+    },
+    "ar": {
+      "n": 25,
+      "metrics": {
+        "urgency": {
+          "precision": 1.0,
+          "recall": 0.25,
+          "f1": 0.4,
+          "tp": 1,
+          "fp": 0,
+          "fn": 3
+        },
+        "fear": {
+          "precision": 1.0,
+          "recall": 0.333,
+          "f1": 0.5,
+          "tp": 2,
+          "fp": 0,
+          "fn": 4
+        },
+        "manipulation": {
+          "precision": 1.0,
+          "recall": 0.5,
+          "f1": 0.667,
+          "tp": 2,
+          "fp": 0,
+          "fn": 2
+        },
+        "share_pressure": {
+          "precision": 0.75,
+          "recall": 0.6,
+          "f1": 0.667,
+          "tp": 3,
+          "fp": 1,
+          "fn": 2
+        },
+        "micro": {
+          "precision": 0.889,
+          "recall": 0.421,
+          "f1": 0.571,
+          "tp": 8,
+          "fp": 1,
+          "fn": 11
+        },
+        "false_alarm_rate_negation": {
+          "rate": 0.0,
+          "n": 3
+        },
+        "false_alarm_rate_quote": {
+          "rate": 0.5,
+          "n": 2
+        },
+        "false_alarm_rate_debunk": {
+          "rate": 0.0,
+          "n": 2
+        },
+        "false_alarm_rate_warning": {
+          "rate": 0.0,
+          "n": 3
+        },
+        "false_alarm_rate_neutral": {
+          "rate": 0.0,
+          "n": 3
+        }
+      },
+      "errors": [
+        {
+          "id": "t-ar-01",
+          "phenomenon": "indicator",
+          "text": "تنبيه!!! انفجار هائل في المصفح، عمموا الخبر بسرعة",
+          "missed": [
+            "fear",
+            "urgency"
+          ],
+          "extra": []
+        },
+        {
+          "id": "t-ar-05",
+          "phenomenon": "quote",
+          "text": "تداول رسالة تقول \"انشروها قبل الحذف\" وهي إشاعة",
+          "missed": [],
+          "extra": [
+            "share_pressure"
+          ]
+        },
+        {
+          "id": "t-ar-08",
+          "phenomenon": "dialect",
+          "text": "روحوا السوبرماركت فوراً، الرفوف بتفضى الليلة!",
+          "missed": [
+            "urgency"
+          ],
+          "extra": []
+        },
+        {
+          "id": "t-ar-10",
+          "phenomenon": "indicator",
+          "text": "ما لا يقولونه لكم عن إصابات الفيروس في العين",
+          "missed": [
+            "manipulation"
+          ],
+          "extra": []
+        },
+        {
+          "id": "t-ar-11",
+          "phenomenon": "dialect",
+          "text": "خلوها تنتشر عشان المسؤولين يتحركون بخصوص السيول في الفجيرة",
+          "missed": [
+            "share_pressure"
+          ],
+          "extra": []
+        },
+        {
+          "id": "t-ar-14",
+          "phenomenon": "indicator",
+          "text": "عاجل: انقطاع الكهرباء في أجزاء من الشارقة",
+          "missed": [
+            "urgency"
+          ],
+          "extra": []
+        },
+        {
+          "id": "t-ar-18",
+          "phenomenon": "indicator",
+          "text": "لن تصدق ما حدث في دبي مارينا الليلة، ريتويت قبل ما ينحذف",
+          "missed": [
+            "manipulation",
+            "share_pressure"
+          ],
+          "extra": []
+        },
+        {
+          "id": "t-ar-20",
+          "phenomenon": "indicator",
+          "text": "هلع في المطار، كأنها نهاية العالم",
+          "missed": [
+            "fear"
+          ],
+          "extra": []
+        },
+        {
+          "id": "t-ar-21",
+          "phenomenon": "dialect",
+          "text": "الحقوا اطلعوا من المدينة قبل وصول العاصفة!",
+          "missed": [
+            "fear"
+          ],
+          "extra": []
+        },
+        {
+          "id": "t-ar-24",
+          "phenomenon": "indicator",
+          "text": "ارسلها لكل الجروبات: لا أحد في أمان في ديرة الليلة",
+          "missed": [
+            "fear"
+          ],
+          "extra": []
+        }
+      ]
+    },
+    "all": {
+      "n": 50,
+      "metrics": {
+        "urgency": {
+          "precision": 1.0,
+          "recall": 0.125,
+          "f1": 0.222,
+          "tp": 1,
+          "fp": 0,
+          "fn": 7
+        },
+        "fear": {
+          "precision": 1.0,
+          "recall": 0.25,
+          "f1": 0.4,
+          "tp": 3,
+          "fp": 0,
+          "fn": 9
+        },
+        "manipulation": {
+          "precision": 0.857,
+          "recall": 0.75,
+          "f1": 0.8,
+          "tp": 6,
+          "fp": 1,
+          "fn": 2
+        },
+        "share_pressure": {
+          "precision": 0.75,
+          "recall": 0.3,
+          "f1": 0.429,
+          "tp": 3,
+          "fp": 1,
+          "fn": 7
+        },
+        "micro": {
+          "precision": 0.867,
+          "recall": 0.342,
+          "f1": 0.491,
+          "tp": 13,
+          "fp": 2,
+          "fn": 25
+        },
+        "false_alarm_rate_negation": {
+          "rate": 0.0,
+          "n": 6
+        },
+        "false_alarm_rate_quote": {
+          "rate": 0.25,
+          "n": 4
+        },
+        "false_alarm_rate_debunk": {
+          "rate": 0.0,
+          "n": 4
+        },
+        "false_alarm_rate_warning": {
+          "rate": 0.0,
+          "n": 6
+        },
+        "false_alarm_rate_neutral": {
+          "rate": 0.167,
+          "n": 6
+        }
+      }
+    }
+  }
+}
