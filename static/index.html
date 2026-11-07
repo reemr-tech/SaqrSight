@@ -5,41 +5,54 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>SaqrSight | A sharper view of the truth</title>
 <link rel="icon" type="image/png" href="/static/favicon.png">
-<link rel="stylesheet" href="/static/style.css?v=0.2.7">
-<link rel="stylesheet" href="/static/report.css?v=0.2.7">
+<link rel="stylesheet" href="/static/style.css?v=0.3.0">
+<link rel="stylesheet" href="/static/report.css?v=0.3.0">
 <link rel="stylesheet" href="/static/vendor/lenis.css">
-<link rel="stylesheet" href="/static/motion.css?v=0.2.7">
-<link rel="stylesheet" href="/static/theme-cyber.css?v=0.2.7">
+<link rel="stylesheet" href="/static/motion.css?v=0.3.0">
+<link rel="stylesheet" href="/static/theme-cyber.css?v=0.3.0">
+<link rel="stylesheet" href="/static/screens.css?v=0.3.0">
 </head>
-<body>
+<body class="signed-out">
 <aside class="sidebar">
   <a class="brand" href="/"><img src="/static/logo.png" class="brand-mark" alt="SaqrSight falcon logo" width="256" height="256"><span>SaqrSight<small data-i18n="tagline">A SHARPER PERSPECTIVE</small></span></a>
   <div class="workspace" data-i18n="workspace">THE OBSERVATORY</div>
   <nav>
-    <button class="nav active" id="newnav"><span class="ico">↗</span> <b data-i18n="navNew">New assessment</b></button>
-    <button class="nav" id="historynav"><span class="ico">▤</span> <b data-i18n="navHistory">Saved reports</b> <span id="count">0</span></button>
+    <button class="nav" id="dashnav"><span class="ico">◧</span> <b data-i18n="navDash">Dashboard</b></button>
+    <button class="nav" id="newnav"><span class="ico">↗</span> <b data-i18n="navNew">New assessment</b></button>
+    <button class="nav" id="historynav"><span class="ico">⌕</span> <b data-i18n="navSearch">Search reports</b> <span id="count">0</span></button>
+    <button class="nav" id="modelsnav"><span class="ico">◈</span> <b data-i18n="navModels">Models &amp; roadmap</b></button>
   </nav>
   <div class="sidebar-art" aria-hidden="true"><span>صقر</span><p data-i18n-html="sideQuote">Clarity begins<br>with a closer look.</p><div class="orbit"></div></div>
-  <div class="sidebar-bottom"><span class="dot"></span> <span data-i18n="localWorkspace">Local workspace</span><p data-i18n="milestone">SGP2 · Analysis prototype</p><small data-i18n="sideScope">Text, images & short video. Evidence-led thinking.</small></div>
+  <div class="sidebar-bottom">
+    <div class="userbox"><span class="dot"></span> <b id="username"></b><small id="useremail"></small></div>
+    <button class="logout" id="logout" type="button" data-i18n="logout">Log out</button>
+    <p data-i18n="milestone">SGP1 · Text analysis prototype</p>
+  </div>
 </aside>
 <main>
 <header>
-  <span class="header-path">SAQRSIGHT LAB <b>/</b> <span id="breadcrumb"></span></span>
+  <span class="header-path"><a class="mini-brand" href="/"><img src="/static/logo.png" alt="" width="28" height="28"> SAQRSIGHT</a> <b>/</b> <span id="breadcrumb"></span></span>
   <span class="header-tools">
     <button class="langtoggle" id="uilang" type="button" aria-label="Switch interface language">العربية</button>
-    <span class="pill" data-i18n="modePill">INITIAL ASSESSMENT</span>
+    <button class="secondary guest-only" id="hdrlogin" type="button" data-i18n="login">Log in</button>
+    <button class="primary guest-only" id="hdrsignup" type="button" data-i18n="signup">Sign up</button>
+    <span class="pill member-only" data-i18n="modePill">INITIAL ASSESSMENT</span>
   </span>
 </header>
 <div class="content">
-<div class="notice"><strong data-i18n="noticeTitle">Initial assessment, not a verdict</strong><span data-i18n="noticeBody">SaqrSight runs automated checks and explains what it found and what remains uncertain. Always verify important claims with official sources.</span></div>
 
-<section id="compose">
+<!-- ================= LANDING (visitors) ================= -->
+<section id="landing" hidden>
   <div class="hero">
     <div class="hero-copy">
       <div class="eyebrow"><span class="tiny-line"></span> <span data-i18n="heroEyebrow">INSPIRED BY THE FALCON. GUIDED BY EVIDENCE.</span></div>
       <h1 data-i18n-html="heroTitle">See beyond<br>the <em>claim.</em></h1>
       <p class="intro" data-i18n-html="heroIntro">A sharper perspective on UAE-related content.<br>Bring the words, visuals, and context into focus.</p>
-      <div class="hero-tags"><span>العربية / English</span><span data-i18n="tagMedia">Text · Images · Short video</span><span data-i18n="tagUae">UAE Focus</span></div>
+      <div class="cta-row">
+        <button class="primary" id="landsignup" type="button"><b data-i18n="landCta">Create a free account</b> <span>↗</span></button>
+        <button class="secondary" id="landlogin" type="button" data-i18n="landLogin">I already have an account</button>
+      </div>
+      <div class="hero-tags"><span>العربية / English</span><span data-i18n="tagText">Social-media text</span><span data-i18n="tagUae">UAE Focus</span></div>
     </div>
     <div class="falcon-scene">
       <div class="radar-ring ring-one"></div><div class="radar-ring ring-two"></div><div class="radar-ring ring-three"></div>
@@ -59,9 +72,70 @@
     </div>
   </div>
   <div class="workflow-strip"><span><b>01</b> <i data-i18n="flow1">Submit a claim</i></span><i>→</i><span><b>02</b> <i data-i18n="flow2">Explore the findings</i></span><i>→</i><span><b>03</b> <i data-i18n="flow3">Keep the perspective</i></span></div>
+  <div class="feature-grid">
+    <article class="card feature"><span class="feature-ico">ع/A</span><h2 data-i18n="f1">Arabic &amp; English text analysis</h2><p data-i18n="f1d">Finds urgent, alarming, manipulative and share-pressure wording – including Gulf dialect – and shows the exact words.</p></article>
+    <article class="card feature"><span class="feature-ico">≡</span><h2 data-i18n="f2">A report anyone can read</h2><p data-i18n="f2d">An initial assessment with a plain-language summary, review priority and next steps – downloadable in English, Arabic or both.</p></article>
+    <article class="card feature"><span class="feature-ico">⚿</span><h2 data-i18n="f3">Private by design</h2><p data-i18n="f3d">Your reports are stored on this server, visible only to your account, and can be deleted at any time.</p></article>
+  </div>
+  <p class="roadmap-note"><span data-i18n="landRoadmap">Image and video analysis, reverse image search and official-source search are planned for Senior Project 2.</span> <button class="linkbtn" id="landmodels" type="button" data-i18n="landRoadmapLink">See the models &amp; roadmap →</button></p>
+</section>
+
+<!-- ================= LOG IN / SIGN UP ================= -->
+<section id="login" hidden>
+  <form class="card authcard" id="loginform" novalidate>
+    <img src="/static/logo.png" alt="" class="auth-logo" width="72" height="72">
+    <h1 data-i18n="loginTitle">Welcome back.</h1>
+    <p class="intro" data-i18n="loginSub">Log in to see your saved assessments.</p>
+    <label for="loginemail" data-i18n="email">Email</label>
+    <input id="loginemail" type="email" autocomplete="username" required>
+    <label for="loginpassword" data-i18n="password">Password</label>
+    <input id="loginpassword" type="password" autocomplete="current-password" required>
+    <div class="autherror" role="alert" hidden></div>
+    <button class="primary wide" type="submit"><b data-i18n="login">Log in</b> <span>↗</span></button>
+    <p class="authswitch"><span data-i18n="noAccount">New to SaqrSight?</span> <button class="linkbtn" type="button" id="tosignup" data-i18n="signup">Sign up</button></p>
+  </form>
+</section>
+
+<section id="signup" hidden>
+  <form class="card authcard" id="signupform" novalidate>
+    <img src="/static/logo.png" alt="" class="auth-logo" width="72" height="72">
+    <h1 data-i18n="signupTitle">Create your account.</h1>
+    <p class="intro" data-i18n="signupSub">Your reports are private to your account.</p>
+    <label for="signupname" data-i18n="name">Name</label>
+    <input id="signupname" type="text" autocomplete="name" maxlength="80" required>
+    <label for="signupemail" data-i18n="email">Email</label>
+    <input id="signupemail" type="email" autocomplete="username" required>
+    <label for="signuppassword" data-i18n="password">Password</label>
+    <input id="signuppassword" type="password" autocomplete="new-password" minlength="8" required>
+    <small class="hint" data-i18n="pwHint">At least 8 characters.</small>
+    <div class="autherror" role="alert" hidden></div>
+    <button class="primary wide" type="submit"><b data-i18n="createAccount">Create account</b> <span>↗</span></button>
+    <p class="authswitch"><span data-i18n="haveAccount">Already have an account?</span> <button class="linkbtn" type="button" id="tologin" data-i18n="login">Log in</button></p>
+  </form>
+</section>
+
+<!-- ================= DASHBOARD ================= -->
+<section id="dashboard" hidden>
+  <div class="eyebrow" data-i18n="dashEyebrow">YOUR DASHBOARD</div>
+  <h1 id="dashtitle"></h1>
+  <p class="intro" data-i18n="dashIntro">An overview of the claims you have assessed.</p>
+  <div class="stat-grid" id="stats"></div>
+  <div class="dash-grid">
+    <article class="card"><h2 data-i18n="byVerdict">Initial assessments</h2><div id="chartverdict" class="bars"></div></article>
+    <article class="card"><h2 data-i18n="byPanic">Panic level of the wording</h2><div id="chartpanic" class="bars"></div></article>
+    <article class="card"><h2 data-i18n="byPriority">Review priority</h2><div id="chartpriority" class="bars"></div></article>
+    <article class="card"><h2 data-i18n="byCategory">Language indicators found</h2><div id="chartcategory" class="bars"></div></article>
+  </div>
+  <article class="card"><div class="section-top"><h2 data-i18n="recent">Recent reports</h2><button class="secondary" id="dashnew" type="button" data-i18n="newAssess">↗ New assessment</button></div><div id="recentlist"></div></article>
+</section>
+
+<!-- ================= NEW ASSESSMENT ================= -->
+<section id="compose" hidden>
+  <div class="eyebrow" data-i18n="composeEyebrow">NEW ASSESSMENT</div>
+  <h1 data-i18n-html="composeTitle">Bring a claim<br>into <em>focus.</em></h1>
   <div class="grid">
     <form id="form" class="card" novalidate>
-      <div class="card-title"><span class="step">01</span><div><h2 data-i18n="formTitle">Bring a claim into focus</h2><p data-i18n="formSub">Add a caption, an image or short video, or both.</p></div></div>
+      <div class="card-title"><span class="step">01</span><div><h2 data-i18n="formTitle">Bring a claim into focus</h2><p data-i18n="formSub">Paste the post's text. An image or short video can be attached as a preview.</p></div></div>
       <div class="label-row"><label for="caption" data-i18n="captionLabel">Post text or caption</label><span id="chars"></span></div>
       <textarea id="caption" rows="6" dir="auto" data-i18n-placeholder="captionPh" placeholder="Paste an Arabic or English claim here…"></textarea>
       <div class="language"><label for="language" data-i18n="langLabel">Text language</label>
@@ -96,8 +170,8 @@
         <div class="eyebrow" data-i18n="approach">THE SAQRSIGHT APPROACH</div>
         <h2 data-i18n-html="approachTitle">A closer look.<br>A clearer picture.</h2>
         <ol>
-          <li><span>01</span><div><strong data-i18n="g1">Text & media</strong><p data-i18n="g1d">Wording indicators and possible AI-generated media</p></div></li>
-          <li><span>02</span><div><strong data-i18n="g2">Context & consistency</strong><p data-i18n="g2d">Whether the caption matches what is visible</p></div></li>
+          <li><span>01</span><div><strong data-i18n="g1">Text &amp; media</strong><p data-i18n="g1d">Wording indicators and possible AI-generated media</p></div></li>
+          <li><span>02</span><div><strong data-i18n="g2">Context &amp; consistency</strong><p data-i18n="g2d">Whether the caption matches what is visible</p></div></li>
           <li><span>03</span><div><strong data-i18n="g3">Supporting evidence</strong><p data-i18n="g3d">Previous appearances and official sources, when enabled</p></div></li>
           <li><span>04</span><div><strong data-i18n="g4">Clear next steps</strong><p data-i18n="g4d">Uncertainty and verification guidance</p></div></li>
         </ol>
@@ -108,10 +182,11 @@
   </div>
 </section>
 
+<!-- ================= REPORT ================= -->
 <section id="results" hidden>
   <div class="eyebrow" data-i18n="reportEyebrow">ASSESSMENT REPORT</div>
   <h1 data-i18n-html="reportTitle">Your claim.<br>A clearer perspective.</h1>
-  <p class="intro"><span data-i18n="savedLocally">Saved locally</span> · <span id="reportdate"></span></p>
+  <p class="intro"><span data-i18n="savedLocally">Saved to your account</span> · <span id="reportdate"></span></p>
   <div class="report-toolbar">
     <button class="primary" id="downloadhtml" data-i18n="dlHtml">↓ Download HTML report</button>
     <button class="secondary" id="downloadjson" data-i18n="dlJson">Download JSON</button>
@@ -124,11 +199,50 @@
   <div class="resultgrid" id="sections"></div>
 </section>
 
+<!-- ================= SEARCH ================= -->
 <section id="history" hidden>
-  <div class="eyebrow" data-i18n="historyEyebrow">YOUR WORKSPACE</div>
-  <h1 data-i18n="historyTitle">Your observation archive.</h1>
+  <div class="eyebrow" data-i18n="historyEyebrow">SEARCH REPORTS</div>
+  <h1 data-i18n="historyTitle">Find a past assessment.</h1>
   <p class="intro" id="historyintro"></p>
+  <form class="card searchbar" id="searchform" role="search">
+    <input id="q" type="search" dir="auto" data-i18n-placeholder="searchPh" placeholder="Search the text of your reports…" aria-label="Search">
+    <select id="fverdict" aria-label="Initial assessment">
+      <option value="" data-i18n="anyVerdict">Any assessment</option>
+      <option value="potentially_misleading" data-i18n="v_potentially_misleading">Potentially misleading</option>
+      <option value="insufficient_evidence" data-i18n="v_insufficient_evidence">Insufficient evidence</option>
+      <option value="apparently_consistent" data-i18n="v_apparently_consistent">Apparently consistent</option>
+    </select>
+    <select id="fpanic" aria-label="Panic level">
+      <option value="" data-i18n="anyPanic">Any panic level</option>
+      <option value="strong" data-i18n="p_strong">Strong panic</option>
+      <option value="mild" data-i18n="p_mild">Mild urgency</option>
+      <option value="none" data-i18n="p_none">None</option>
+    </select>
+    <select id="fpriority" aria-label="Review priority">
+      <option value="" data-i18n="anyPriority">Any priority</option>
+      <option value="high" data-i18n="pr_high">High</option>
+      <option value="medium" data-i18n="pr_medium">Medium</option>
+      <option value="low" data-i18n="pr_low">Low</option>
+    </select>
+    <select id="flang" aria-label="Language">
+      <option value="" data-i18n="anyLang">Any language</option>
+      <option value="ar" data-i18n="langAr">Arabic</option>
+      <option value="en" data-i18n="langEn">English</option>
+      <option value="mixed" data-i18n="langMixed">Mixed Arabic and English</option>
+    </select>
+    <button class="primary" type="submit" data-i18n="searchBtn">Search</button>
+  </form>
+  <p class="resultcount" id="resultcount"></p>
   <div id="historylist"></div>
+</section>
+
+<!-- ================= MODELS & ROADMAP ================= -->
+<section id="models" hidden>
+  <div class="eyebrow" data-i18n="modelsEyebrow">MODELS &amp; ROADMAP</div>
+  <h1 data-i18n="modelsTitle">What powers SaqrSight.</h1>
+  <p class="intro" data-i18n="modelsIntro">Every component, its exact version and licence, and whether it is working now (Senior Project 1) or planned (Senior Project 2).</p>
+  <div class="legend" id="modelslegend"></div>
+  <div id="modelslist"></div>
 </section>
 
 <footer><span>SAQRSIGHT / صقر</span><span data-i18n="footer">Designed to support informed judgment.</span></footer>
@@ -152,8 +266,9 @@
 <script src="/static/vendor/ScrollTrigger.min.js"></script>
 <script src="/static/vendor/SplitText.min.js"></script>
 <script src="/static/vendor/lenis.min.js"></script>
-<script src="/static/motion.js?v=0.2.7"></script>
-<script src="/static/i18n.js?v=0.2.7"></script>
-<script src="/static/app.js?v=0.2.7"></script>
+<script src="/static/motion.js?v=0.3.0"></script>
+<script src="/static/i18n.js?v=0.3.0"></script>
+<script src="/static/models-data.js?v=0.3.0"></script>
+<script src="/static/app.js?v=0.3.0"></script>
 </body>
 </html>
