@@ -23,6 +23,10 @@ def client(tmp_path, monkeypatch):
     importlib.reload(app)
     with TestClient(app.app) as c:
         c.app_module = app
+        r = c.post("/api/auth/signup", json={"name": "Test User", "email": "test@example.com",
+                                              "password": "correct horse 1"})
+        assert r.status_code == 201, r.text
+        c.user = r.json()
         yield c
 
 

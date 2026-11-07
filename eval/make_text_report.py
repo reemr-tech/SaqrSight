@@ -61,6 +61,14 @@ def main():
                     m = d["metrics"]["micro"]
                     L.append(f"| {label} | {name} | {d['n']} | {f(m['precision'])} | {f(m['recall'])} | {f(m['f1'])} |")
         L.append("")
+    panic_rows = [(split, lang, v11[split][lang]["panic_level"]) for split in ("real_test", "test_v2", "test")
+                  if split in v11 for lang in ("en", "ar") if v11[split][lang].get("panic_level")]
+    if panic_rows:
+        L.append("## Panic level (none / mild / strong)\n")
+        L.append("| Set | Language | n | Accuracy | Macro-F1 |\n|---|---|---|---|---|")
+        for split, lang, m in panic_rows:
+            L.append(f"| {split} | {lang} | {m['n']} | {f(m['accuracy'])} | {f(m['macro_f1'])} |")
+        L.append("")
     L.append("## 1. Overall results on the blind test (v2)\n")
     L.append("Micro-averaged over the four categories. Precision = when it flags something, how often it is right; "
              "recall = how many real indicators it finds.\n")

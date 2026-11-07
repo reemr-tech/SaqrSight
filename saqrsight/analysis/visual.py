@@ -19,8 +19,18 @@ MODULE = "media_analysis"
 SYNTHETIC_LABELS = ("artificial", "ai", "fake", "generated", "sdxl", "synthetic", "ai_generated")
 
 
+REAL_LABELS = ("real", "human", "hum", "authentic")
+
+
 def synthetic_score(preds: list[dict]) -> float:
-    """Probability mass the classifier assigns to its 'AI-generated' label(s)."""
+    """Probability the classifier assigns to 'AI-generated'.
+
+    Detectors with a 'real' class and several generator classes (e.g. NYUAD: dalle / real / sd) give
+    1 - P(real); detectors with an explicit 'artificial' / 'ai' class use that class's probability."""
+    labels = {str(p["label"]).lower(): float(p["score"]) for p in preds}
+    real = [v for k, v in labels.items() if k in REAL_LABELS]
+    if real and len(labels) > 2:
+        return max(0.0, min(1.0, 1.0 - sum(real)))
     total = 0.0
     for p in preds:
         label = str(p["label"]).lower().replace("-", "_").replace(" ", "_")

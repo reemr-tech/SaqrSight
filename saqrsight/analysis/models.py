@@ -30,7 +30,16 @@ def _get(key: str, factory):
 def image_classifier(model_id: str):
     def make():
         from transformers import pipeline
-        return pipeline("image-classification", model=model_id, device="cpu")
+        try:
+            return pipeline("image-classification", model=model_id, device="cpu")
+        except ValueError:
+            # Older checkpoints (e.g. NYUAD-ComNets/NYUAD_AI-generated_images_detector) store their
+            # preprocessing settings in a format newer transformers cannot auto-detect. They are ViT
+            # models, so load the ViT image processor from the same repository explicitly.
+            from transformers import AutoModelForImageClassification, ViTImageProcessor
+            return pipeline("image-classification", device="cpu",
+                            model=AutoModelForImageClassification.from_pretrained(model_id),
+                            image_processor=ViTImageProcessor.from_pretrained(model_id))
     return _get("cls:" + model_id, make)
 
 

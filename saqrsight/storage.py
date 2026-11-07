@@ -6,7 +6,11 @@ Schema (local prototype):
   submissions     submission metadata (caption, language, media description, consent flag).
   module_results  one row per analysis module / evidence provider result.
   sources         every external source reference cited in a report (only provider-returned URLs).
-Deleting a report removes all four kinds of rows and its media folder.
+  users           local accounts (name, email, PBKDF2 password hash – never the password itself).
+  sessions        login sessions; only a SHA-256 hash of each session token is stored.
+Every report belongs to one user (reports.user_id); users can only list, open, download or delete
+their own reports. Reports saved before accounts existed are adopted by the first account created.
+Deleting a report removes all four kinds of report rows and its media folder.
 """
 from __future__ import annotations
 
@@ -34,11 +38,18 @@ CREATE TABLE IF NOT EXISTS sources (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     report_id TEXT REFERENCES reports(id) ON DELETE CASCADE, module TEXT, url TEXT,
     title TEXT, relation TEXT, payload TEXT);
+CREATE TABLE IF NOT EXISTS users (
+    id TEXT PRIMARY KEY, name TEXT NOT NULL, email TEXT NOT NULL UNIQUE,
+    password_hash TEXT NOT NULL, created_at TEXT NOT NULL);
+CREATE TABLE IF NOT EXISTS sessions (
+    token_hash TEXT PRIMARY KEY, user_id TEXT NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+    created_at TEXT NOT NULL, expires_at TEXT NOT NULL);
 """
 MIGRATIONS = [
     ("reports", "status", "ALTER TABLE reports ADD COLUMN status TEXT NOT NULL DEFAULT 'complete'"),
     ("reports", "media_dir", "ALTER TABLE reports ADD COLUMN media_dir TEXT"),
     ("reports", "updated_at", "ALTER TABLE reports ADD COLUMN updated_at TEXT"),
+    ("reports", "user_id", "ALTER TABLE reports ADD COLUMN user_id TEXT"),
 ]
 
 
@@ -68,12 +79,12 @@ class Store:
         return self.cfg.media_dir / report_id
 
     # --- writes -----------------------------------------------------------------------------
-    def create(self, payload: dict, submission: dict) -> None:
+    def create(self, payload: dict, submission: dict, user_id: str | None = None) -> None:
         with self.db() as con:
-            con.execute("INSERT INTO reports (id, created_at, payload, image_name, status, media_dir, updated_at) "
-                        "VALUES (?,?,?,?,?,?,?)",
+            con.execute("INSERT INTO reports (id, created_at, payload, image_name, status, media_dir, updated_at, "
+                        "user_id) VALUES (?,?,?,?,?,?,?,?)",
                         (payload["id"], payload["created_at"], _dump(payload), None, payload["status"],
-                         payload["id"] if submission.get("media_kind") else None, payload["created_at"]))
+                         payload["id"] if submission.get("media_kind") else None, payload["created_at"], user_id))
             con.execute("INSERT INTO submissions VALUES (?,?,?,?,?,?,?)",
                         (payload["id"], submission["caption"], submission["language"],
                          submission["language_detected"], submission.get("media_kind"),
@@ -139,20 +150,93 @@ class Store:
             return [json.loads(r["payload"]) for r in
                     con.execute("SELECT payload FROM module_results WHERE report_id=?", (report_id,))]
 
-    def list(self, limit: int = 100) -> list[dict]:
+    def list(self, limit: int = 100, user_id: str | None = None, q: str = "", verdict: str = "",
+             priority: str = "", language: str = "", panic: str = "") -> list[dict]:
+        """Summaries of a user's reports, newest first, optionally filtered (used by Search reports)."""
         with self.db() as con:
-            rows = con.execute("SELECT id, created_at, payload, status FROM reports "
-                               "ORDER BY created_at DESC LIMIT ?", (limit,)).fetchall()
+            if user_id is None:
+                rows = con.execute("SELECT id, created_at, payload, status FROM reports "
+                                   "ORDER BY created_at DESC").fetchall()
+            else:
+                rows = con.execute("SELECT id, created_at, payload, status FROM reports WHERE user_id=? "
+                                   "ORDER BY created_at DESC", (user_id,)).fetchall()
         out = []
+        needle = _fold(q)
         for r in rows:
-            p = json.loads(r["payload"])
-            media = p.get("media") or ({"kind": "image"} if p.get("image") else None)
-            out.append({"id": r["id"], "created_at": r["created_at"], "caption": p.get("caption", ""),
-                        "mode": p.get("mode", "analysis"), "status": r["status"],
-                        "has_image": bool(media), "media_kind": media and media.get("kind"),
-                        "assessment": (p.get("assessment") or {}).get("verdict"),
-                        "priority": (p.get("priority") or {}).get("level")})
+            item = _summary(r)
+            if needle and needle not in _fold(item["caption"]):
+                continue
+            if verdict and item["assessment"] != verdict:
+                continue
+            if priority and item["priority"] != priority:
+                continue
+            if language and item["language"] != language:
+                continue
+            if panic and item["panic_level"] != panic:
+                continue
+            out.append(item)
+            if len(out) >= limit:
+                break
         return out
+
+    def dashboard(self, user_id: str) -> dict:
+        """Counts for the dashboard, computed from the user's saved reports."""
+        items = self.list(limit=10_000, user_id=user_id)
+        week_ago = (datetime.now(timezone.utc) - timedelta(days=7)).isoformat()
+        count = lambda key, values: {v: sum(1 for i in items if i[key] == v) for v in values}  # noqa: E731
+        analysed = [i for i in items if i["mode"] != "sample" and i["status"] == "complete"]
+        return {
+            "total": len(items),
+            "this_week": sum(1 for i in items if i["created_at"] >= week_ago),
+            "verdicts": count("assessment", ["potentially_misleading", "insufficient_evidence", "apparently_consistent"]),
+            "priorities": count("priority", ["high", "medium", "low"]),
+            "panic_levels": count("panic_level", ["strong", "mild", "none"]),
+            "languages": count("language", ["ar", "en", "mixed"]),
+            "categories": {c: sum(1 for i in analysed if c in i["categories"])
+                           for c in ("urgency", "fear", "manipulation", "share_pressure")},
+            "analysed": len(analysed),
+            "samples": sum(1 for i in items if i["mode"] == "sample"),
+            "recent": items[:5],
+        }
+
+    # --- users and sessions -----------------------------------------------------------------
+    def create_user(self, user_id: str, name: str, email: str, password_hash: str) -> bool:
+        """Create an account; the very first account adopts reports saved before accounts existed."""
+        with self.db() as con:
+            first = con.execute("SELECT COUNT(*) FROM users").fetchone()[0] == 0
+            try:
+                con.execute("INSERT INTO users (id, name, email, password_hash, created_at) VALUES (?,?,?,?,?)",
+                            (user_id, name, email, password_hash, _now()))
+            except sqlite3.IntegrityError:
+                return False
+            if first:
+                con.execute("UPDATE reports SET user_id=? WHERE user_id IS NULL", (user_id,))
+        return True
+
+    def user_by_email(self, email: str) -> sqlite3.Row | None:
+        with self.db() as con:
+            return con.execute("SELECT * FROM users WHERE email=?", (email,)).fetchone()
+
+    def create_session(self, token_hash: str, user_id: str, days: int) -> None:
+        now = datetime.now(timezone.utc)
+        with self.db() as con:
+            con.execute("DELETE FROM sessions WHERE expires_at < ?", (now.isoformat(),))
+            con.execute("INSERT INTO sessions VALUES (?,?,?,?)",
+                        (token_hash, user_id, now.isoformat(), (now + timedelta(days=days)).isoformat()))
+
+    def user_for_session(self, token_hash: str) -> dict | None:
+        with self.db() as con:
+            row = con.execute("SELECT u.id, u.name, u.email FROM sessions s JOIN users u ON u.id = s.user_id "
+                              "WHERE s.token_hash=? AND s.expires_at > ?", (token_hash, _now())).fetchone()
+        return dict(row) if row else None
+
+    def delete_session(self, token_hash: str) -> None:
+        with self.db() as con:
+            con.execute("DELETE FROM sessions WHERE token_hash=?", (token_hash,))
+
+    def owner(self, report_id: str) -> str | None:
+        row = self.get_row(report_id)
+        return row["user_id"] if row else None
 
     def visual_path(self, report_id: str, ref: str) -> Path | None:
         row = self.get_row(report_id)
@@ -165,6 +249,24 @@ class Store:
             return None
         p = self.media_folder(report_id) / f"{ref}.jpg"
         return p if p.is_file() else None
+
+
+def _summary(r: sqlite3.Row) -> dict:
+    p = json.loads(r["payload"])
+    media = p.get("media") or ({"kind": "image"} if p.get("image") else None)
+    text = ((p.get("modules") or {}).get("text_analysis") or {}).get("data") or {}
+    return {"id": r["id"], "created_at": r["created_at"], "caption": p.get("caption", ""),
+            "mode": p.get("mode", "analysis"), "status": r["status"], "language": p.get("language"),
+            "has_image": bool(media), "media_kind": media and media.get("kind"),
+            "assessment": (p.get("assessment") or {}).get("verdict"),
+            "priority": (p.get("priority") or {}).get("level"),
+            "panic_level": text.get("panic_level"), "categories": text.get("categories", [])}
+
+
+def _fold(text: str) -> str:
+    """Case- and Arabic-letter-insensitive form for searching (أ/إ/آ→ا, ة→ه, ى→ي, no diacritics)."""
+    from .textutil import normalize
+    return normalize(text or "")
 
 
 def _dump(obj: Any) -> str:

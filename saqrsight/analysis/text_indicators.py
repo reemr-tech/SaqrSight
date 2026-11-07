@@ -142,6 +142,19 @@ def find_matches(caption: str) -> list[dict]:
     return matches
 
 
+def panic_level_for(level: str, categories: set) -> str:
+    """Three-level panic label used in the dataset plan and the report:
+    strong – high indicator level, or fear combined with urgency or pressure to share;
+    mild   – any other active indicator;
+    none   – no active indicator.
+    It describes the wording only, never whether the claim is true."""
+    if not categories:
+        return "none"
+    if level == "high" or ("fear" in categories and categories & {"urgency", "share_pressure"}):
+        return "strong"
+    return "mild"
+
+
 def level_for(active: list[dict]) -> str:
     cats = {m["category"] for m in active}
     n = len(active)
@@ -195,7 +208,8 @@ def analyze(caption: str, language: str) -> ModuleResult:
                    + ", ".join(L.CATEGORIES[c]["label_en"] for c in cats) + ".")
     return ModuleResult(
         module=MODULE, status=COMPLETED, version=VERSION, findings=findings, summary=summary,
-        data={"indicator_level": level, "categories": cats, "matches": matches,
+        data={"indicator_level": level, "panic_level": panic_level_for(level, set(cats)),
+              "categories": cats, "matches": matches,
               "style_signals": [s[0] for s in style], "language": language},
         limitations=[
             "Rule-based wording indicators; they describe language, not whether the claim is true.",
