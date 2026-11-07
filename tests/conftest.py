@@ -17,12 +17,17 @@ def client(tmp_path, monkeypatch):
     """App with isolated storage, models off and no provider keys (unless a test sets them)."""
     monkeypatch.setenv("SAQRSIGHT_DATA_DIR", str(tmp_path))
     monkeypatch.setenv("SAQRSIGHT_ENABLE_MODELS", "0")
+    monkeypatch.setenv("SAQRSIGHT_MEDIA_ENABLED", "1")   # the image/video prototype is tested too
     for k in ("GOOGLE_VISION_API_KEY", "BRAVE_SEARCH_API_KEY", "GOOGLE_CSE_API_KEY", "GOOGLE_CSE_CX"):
         monkeypatch.delenv(k, raising=False)
     import app
     importlib.reload(app)
     with TestClient(app.app) as c:
         c.app_module = app
+        r = c.post("/api/auth/signup", json={"name": "Test User", "email": "test@example.com",
+                                              "password": "correct horse 1"})
+        assert r.status_code == 201, r.text
+        c.user = r.json()
         yield c
 
 

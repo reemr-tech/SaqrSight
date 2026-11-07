@@ -88,8 +88,11 @@
       .from('.hud-tag', { opacity: 0, x: -14, duration: 0.6, stagger: 0.15 }, 1.4)
       .from('.radar-ring', { scale: 0.4, opacity: 0, duration: 1.6, stagger: 0.12 }, 0.15)
       .from('.hero .eyebrow, .hero-tags span, .workflow-strip span', { y: 14, opacity: 0, duration: 0.8, stagger: 0.05 }, 0.5);
-    splitReveal(document.querySelector('#compose h1'), 0.25);
-    blurIn(document.querySelector('#compose .intro'), 0.6);
+    const first = document.querySelector('.content > section:not([hidden])');
+    if (first) {
+      splitReveal(first.querySelector('h1'), 0.25);
+      blurIn(first.querySelector('.intro'), 0.6);
+    }
     enter(['#form', '.guide .card', '.example']);
     // gentle falcon parallax following the pointer
     const scene = document.querySelector('.falcon-scene');
@@ -124,16 +127,20 @@
     if (id !== 'results') splitReveal(root.querySelector('h1'), 0.05);   // report() animates the results title
     if (id === 'history') enter(root.querySelectorAll('.historyitem, .empty'), { delay: 0.15 });
     if (id === 'compose') enter(['#form', '.guide .card', '.example']);
+    if (id === 'landing') enter(root.querySelectorAll('.feature'), { delay: 0.1 });
+    if (id === 'models') enter(root.querySelectorAll('.model'), { delay: 0.1 });
+    if (id === 'login' || id === 'signup') gsap.fromTo(root.querySelector('.authcard'), { y: 24, opacity: 0, scale: 0.98 },
+      { y: 0, opacity: 1, scale: 1, duration: 0.7, ease: 'expo.out' });
     ScrollTrigger.refresh();
   };
 
   // Text was replaced (language switch): re-run the reveals on the visible headings.
   api.text = () => {
     if (!ready) return;
-    const visible = ['compose', 'results', 'history'].map(id => document.getElementById(id)).find(s => !s.hidden);
+    const visible = document.querySelector('.content > section:not([hidden])');
     if (!visible) return;
     splitReveal(visible.querySelector('h1'));
-    if (visible.id === 'compose') blurIn(visible.querySelector('.intro'), 0.2);
+    if (visible.id === 'landing') blurIn(visible.querySelector('.intro'), 0.2);
   };
 
   // ---------- report rendering ----------

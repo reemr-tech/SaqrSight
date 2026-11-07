@@ -38,7 +38,8 @@ ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT))
 from saqrsight.analysis.visual import score_images  # noqa: E402
 
-CANDIDATES = ["Organika/sdxl-detector", "haywoodsloan/ai-image-detector-deploy", "Ateeqq/ai-vs-human-image-detector"]
+CANDIDATES = ["NYUAD-ComNets/NYUAD_AI-generated_images_detector", "Organika/sdxl-detector",
+              "haywoodsloan/ai-image-detector-deploy", "Ateeqq/ai-vs-human-image-detector"]
 Image.MAX_IMAGE_PIXELS = 40_000_000
 CACHE = ROOT / "external" / "elsa" / "real"
 

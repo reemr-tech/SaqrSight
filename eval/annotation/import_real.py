@@ -48,8 +48,13 @@ def main(path):
             problems.append(f"{r.get('id')}: unknown phenomenon '{ph}'")
             continue
         labels = [c for c in CATS if str(r.get(c, "0")).strip() in ("1", "1.0", "yes", "y", "true")]
+        panic = str(r.get("panic_level", "")).strip().lower()
+        if panic and panic not in ("none", "mild", "strong"):
+            problems.append(f"{r.get('id')}: panic_level must be none, mild or strong")
+            continue
         posts.append({"id": r.get("id") or f"real-{len(posts) + 1}", "lang": lang, "text": r["text"].strip(),
                       "labels": labels, "phenomenon": ph, "source_type": r.get("source_type", "").strip(),
+                      **({"panic_level": panic} if panic else {}),
                       "_k": k})
     dev, test = [], []
     for p in posts:

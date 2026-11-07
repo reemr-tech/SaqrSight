@@ -49,8 +49,11 @@ class Settings:
         self.video_frames = _int("SAQRSIGHT_VIDEO_FRAMES", 5)
 
         # Analysis modules. Model-based modules can be switched off (e.g. on low-memory machines).
+        # Image and video analysis is Senior Project 2 scope: off by default in SGP1.
+        # SAQRSIGHT_MEDIA_ENABLED=1 turns the (prototype) image/video checks back on.
+        self.media_enabled = _bool("SAQRSIGHT_MEDIA_ENABLED", False)
         self.enable_models = _bool("SAQRSIGHT_ENABLE_MODELS", True)
-        self.visual_model = os.environ.get("SAQRSIGHT_VISUAL_MODEL", "haywoodsloan/ai-image-detector-deploy")
+        self.visual_model = os.environ.get("SAQRSIGHT_VISUAL_MODEL", "NYUAD-ComNets/NYUAD_AI-generated_images_detector")
         self.clip_image_model = os.environ.get("SAQRSIGHT_CLIP_IMAGE_MODEL", "clip-ViT-B-32")
         self.clip_text_model = os.environ.get(
             "SAQRSIGHT_CLIP_TEXT_MODEL", "sentence-transformers/clip-ViT-B-32-multilingual-v1")
@@ -70,6 +73,8 @@ class Settings:
 
         # Retention: reports older than this many days are purged at startup (0 = keep until deleted).
         self.retention_days = _int("SAQRSIGHT_RETENTION_DAYS", 90)
+        # Set to 1 when the site is served over HTTPS so the login cookie is only sent encrypted.
+        self.secure_cookies = _bool("SAQRSIGHT_SECURE_COOKIES", False)
 
     @property
     def reverse_search_configured(self) -> bool:

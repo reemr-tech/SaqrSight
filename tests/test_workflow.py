@@ -11,7 +11,7 @@ from conftest import mp4, png, wait
 
 def test_page_assets_and_config(client):
     assert "SaqrSight" in client.get("/").text
-    for asset in ("app.js", "style.css", "report.css", "i18n.js", "falcon.svg", "falcon-photo.jpg", "logo.png", "favicon.png", "theme-cyber.css", "motion.js", "motion.css",
+    for asset in ("app.js", "style.css", "report.css", "i18n.js", "falcon.svg", "falcon-photo.jpg", "logo.png", "favicon.png", "screens.css", "models-data.js", "theme-cyber.css", "motion.js", "motion.css",
                   "vendor/gsap.min.js", "vendor/ScrollTrigger.min.js", "vendor/SplitText.min.js",
                   "vendor/lenis.min.js", "vendor/lenis.css"):
         assert client.get("/static/" + asset).status_code == 200
@@ -154,6 +154,8 @@ def test_persistence_and_missing(client):
     app = client.app_module
     importlib.reload(app)
     with TestClient(app.app) as second:
+        assert second.get("/api/reports/" + p["id"]).status_code == 401          # not logged in
+        second.post("/api/auth/login", json={"email": "test@example.com", "password": "correct horse 1"})
         assert second.get("/api/reports/" + p["id"]).json()["caption"] == "Persistent report"
     assert client.get("/api/reports/missing").status_code == 404
     assert client.delete("/api/reports/missing").status_code == 404
@@ -169,8 +171,9 @@ def test_legacy_sample_reports_remain_labelled(client):
                "sections": [{"title": "Overall assessment", "finding": "Sample only"}]}
     Image.open(BytesIO(png())).save(app.MEDIA / f"{rid}.jpg")
     with sqlite3.connect(app.cfg.db_path) as con:
-        con.execute("INSERT INTO reports (id, created_at, payload, image_name) VALUES (?,?,?,?)",
-                    (rid, payload["created_at"], json.dumps(payload, ensure_ascii=False), f"{rid}.jpg"))
+        con.execute("INSERT INTO reports (id, created_at, payload, image_name, user_id) VALUES (?,?,?,?,?)",
+                    (rid, payload["created_at"], json.dumps(payload, ensure_ascii=False), f"{rid}.jpg",
+                     client.user["id"]))
     row = client.get("/api/reports").json()[0]
     assert row["mode"] == "sample" and row["has_image"]
     assert client.get(f"/api/reports/{rid}/image").status_code == 200

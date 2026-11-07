@@ -3,7 +3,9 @@
 const $ = id => document.getElementById(id);
 const IMG_TYPES = ['image/jpeg', 'image/png', 'image/webp'];
 const VID_TYPES = ['video/mp4', 'video/quicktime', 'video/webm'];
-let current = null, previewURL = null, busy = false, cfg = null, pollTimer = null, viewName = 'compose';
+let current = null, previewURL = null, busy = false, cfg = null, pollTimer = null, viewName = 'landing', user = null;
+const VIEWS = ['landing', 'login', 'signup', 'dashboard', 'compose', 'results', 'history', 'models'];
+const PUBLIC_VIEWS = ['landing', 'login', 'signup'];
 let lang = 'en';
 try { lang = localStorage.getItem('saqr-ui-lang') || 'en'; } catch (e) { /* storage unavailable */ }
 
@@ -38,6 +40,9 @@ function applyLang() {
   setBreadcrumb();
   if (current && viewName === 'results') showReport(current, true);
   if (viewName === 'history') refresh();
+  if (viewName === 'dashboard') loadDashboard();
+  renderModels();
+  if (user) $('dashtitle').textContent = t('dashTitle', { name: user.name });
   if (window.Motion) Motion.text();
 }
 $('uilang').onclick = () => {
@@ -57,6 +62,11 @@ function renderConfig() {
   $('limits').textContent = t('limits', { imgf: l.image_formats.join(', '), imb: l.max_image_mb, imp: l.max_image_megapixels,
     ims: l.min_image_side, vidf: l.video_formats.join(', '), vmb: l.max_video_mb, vs: l.max_video_seconds, vf: l.video_frames_sampled });
   $('caption').maxLength = l.max_text_chars;
+  // Image and video analysis is Senior Project 2: show the 'coming soon' card instead of the upload box.
+  const media = !!cfg.media_enabled;
+  $('drop').hidden = !media;
+  $('mediasoon').hidden = media;
+  if (!media) { $('media').value = ''; $('preview').hidden = true; }
   $('privacy').textContent = t('privacy', { days: l.retention_days });
   const ext = cfg.checks.reverse_image_search || cfg.checks.official_sources;
   $('consent').disabled = !ext;
@@ -78,20 +88,26 @@ function renderConfig() {
 
 // ---------- views ----------
 function setBreadcrumb() {
-  $('breadcrumb').textContent = viewName === 'history' ? t('bcHistory') : viewName === 'results' ? t('bcReport') : t('bcNew');
+  $('breadcrumb').textContent = t('bc_' + viewName);
 }
 function view(id) {
+  if (!user && !PUBLIC_VIEWS.includes(id)) id = 'landing';
+  if (user && PUBLIC_VIEWS.includes(id)) id = 'dashboard';
   viewName = id;
-  for (const name of ['compose', 'results', 'history']) $(name).hidden = name !== id;
-  $('newnav').classList.toggle('active', id !== 'history');
-  $('historynav').classList.toggle('active', id === 'history');
+  for (const name of VIEWS) $(name).hidden = name !== id;
+  const navFor = { dashboard: 'dashnav', compose: 'newnav', results: 'newnav', history: 'historynav', models: 'modelsnav' };
+  for (const n of ['dashnav', 'newnav', 'historynav', 'modelsnav']) $(n).classList.toggle('active', navFor[id] === n);
   setBreadcrumb();
   window.scrollTo(0, 0);
   if (window.Motion) Motion.view(id);
 }
 function error(message) { $('error').textContent = message; $('error').hidden = !message; }
 async function request(url, options) {
-  const r = await fetch(url, options);
+  const r = await fetch(url, Object.assign({ credentials: 'same-origin' }, options));
+  if (r.status === 401 && user && !url.startsWith('/api/auth/')) {   // session expired or logged out elsewhere
+    setUser(null);
+    view('login');
+  }
   if (!r.ok) {
     let message = 'Request failed. Please try again.';
     try { const e = await r.json(); if (typeof e.detail === 'string') message = e.detail; } catch (e) { /* ignore */ }
@@ -157,7 +173,7 @@ $('form').onsubmit = async e => {
     const p = await request('/api/reports', { method: 'POST', body: data });
     showReport(p);
     poll(p.id);
-    refresh();
+    refreshCount();
   } catch (err) {
     error(err.message);
   } finally {
@@ -345,30 +361,38 @@ function showReport(p, keepView) {
 }
 
 // ---------- history ----------
+function searchParams() {
+  const params = new URLSearchParams();
+  for (const [key, id] of [['q', 'q'], ['verdict', 'fverdict'], ['panic', 'fpanic'], ['priority', 'fpriority'], ['language', 'flang']]) {
+    const v = $(id).value.trim();
+    if (v) params.set(key, v);
+  }
+  return params;
+}
+async function refreshCount() {
+  if (!user) return;
+  try { $('count').textContent = (await request('/api/reports')).length; } catch (e) { /* ignore */ }
+}
 async function refresh() {
+  if (!user) return;
   try {
-    const reports = await request('/api/reports');
-    $('count').textContent = reports.length;
+    const params = searchParams();
+    const reports = await request('/api/reports' + (params.toString() ? '?' + params : ''));
+    if (!params.toString()) $('count').textContent = reports.length;
+    $('resultcount').textContent = params.toString() ? t('resultCount', { n: reports.length }) : '';
     $('historyintro').textContent = t('historyIntro', { days: cfg ? cfg.limits.retention_days : 30 });
     const list = $('historylist');
     list.replaceChildren();
-    if (!reports.length) list.append(el('div', 'card empty', t('empty')));
+    if (!reports.length) list.append(el('div', 'card empty', searchParams().toString() ? t('noMatches') : t('empty')));
     for (const r of reports) {
       const row = el('article', 'card historyitem');
       const d = el('div');
-      const badge = r.mode === 'sample' ? t('sampleBadge') : [r.assessment && L({ en: r.assessment.replaceAll('_', ' '), ar: { potentially_misleading: 'قد يكون مضللاً', apparently_consistent: 'يبدو متسقاً', insufficient_evidence: 'أدلة غير كافية' }[r.assessment] }), r.status === 'processing' ? '…' : null].filter(Boolean).join(' · ');
-      d.append(el('small', null, (badge ? badge.toUpperCase() + ' · ' : '') + new Date(r.created_at).toLocaleString(lang === 'ar' ? 'ar-AE' : undefined)));
+      d.append(reportMeta(r));
       const cap = el('p', null, r.caption || t('imageOnly'));
       cap.dir = 'auto';
       d.append(cap);
       const open = el('button', 'secondary', t('open'));
-      open.onclick = async () => {
-        try {
-          const p = await request('/api/reports/' + encodeURIComponent(r.id));
-          showReport(p);
-          if (p.status !== 'complete') poll(p.id);
-        } catch (e) { alert(e.message); }
-      };
+      open.onclick = () => openReport(r.id);
       row.append(d, open);
       list.append(row);
     }
@@ -377,6 +401,168 @@ async function refresh() {
     $('historylist').textContent = e.message;
   }
 }
+
+// ---------- shared report summary line (search results, dashboard) ----------
+function reportMeta(r) {
+  const meta = el('div', 'meta-row');
+  if (r.mode === 'sample') meta.append(el('span', 'tag sample', t('sampleBadge')));
+  if (r.assessment) meta.append(el('span', 'tag v-' + r.assessment, t('v_' + r.assessment)));
+  if (r.panic_level) meta.append(el('span', 'tag p-' + r.panic_level, t('p_' + r.panic_level)));
+  if (r.priority) meta.append(el('span', 'tag pr-' + r.priority, t('priority') + ': ' + t('pr_' + r.priority)));
+  if (r.status === 'processing') meta.append(el('span', 'tag', '…'));
+  meta.append(el('small', null, new Date(r.created_at).toLocaleString(lang === 'ar' ? 'ar-AE' : undefined)));
+  return meta;
+}
+async function openReport(id) {
+  try {
+    const p = await request('/api/reports/' + encodeURIComponent(id));
+    showReport(p);
+    if (p.status !== 'complete') poll(p.id);
+  } catch (e) { alert(e.message); }
+}
+
+// ---------- dashboard ----------
+function bars(target, counts, order, labelFor, clsFor) {
+  const box = $(target);
+  box.replaceChildren();
+  const max = Math.max(1, ...order.map(k => counts[k] || 0));
+  for (const k of order) {
+    const row = el('div', 'bar-row');
+    const track = el('div', 'bar-track');
+    const fill = el('div', 'bar-fill ' + (clsFor ? clsFor(k) : ''));
+    fill.style.setProperty('--w', ((counts[k] || 0) / max * 100) + '%');
+    track.append(fill);
+    row.append(el('span', 'bar-label', labelFor(k)), track, el('b', 'bar-value', String(counts[k] || 0)));
+    box.append(row);
+  }
+}
+async function loadDashboard() {
+  if (!user) return;
+  $('dashtitle').textContent = t('dashTitle', { name: user.name });
+  let d;
+  try { d = await request('/api/dashboard'); } catch (e) { return; }
+  $('count').textContent = d.total;
+  const stats = $('stats');
+  stats.replaceChildren();
+  for (const [value, label, cls] of [[d.total, t('stTotal'), ''], [d.this_week, t('stWeek'), ''],
+    [d.priorities.high, t('stHigh'), 'red'], [d.panic_levels.strong, t('stStrong'), 'amber']]) {
+    const tile = el('article', 'card stat ' + cls);
+    tile.append(el('b', 'stat-value', String(value)), el('span', 'stat-label', label));
+    stats.append(tile);
+  }
+  bars('chartverdict', d.verdicts, ['potentially_misleading', 'insufficient_evidence', 'apparently_consistent'], k => t('v_' + k), k => 'v-' + k);
+  bars('chartpanic', d.panic_levels, ['strong', 'mild', 'none'], k => t('p_' + k), k => 'p-' + k);
+  bars('chartpriority', d.priorities, ['high', 'medium', 'low'], k => t('pr_' + k), k => 'pr-' + k);
+  bars('chartcategory', d.categories, ['urgency', 'fear', 'manipulation', 'share_pressure'], k => t('cat_' + k), () => 'cat');
+  const list = $('recentlist');
+  list.replaceChildren();
+  if (!d.recent.length) list.append(el('p', 'empty', t('dashEmpty')));
+  for (const r of d.recent) {
+    const row = el('div', 'recent-row');
+    const left = el('div');
+    const cap = el('p', null, r.caption || t('imageOnly'));
+    cap.dir = 'auto';
+    left.append(cap, reportMeta(r));
+    const open = el('button', 'secondary', t('open'));
+    open.onclick = () => openReport(r.id);
+    row.append(left, open);
+    list.append(row);
+  }
+  if (window.Motion) Motion.enter(document.querySelectorAll('#dashboard .card'));
+}
+
+// ---------- models & roadmap ----------
+function renderModels() {
+  const data = window.SAQR_MODELS;
+  if (!data) return;
+  const legend = $('modelslegend');
+  legend.replaceChildren(...['now', 'prototype', 'planned'].map(s => el('span', 'status-tag s-' + s, t('ms_' + s))));
+  const list = $('modelslist');
+  list.replaceChildren();
+  for (const g of data.groups) {
+    const section = el('div', 'model-group');
+    section.append(el('h2', null, L(g)));
+    const grid = el('div', 'model-grid');
+    for (const m of g.items) {
+      const card = el('article', 'card model s-' + m.status);
+      const top = el('div', 'section-top');
+      top.append(el('h3', null, m.name), el('span', 'status-tag s-' + m.status, t('ms_' + m.status)));
+      const id = el('code', 'model-id', m.id);
+      id.dir = 'ltr';
+      card.append(top, id);
+      const dl = el('dl');
+      for (const [k, v] of [['m_size', m.size], ['m_role', m.role], ['m_result', m.result], ['m_licence', m.licence]]) {
+        dl.append(el('dt', null, t(k)), el('dd', null, L(v)));
+      }
+      card.append(dl);
+      if (m.links.length) {
+        const links = el('p', 'model-links');
+        for (const l of m.links) links.append(safeLink(l.url, l.label + ' ↗'));
+        card.append(links);
+      }
+      grid.append(card);
+    }
+    section.append(grid);
+    list.append(section);
+  }
+}
+
+// ---------- accounts ----------
+function setUser(u) {
+  user = u;
+  document.body.classList.toggle('signed-in', !!u);
+  document.body.classList.toggle('signed-out', !u);
+  $('username').textContent = u ? u.name : '';
+  $('useremail').textContent = u ? u.email : '';
+  if (!u) { current = null; stopPolling(); $('count').textContent = '0'; }
+}
+async function checkAuth() {
+  try {
+    const r = await fetch('/api/auth/me', { credentials: 'same-origin' });
+    setUser(r.ok ? await r.json() : null);
+  } catch (e) { setUser(null); }
+}
+function authError(form, message) {
+  const box = form.querySelector('.autherror');
+  box.textContent = message || '';
+  box.hidden = !message;
+}
+async function submitAuth(form, url, body) {
+  authError(form, '');
+  const btn = form.querySelector('button[type=submit]');
+  btn.disabled = true;
+  try {
+    const u = await request(url, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) });
+    setUser(u);
+    form.reset();
+    await loadConfig();
+    view('dashboard');
+    loadDashboard();
+  } catch (e) {
+    authError(form, e.message);
+  } finally {
+    btn.disabled = false;
+  }
+}
+$('loginform').onsubmit = e => {
+  e.preventDefault();
+  submitAuth($('loginform'), '/api/auth/login', { email: $('loginemail').value, password: $('loginpassword').value });
+};
+$('signupform').onsubmit = e => {
+  e.preventDefault();
+  submitAuth($('signupform'), '/api/auth/signup',
+    { name: $('signupname').value, email: $('signupemail').value, password: $('signuppassword').value });
+};
+$('logout').onclick = async () => {
+  try { await request('/api/auth/logout', { method: 'POST' }); } catch (e) { /* ignore */ }
+  setUser(null);
+  view('landing');
+};
+for (const [id, target] of [['hdrlogin', 'login'], ['landlogin', 'login'], ['tologin', 'login'],
+  ['hdrsignup', 'signup'], ['landsignup', 'signup'], ['tosignup', 'signup']]) {
+  $(id).onclick = () => view(target);
+}
+$('landmodels').onclick = () => { if (user) view('models'); else view('login'); };
 
 // ---------- wiring ----------
 $('caption').oninput = updateChars;
@@ -387,6 +573,11 @@ $('clear').onclick = clear;
 $('another').onclick = clear;
 $('newnav').onclick = () => { if (!busy) view('compose'); };
 $('historynav').onclick = () => { if (busy) return; view('history'); refresh(); };
+$('dashnav').onclick = () => { if (busy) return; view('dashboard'); loadDashboard(); };
+$('modelsnav').onclick = () => { if (!busy) view('models'); };
+$('dashnew').onclick = () => view('compose');
+$('searchform').onsubmit = e => { e.preventDefault(); refresh(); };
+for (const id of ['fverdict', 'fpanic', 'fpriority', 'flang']) $(id).onchange = refresh;
 $('example').onclick = () => { $('caption').value = t('exampleText'); updateChars(); $('caption').focus(); };
 for (const type of ['dragenter', 'dragover']) $('drop').addEventListener(type, e => { e.preventDefault(); $('drop').classList.add('drag'); });
 for (const type of ['dragleave', 'drop']) $('drop').addEventListener(type, e => { e.preventDefault(); $('drop').classList.remove('drag'); });
@@ -433,6 +624,9 @@ $('delete').onclick = async () => {
     view('history');
   } catch (e) { alert(e.message); }
 };
-view('compose');
+// ---------- start ----------
 applyLang();
-loadConfig().then(refresh);
+loadConfig();
+checkAuth().then(() => {
+  if (user) { view('dashboard'); loadDashboard(); } else view('landing');
+});

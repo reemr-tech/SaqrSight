@@ -42,6 +42,7 @@ Use `eval/annotation/template.csv` (opens in Excel or Numbers; save as CSV, UTF-
 | `source_type` | e.g. `x`, `telegram`, `news`, `official`, `whatsapp-public` |
 | `date_collected` | e.g. `2026-11-10` |
 | `urgency`, `fear`, `manipulation`, `share_pressure` | `1` if the post itself uses this kind of wording, otherwise `0` |
+| `panic_level` | `none`, `mild` (some urgency or pressure, no fear-inducing wording) or `strong` (panic- or fear-inducing wording) – judged on the wording, not on whether the news is true |
 | `phenomenon` | One of `indicator`, `dialect`, `negation`, `quote`, `debunk`, `warning`, `neutral` |
 | `notes` | Anything unclear |
 

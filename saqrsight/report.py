@@ -138,14 +138,20 @@ def build_sections(p: dict) -> list[dict]:
     t = mods.get("text_analysis")
     if t and t["status"] == "completed":
         lvl = t["data"]["indicator_level"]
+        pl = t["data"].get("panic_level") or ("none" if lvl == "none" else "mild")
+        pl_en = {"none": "None", "mild": "Mild urgency", "strong": "Strong panic / fear-inducing"}[pl]
+        pl_ar = {"none": "لا يوجد", "mild": "استعجال خفيف", "strong": "ذعر شديد / مثير للخوف"}[pl]
         panic = [f for f in t["findings"] if f["code"] in ("urgency", "fear", "manipulation", "share_pressure")]
         sections.append(_section(
             "panic_language", "completed",
-            ("The words below may create urgency or alarm. They describe how the post is written – they do not "
-             "show the claim is false or predict panic." if panic else
-             "No urgent, alarming or pressuring words from SaqrSight's list were found."),
-            summary_ar=("قد تثير الكلمات أدناه الاستعجال أو القلق. هي تصف أسلوب كتابة المنشور، ولا تثبت أن الادعاء كاذب "
-                        "ولا تتنبأ بالذعر." if panic else "لم تُرصد كلمات استعجال أو إثارة أو ضغط من قائمة صقر."),
+            f"Panic level: {pl_en}. "
+            + ("The words below may create urgency or alarm. They describe how the post is written – they do not "
+               "show the claim is false or predict panic." if panic else
+               "No urgent, alarming or pressuring words from SaqrSight's list were found."),
+            summary_ar=f"مستوى الذعر: {pl_ar}. "
+            + ("قد تثير الكلمات أدناه الاستعجال أو القلق. هي تصف أسلوب كتابة المنشور، ولا تثبت أن الادعاء كاذب "
+               "ولا تتنبأ بالذعر." if panic else "لم تُرصد كلمات استعجال أو إثارة أو ضغط من قائمة صقر."),
+            panic_level=pl,
             level=lvl, findings=[_finding(f) for f in panic]))
     else:
         sections.append(_mod_section("panic_language", t))
@@ -229,7 +235,7 @@ padding:1px 7px;margin:2px 4px 2px 0;quotes:none}
 .verdict .val{font-size:26px;font-weight:800;letter-spacing:-.02em;line-height:1.15}
 .verdict .ar{text-align:right}
 .v-potentially_misleading .val{color:#ff8fa3}.v-apparently_consistent .val{color:var(--green)}.v-insufficient_evidence .val{color:var(--amber)}
-.facts{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:16px}
+.facts{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:10px;margin-top:16px}
 .fact{background:rgba(7,13,24,.65);border:1px solid var(--line);border-radius:6px;padding:10px 12px}
 .fact .k{font:600 10.5px/1.3 var(--mono);letter-spacing:1.2px;color:var(--dim);display:flex;justify-content:space-between;gap:6px}
 .fact .k .ar{font:700 11px var(--sans);letter-spacing:0}
@@ -430,6 +436,15 @@ def _card(L: _Lang, s: dict, num: str) -> str:
             f'{_status(L, s)}{title_ar}</div>{"".join(body)}</section>')
 
 
+def _panic_label(mods: dict) -> tuple[str, str]:
+    data = ((mods.get("text_analysis") or {}).get("data") or {})
+    pl = data.get("panic_level")
+    if not pl:
+        return ("Not assessed", "لم يُقيَّم")
+    return {"none": ("None", "لا يوجد"), "mild": ("Mild urgency", "استعجال خفيف"),
+            "strong": ("Strong panic", "ذعر شديد")}[pl]
+
+
 def _guide(L: _Lang) -> str:
     rows = "".join(
         f'<div class="g-row"><div class="g-term">{L.pair(en, ar_t)}</div>{L.bi(d_en, d_ar)}</div>'
@@ -521,6 +536,7 @@ def render_html(p: dict, images: list[dict] | None = None, lang: str = "both") -
         + fact("REVIEW PRIORITY", "أولوية المراجعة", f'<span class="prio {_e(pr.get("level", ""))}">{L.pair(prl["en"], prl["ar"])}</span>')
         + fact("ISSUE TYPE", "نوع المشكلة", "".join(f"<div>{L.pair(i['en'], i['ar'])}</div>" for i in issues)
                or L.pair("None identified", "لم يُحدَّد"))
+        + fact("PANIC LEVEL", "مستوى الذعر", L.pair(*_panic_label(mods)))
         + fact("CHECKS COMPLETED", "الفحوص المكتملة",
                L.pair(f"{done} of {len(CHECKS)}", f"{done} من {len(CHECKS)}"))
         + "</div>"

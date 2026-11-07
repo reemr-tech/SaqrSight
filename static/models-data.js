@@ -1,0 +1,147 @@
+'use strict';
+// Content of the "Models & roadmap" page. Facts checked against the official model/dataset pages
+// (Hugging Face API, GitHub, provider pricing pages) in November 2026.
+// status: "now" = working in Senior Project 1 · "prototype" = in the code, not yet evaluated (SGP2)
+//         "planned" = design only, Senior Project 2
+window.SAQR_MODELS = {
+  groups: [
+    {
+      en: 'Text analysis', ar: 'تحليل النص',
+      items: [
+        {
+          status: 'now',
+          name: 'SaqrSight language-indicator rules', id: 'text-lexicon-1.1.1',
+          size: { en: 'Rule-based (no trained weights)', ar: 'قائم على قواعد (دون أوزان مدرّبة)' },
+          role: { en: 'Finds urgency, fear, manipulation and share-pressure wording in Arabic (incl. Gulf dialect) and English, handles negation, quotes, rumour denials and official warnings, and gives the 3-level panic label (none / mild / strong).',
+                  ar: 'يرصد صياغة الاستعجال والتخويف والتلاعب والضغط للنشر بالعربية (ومنها اللهجة الخليجية) والإنجليزية، ويتعامل مع النفي والاقتباس ونفي الشائعات والتحذيرات الرسمية، ويعطي مستوى الذعر بثلاث درجات (لا يوجد / خفيف / شديد).' },
+          result: { en: 'Blind test (60 posts): F1 0.81 English, 0.72 Arabic, no false alarms.', ar: 'الاختبار المحجوب (60 منشوراً): F1 ‏0.81 للإنجليزية و0.72 للعربية، دون إنذارات خاطئة.' },
+          licence: { en: 'Project code', ar: 'شيفرة المشروع' },
+          links: [],
+        },
+        {
+          status: 'now',
+          name: 'TF-IDF + logistic regression (scikit-learn)', id: 'tfidf-char2-5+logreg',
+          size: { en: 'Small classic model', ar: 'نموذج تقليدي صغير' },
+          role: { en: 'Machine-learning comparison for the evaluation chapter (not used in reports).', ar: 'مقارنة بالتعلم الآلي لفصل التقييم (لا يُستخدم في التقارير).' },
+          result: { en: 'Blind test: F1 0.68 English, 0.65 Arabic.', ar: 'الاختبار المحجوب: F1 ‏0.68 للإنجليزية و0.65 للعربية.' },
+          licence: { en: 'BSD-3-Clause (scikit-learn)', ar: 'BSD-3-Clause ‏(scikit-learn)' },
+          links: [{ label: 'scikit-learn', url: 'https://scikit-learn.org/' }],
+        },
+        {
+          status: 'planned',
+          name: 'AraBERT v0.2', id: 'aubmindlab/bert-base-arabertv02',
+          size: { en: '136M parameters', ar: '136 مليون معامل' },
+          role: { en: 'To be fine-tuned on about 1,500–3,000 labelled Arabic captions for the 3-level panic label; the Twitter variant (bert-base-arabertv02-twitter, trained on dialect tweets) is the alternative for Gulf posts. AraBERT v2 itself needs the Farasa word segmenter, so v0.2 is used.',
+                  ar: 'سيُعاد تدريبه على نحو 1,500–3,000 نص عربي مصنّف لمستوى الذعر بثلاث درجات؛ ونسخة تويتر (bert-base-arabertv02-twitter، المدرّبة على تغريدات باللهجات) بديل للمنشورات الخليجية. يحتاج AraBERT v2 نفسه إلى أداة Farasa لتقطيع الكلمات، لذا تُستخدم v0.2.' },
+          result: { en: 'Not yet trained – needs the labelled dataset.', ar: 'لم يُدرَّب بعد، ويحتاج إلى مجموعة البيانات المصنّفة.' },
+          licence: { en: 'No licence declared by the authors – academic use with citation (Antoun et al., 2020)', ar: 'لم يعلن المؤلفون رخصة – استخدام أكاديمي مع الاستشهاد (Antoun وآخرون، 2020)' },
+          links: [{ label: 'Hugging Face', url: 'https://huggingface.co/aubmindlab/bert-base-arabertv02' },
+                  { label: 'GitHub', url: 'https://github.com/aub-mind/arabert' }],
+        },
+        {
+          status: 'planned',
+          name: 'XLM-RoBERTa base', id: 'FacebookAI/xlm-roberta-base',
+          size: { en: '278.9M parameters (≈270M in the paper)', ar: '278.9 مليون معامل (≈270 مليوناً في الورقة)' },
+          role: { en: 'Multilingual model for English and mixed Arabic–English posts, compared with AraBERT.', ar: 'نموذج متعدد اللغات للمنشورات الإنجليزية والمختلطة، يُقارن مع AraBERT.' },
+          result: { en: 'Not yet trained.', ar: 'لم يُدرَّب بعد.' },
+          licence: { en: 'MIT', ar: 'MIT' },
+          links: [{ label: 'Hugging Face', url: 'https://huggingface.co/FacebookAI/xlm-roberta-base' },
+                  { label: 'Paper (arXiv:1911.02116)', url: 'https://arxiv.org/abs/1911.02116' }],
+        },
+      ],
+    },
+    {
+      en: 'Images and video (Senior Project 2)', ar: 'الصور والفيديو (المشروع الثاني)',
+      items: [
+        {
+          status: 'prototype',
+          name: 'NYUAD AI-generated image detector', id: 'NYUAD-ComNets/NYUAD_AI-generated_images_detector',
+          size: { en: 'Vision Transformer, 85.8M parameters', ar: 'Vision Transformer، ‏85.8 مليون معامل' },
+          role: { en: 'Signals a possibly AI-generated image (classes: DALL·E, real, Stable Diffusion). Connected in the code; never used in the verdict until it is evaluated.',
+                  ar: 'يعطي إشارة إلى احتمال أن الصورة مولدة بالذكاء الاصطناعي (الفئات: DALL·E، حقيقية، Stable Diffusion). موصول في الشيفرة، ولا يُستخدم في الحكم قبل تقييمه.' },
+          result: { en: 'Not yet evaluated by us (authors report 97.4% accuracy on their own validation set).', ar: 'لم نقيّمه بعد (يذكر المؤلفون دقة 97.4% على مجموعة التحقق الخاصة بهم).' },
+          licence: { en: 'Apache-2.0', ar: 'Apache-2.0' },
+          links: [{ label: 'Hugging Face', url: 'https://huggingface.co/NYUAD-ComNets/NYUAD_AI-generated_images_detector' }],
+        },
+        {
+          status: 'prototype',
+          name: 'CLIP ViT-B/32 + multilingual text encoder', id: 'clip-ViT-B-32 · sentence-transformers/clip-ViT-B-32-multilingual-v1',
+          size: { en: 'Image encoder + 134.7M-parameter text encoder + small classifier', ar: 'مُرمِّز صور + مُرمِّز نصوص بـ134.7 مليون معامل + مصنّف صغير' },
+          role: { en: 'Checks whether a picture matches its caption (topic only – it cannot confirm place or date).', ar: 'يفحص ما إذا كانت الصورة تطابق نصها (الموضوع فقط، ولا يؤكد المكان أو التاريخ).' },
+          result: { en: 'Prototype tested on NewsCLIPpings and VERITE; full evaluation in SGP2.', ar: 'نموذج أولي اختُبر على NewsCLIPpings وVERITE؛ والتقييم الكامل في المشروع الثاني.' },
+          licence: { en: 'MIT (OpenAI CLIP) · Apache-2.0 (multilingual encoder)', ar: 'MIT ‏(OpenAI CLIP) · ‏Apache-2.0 (المُرمِّز متعدد اللغات)' },
+          links: [{ label: 'OpenAI CLIP', url: 'https://github.com/openai/CLIP' },
+                  { label: 'Multilingual encoder', url: 'https://huggingface.co/sentence-transformers/clip-ViT-B-32-multilingual-v1' }],
+        },
+      ],
+    },
+    {
+      en: 'Services (Senior Project 2)', ar: 'خدمات خارجية (المشروع الثاني)',
+      items: [
+        {
+          status: 'planned',
+          name: 'Google Gemini (Gemini API)', id: 'gemini-3-flash-preview',
+          size: { en: 'Hosted model (pay as you go)', ar: 'نموذج مستضاف (الدفع حسب الاستخدام)' },
+          role: { en: 'To reword the “In plain words” summary from the structured findings only. It never decides the verdict. Paid tier only, after the user agrees, because free-tier data may be used by Google to improve its products.',
+                  ar: 'لإعادة صياغة ملخص «باختصار» من النتائج المنظمة فقط، ولا يحدد الحكم أبداً. الفئة المدفوعة فقط وبعد موافقة المستخدم، لأن بيانات الفئة المجانية قد تستخدمها Google لتحسين منتجاتها.' },
+          result: { en: 'Price: $0.50 per 1M input tokens, $3.00 per 1M output tokens (preview model).', ar: 'السعر: 0.50 دولار لكل مليون رمز إدخال، و3.00 دولارات لكل مليون رمز إخراج (نموذج تجريبي).' },
+          licence: { en: 'Gemini API Terms of Service', ar: 'شروط خدمة Gemini API' },
+          links: [{ label: 'Terms', url: 'https://ai.google.dev/gemini-api/terms' },
+                  { label: 'Pricing', url: 'https://ai.google.dev/gemini-api/docs/pricing' }],
+        },
+        {
+          status: 'planned',
+          name: 'Reverse image search', id: 'Google Cloud Vision (Web Detection) or TinEye API',
+          size: { en: 'External API', ar: 'واجهة برمجية خارجية' },
+          role: { en: 'Finds earlier appearances of an image. Code prototype exists; kept as proposed.', ar: 'يبحث عن ظهور سابق للصورة. يوجد نموذج أولي في الشيفرة، ويبقى مقترحاً.' },
+          result: { en: 'Cost: Google Vision – first 1,000 per month free, then $3.50 per 1,000; TinEye – prepaid, from $200 for 5,000 searches.', ar: 'التكلفة: Google Vision – أول 1,000 شهرياً مجاناً ثم 3.50 دولارات لكل 1,000؛ TinEye – مسبق الدفع، من 200 دولار لـ5,000 بحث.' },
+          licence: { en: 'Provider terms', ar: 'شروط المزوّد' },
+          links: [{ label: 'Cloud Vision pricing', url: 'https://cloud.google.com/vision/pricing' },
+                  { label: 'TinEye API', url: 'https://help.tineye.com/article/169-purchasing-search-bundles' }],
+        },
+        {
+          status: 'planned',
+          name: 'Official UAE sources', id: 'Search API limited to official domains (WAM, u.ae, NCEMA, police, NCM, MOHAP …)',
+          size: { en: 'External API – no scraping', ar: 'واجهة برمجية خارجية – دون استخلاص للصفحات' },
+          role: { en: 'Looks for official reports or denials of the same event, place and time. Code prototype exists; kept as proposed.', ar: 'يبحث عن تقارير رسمية أو نفي للحدث والمكان والزمان نفسها. يوجد نموذج أولي في الشيفرة، ويبقى مقترحاً.' },
+          result: { en: 'Needs a search API key (Brave or Google).', ar: 'يحتاج إلى مفتاح واجهة بحث (Brave أو Google).' },
+          licence: { en: 'Provider terms', ar: 'شروط المزوّد' },
+          links: [],
+        },
+      ],
+    },
+    {
+      en: 'Data and infrastructure', ar: 'البيانات والبنية التحتية',
+      items: [
+        {
+          status: 'planned',
+          name: 'Training data (public)', id: 'ArMPro (ArAIEval) · AraFacts',
+          size: { en: 'About 1,500–3,000 Arabic captions in total', ar: 'نحو 1,500–3,000 نص عربي إجمالاً' },
+          role: { en: 'Propaganda/manipulation and claim examples for fine-tuning AraBERT, with a train/validation split.', ar: 'أمثلة دعاية وتلاعب وادعاءات لإعادة تدريب AraBERT، مع تقسيم للتدريب والتحقق.' },
+          result: { en: 'Non-commercial licences – fine for this academic project, with citation.', ar: 'رخص لغير الأغراض التجارية – مناسبة لهذا المشروع الأكاديمي مع الاستشهاد.' },
+          licence: { en: 'ArMPro: CC BY-NC-SA 4.0 · AraFacts: CC BY-NC 4.0 · ArAIEval: check task terms', ar: 'ArMPro: ‏CC BY-NC-SA 4.0 · ‏AraFacts: ‏CC BY-NC 4.0 · ‏ArAIEval: تحقق من شروط المهمة' },
+          links: [{ label: 'ArMPro', url: 'https://huggingface.co/datasets/QCRI/ArmPro' },
+                  { label: 'AraFacts', url: 'https://gitlab.com/bigirqu/AraFacts' }],
+        },
+        {
+          status: 'planned',
+          name: 'UAE evaluation set (ours)', id: 'eval/annotation',
+          size: { en: '150–200 real posts, Arabic and English', ar: '150–200 منشور حقيقي بالعربية والإنجليزية' },
+          role: { en: 'Evaluation only – never used for training. Labelled by two people (agreement measured), usernames removed, kept internal.', ar: 'للتقييم فقط ولا يُستخدم للتدريب أبداً. يصنّفه شخصان (مع قياس الاتفاق)، وتُحذف أسماء المستخدمين، ويُحفظ داخلياً.' },
+          result: { en: 'Labelling kit ready in the project.', ar: 'أدوات التصنيف جاهزة في المشروع.' },
+          licence: { en: 'Internal; raw posts are not republished', ar: 'داخلي؛ ولا تُعاد نشر المنشورات الأصلية' },
+          links: [],
+        },
+        {
+          status: 'planned',
+          name: 'Hosting', id: 'Hostinger VPS – KVM 2',
+          size: { en: '2 vCPU · 8 GB RAM · 100 GB NVMe', ar: '2 معالج افتراضي · 8 غيغابايت ذاكرة · 100 غيغابايت NVMe' },
+          role: { en: 'For a public deployment. Enough to run the website and AraBERT on CPU. Fine-tuning can use a free Google Colab GPU.', ar: 'للنشر العام. يكفي لتشغيل الموقع وAraBERT على المعالج. ويمكن إعادة التدريب على GPU مجانية في Google Colab.' },
+          result: { en: 'About $8.99/month (24-month promotional price), $14.99 on renewal.', ar: 'نحو 8.99 دولارات شهرياً (سعر ترويجي لـ24 شهراً)، و14.99 عند التجديد.' },
+          licence: { en: 'Provider terms', ar: 'شروط المزوّد' },
+          links: [{ label: 'Hostinger VPS', url: 'https://www.hostinger.com/vps-hosting' }],
+        },
+      ],
+    },
+  ],
+};

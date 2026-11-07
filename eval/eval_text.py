@@ -34,6 +34,27 @@ def prf(tp, fp, fn):
     return {"precision": rnd(p), "recall": rnd(r), "f1": rnd(f), "tp": tp, "fp": fp, "fn": fn}
 
 
+def evaluate_panic(rows):
+    """3-level panic label (none / mild / strong): accuracy, macro-F1 and confusion, for rows with gold labels."""
+    rows = [r for r in rows if r.get("panic_level")]
+    if not rows:
+        return None
+    pred = [text_indicators.analyze(r["text"], "").data["panic_level"] for r in rows]
+    gold = [r["panic_level"] for r in rows]
+    f1s = []
+    for c in ("none", "mild", "strong"):
+        tp = sum(p == c and g == c for p, g in zip(pred, gold))
+        fp = sum(p == c and g != c for p, g in zip(pred, gold))
+        fn = sum(p != c and g == c for p, g in zip(pred, gold))
+        pr = tp / (tp + fp) if tp + fp else 0.0
+        rc = tp / (tp + fn) if tp + fn else 0.0
+        f1s.append(2 * pr * rc / (pr + rc) if pr + rc else 0.0)
+    return {"n": len(rows), "accuracy": round(sum(p == g for p, g in zip(pred, gold)) / len(rows), 3),
+            "macro_f1": round(sum(f1s) / 3, 3),
+            "confusion": {f"{g}->{p}": sum(1 for x, y in zip(gold, pred) if x == g and y == p)
+                          for g in ("none", "mild", "strong") for p in ("none", "mild", "strong")}}
+
+
 def evaluate(rows):
     out, errors = {}, []
     preds = [predict(r["text"]) for r in rows]
@@ -65,6 +86,9 @@ def main():
             sub = [r for r in rows if lang == "all" or r["lang"] == lang]
             m, errs = evaluate(sub)
             results[split][lang] = {"n": len(sub), "metrics": m}
+            panic = evaluate_panic(sub)
+            if panic:
+                results[split][lang]["panic_level"] = panic
             if lang != "all":
                 results[split][lang]["errors"] = errs
     out = ROOT / "eval" / "results" / "text.json"
