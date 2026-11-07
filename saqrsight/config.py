@@ -49,6 +49,9 @@ class Settings:
         self.video_frames = _int("SAQRSIGHT_VIDEO_FRAMES", 5)
 
         # Analysis modules. Model-based modules can be switched off (e.g. on low-memory machines).
+        # Image and video analysis is Senior Project 2 scope: off by default in SGP1.
+        # SAQRSIGHT_MEDIA_ENABLED=1 turns the (prototype) image/video checks back on.
+        self.media_enabled = _bool("SAQRSIGHT_MEDIA_ENABLED", False)
         self.enable_models = _bool("SAQRSIGHT_ENABLE_MODELS", True)
         self.visual_model = os.environ.get("SAQRSIGHT_VISUAL_MODEL", "NYUAD-ComNets/NYUAD_AI-generated_images_detector")
         self.clip_image_model = os.environ.get("SAQRSIGHT_CLIP_IMAGE_MODEL", "clip-ViT-B-32")

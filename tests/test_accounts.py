@@ -82,3 +82,22 @@ def test_first_account_adopts_older_reports(tmp_path, monkeypatch):
     with TestClient(app.app) as c:
         c.post("/api/auth/signup", json={"name": "First", "email": "first@example.com", "password": "first pass 1"})
         assert [r["id"] for r in c.get("/api/reports").json()] == ["old-1"]
+
+
+def test_sgp1_default_text_only(tmp_path, monkeypatch):
+    """By default (Senior Project 1) image and video analysis is off: uploads are refused, text works."""
+    import importlib
+    from conftest import png
+    monkeypatch.setenv("SAQRSIGHT_DATA_DIR", str(tmp_path))
+    monkeypatch.setenv("SAQRSIGHT_ENABLE_MODELS", "0")
+    monkeypatch.delenv("SAQRSIGHT_MEDIA_ENABLED", raising=False)
+    import app
+    importlib.reload(app)
+    with TestClient(app.app) as c:
+        cfg = c.get("/api/config").json()
+        assert cfg["media_enabled"] is False and cfg["checks"]["media_analysis"] is False
+        c.post("/api/auth/signup", json={"name": "A", "email": "a@example.com", "password": "pass word 1"})
+        r = c.post("/api/reports", data={"caption": "Fire in Dubai"}, files={"media": ("x.png", png(), "image/png")})
+        assert r.status_code == 422 and "Senior Project 2" in r.json()["detail"]
+        assert c.get("/api/reports").json() == []
+        assert wait(c, c.post("/api/reports", data={"caption": "Fire in Dubai"}).json()["id"])["status"] == "complete"

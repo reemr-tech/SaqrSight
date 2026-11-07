@@ -109,3 +109,13 @@ body.signed-in .mini-brand{display:inline-flex}
 body.signed-in .mini-brand img{display:none}
 /* Arabic: never letter-space (it breaks letter joining) */
 html[dir=rtl] .eyebrow,html[dir=rtl] .header-path,html[dir=rtl] .pill,html[dir=rtl] .brand small,html[dir=rtl] .workspace,html[dir=rtl] .scene-label,html[dir=rtl] .stat-label,html[dir=rtl] .sidebar-bottom p{letter-spacing:0!important;font-family:inherit}
+
+/* image & video: coming in Senior Project 2 */
+.media-soon{display:flex;align-items:center;gap:14px;padding:16px 18px;border:1px dashed rgba(124,92,255,.55);border-radius:6px;
+  background:rgba(124,92,255,.06)}
+.media-soon[hidden]{display:none}
+.media-soon strong{display:block;font-size:13.5px;color:var(--ink)}
+.media-soon p{margin:3px 0 0;font-size:12.5px;color:var(--muted)}
+.media-soon>div{flex:1}
+.soon-ico{display:grid;place-items:center;width:40px;height:40px;border-radius:8px;background:rgba(124,92,255,.14);color:#b6a5ff;font-size:18px}
+.content h1 em,.content h1 em *{font-style:normal;color:var(--cyan);text-shadow:0 0 24px rgba(34,211,238,.45)}

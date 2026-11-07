@@ -53,7 +53,7 @@ it runs offline.
 
 | Feature | Status | Notes |
 |---|---|---|
-| Text, image, video and combined submission with validation | **Implemented** | Files are decoded to validate them (the extension is not trusted). Limits are configurable and shown before upload. |
+| Text submission with validation; image and video upload | **Implemented** (text) · **off in SGP1** (image/video: shown as "Coming in Senior Project 2", the server refuses uploads; `SAQRSIGHT_MEDIA_ENABLED=1` turns the prototype on) | Files are decoded to validate them (the extension is not trusted). Limits are configurable and shown before upload. |
 | Report history, reopen, HTML and JSON export, delete | **Implemented** | Carried over from SGP1. Deleting a report removes its database rows and stored media. |
 | SGP1 sample reports | **Implemented** | Still open, labelled **SGP1 SAMPLE REPORT**, and are never presented as analysis. |
 | Language detection with manual override (Arabic / English / mixed) | **Implemented** | A script-ratio heuristic, not a trained language-ID model. |
@@ -65,7 +65,7 @@ it runs offline.
 | Assessment rules, review priority, issue types, recommended actions | **Implemented** | See [Assessment rules](#assessment-rules). |
 | Reverse image search (Google Cloud Vision Web Detection) | **Optional** | Needs an API key and per-report user consent. Code and tests are done; it has not been run against the live service. |
 | Official UAE source retrieval (Brave Search or Google Programmable Search) | **Optional** | Needs an API key and per-report user consent. Code and tests are done; it has not been run against the live service. |
-| Short video (frame sampling with timestamps) | **Implemented** | MP4/MOV/WebM up to 60 s. Only the sampled frames are stored. |
+| Short video (frame sampling with timestamps) | **Prototype – off in SGP1** | MP4/MOV/WebM up to 60 s. Only the sampled frames are stored. |
 | Trained multilingual text-indicator model | **Planned** | Only the baseline exists. A model should be compared against it on labelled data. |
 | Direct X / Telegram post links | **Planned** | Not built. Supported API access has not been confirmed. Manual caption and media entry stay available. |
 | Accounts: sign up, log in, log out; each user sees only their own reports | **Implemented** | PBKDF2 password hashing, HttpOnly session cookie, login throttling (see [Security](#storage-privacy-and-security)). HTTPS is still needed for a public deployment. |

@@ -135,11 +135,13 @@ def config():
     from saqrsight.analysis.models import load_calibration
     return {
         "limits": cfg.public_limits(),
+        "media_enabled": cfg.media_enabled,
         "checks": {
             "text_analysis": True,
-            "media_analysis": cfg.enable_models,
-            "consistency_check": cfg.enable_models and load_calibration("consistency_classifier.json") is not None,
-            "reverse_image_search": cfg.reverse_search_configured,
+            "media_analysis": cfg.media_enabled and cfg.enable_models,
+            "consistency_check": cfg.media_enabled and cfg.enable_models
+                                 and load_calibration("consistency_classifier.json") is not None,
+            "reverse_image_search": cfg.media_enabled and cfg.reverse_search_configured,
             "official_sources": cfg.official_search_configured,
         },
         "external": {
@@ -163,6 +165,9 @@ async def create_report(caption: str = Form(""), language: str = Form("auto"),
     if language not in {"auto", "ar", "en", "mixed"}:
         raise HTTPException(422, "Choose Arabic, English, mixed, or automatic language selection.")
     has_file = upload is not None and bool(upload.filename)
+    if has_file and not cfg.media_enabled:
+        raise HTTPException(422, "Image and video analysis is not available yet – it is planned for Senior "
+                                 "Project 2. Please submit the post's text.")
     if not original and not has_file:
         raise HTTPException(422, "Enter text or upload an image or video.")
     rid = str(uuid.uuid4())

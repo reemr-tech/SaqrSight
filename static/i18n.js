@@ -131,6 +131,9 @@ window.I18N = {
     bc_results: "Assessment report",
     bc_history: "Search reports",
     bc_models: "Models & roadmap",
+    soonTitle: "Image & video analysis",
+    soonBody: "Coming in Senior Project 2. For now, SaqrSight analyses the text of the post.",
+    formSub: "Paste the post's text in Arabic or English.",
   },
   ar: {
     tagline: 'منظور أدق', workspace: 'المرصد', navNew: 'تقييم جديد', navHistory: 'التقارير المحفوظة',
@@ -262,5 +265,8 @@ window.I18N = {
     bc_results: "تقرير التقييم",
     bc_history: "البحث في التقارير",
     bc_models: "النماذج وخطة العمل",
+    soonTitle: "تحليل الصور والفيديو",
+    soonBody: "قادم في المشروع الثاني. حالياً يحلل صقر نص المنشور.",
+    formSub: "الصق نص المنشور بالعربية أو الإنجليزية.",
   },
 };

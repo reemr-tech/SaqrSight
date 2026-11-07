@@ -5,12 +5,12 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>SaqrSight | A sharper view of the truth</title>
 <link rel="icon" type="image/png" href="/static/favicon.png">
-<link rel="stylesheet" href="/static/style.css?v=0.3.0">
-<link rel="stylesheet" href="/static/report.css?v=0.3.0">
+<link rel="stylesheet" href="/static/style.css?v=0.3.2">
+<link rel="stylesheet" href="/static/report.css?v=0.3.2">
 <link rel="stylesheet" href="/static/vendor/lenis.css">
-<link rel="stylesheet" href="/static/motion.css?v=0.3.0">
-<link rel="stylesheet" href="/static/theme-cyber.css?v=0.3.0">
-<link rel="stylesheet" href="/static/screens.css?v=0.3.0">
+<link rel="stylesheet" href="/static/motion.css?v=0.3.2">
+<link rel="stylesheet" href="/static/theme-cyber.css?v=0.3.2">
+<link rel="stylesheet" href="/static/screens.css?v=0.3.2">
 </head>
 <body class="signed-out">
 <aside class="sidebar">
@@ -40,6 +40,7 @@
   </span>
 </header>
 <div class="content">
+<div class="notice"><strong data-i18n="noticeTitle">Initial assessment, not a verdict</strong><span data-i18n="noticeBody">SaqrSight runs automated checks and explains what it found and what remains uncertain. Always verify important claims with official sources.</span></div>
 
 <!-- ================= LANDING (visitors) ================= -->
 <section id="landing" hidden>
@@ -153,6 +154,12 @@
         <span id="limits"></span>
         <input id="media" type="file" accept="image/jpeg,image/png,image/webp,video/mp4,video/quicktime,video/webm">
       </label>
+      <div class="media-soon" id="mediasoon" hidden>
+        <span class="soon-ico" aria-hidden="true">◫</span>
+        <div><strong data-i18n="soonTitle">Image &amp; video analysis</strong>
+          <p data-i18n="soonBody">Coming in Senior Project 2. For now, SaqrSight analyses the text of the post.</p></div>
+        <span class="status-tag s-planned" data-i18n="ms_planned">Planned · SGP2</span>
+      </div>
       <div id="preview" hidden><img id="previewimg" alt=""><video id="previewvid" muted playsinline hidden></video><div><strong id="filename"></strong><small id="filesize"></small><button type="button" id="remove" data-i18n="remove">Remove file</button></div></div>
       <fieldset class="consent" id="consentbox">
         <label><input type="checkbox" id="consent"> <span data-i18n="consentLabel">Allow external evidence searches for this report</span></label>
@@ -266,9 +273,9 @@
 <script src="/static/vendor/ScrollTrigger.min.js"></script>
 <script src="/static/vendor/SplitText.min.js"></script>
 <script src="/static/vendor/lenis.min.js"></script>
-<script src="/static/motion.js?v=0.3.0"></script>
-<script src="/static/i18n.js?v=0.3.0"></script>
-<script src="/static/models-data.js?v=0.3.0"></script>
-<script src="/static/app.js?v=0.3.0"></script>
+<script src="/static/motion.js?v=0.3.2"></script>
+<script src="/static/i18n.js?v=0.3.2"></script>
+<script src="/static/models-data.js?v=0.3.2"></script>
+<script src="/static/app.js?v=0.3.2"></script>
 </body>
 </html>

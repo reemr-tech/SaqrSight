@@ -62,6 +62,11 @@ function renderConfig() {
   $('limits').textContent = t('limits', { imgf: l.image_formats.join(', '), imb: l.max_image_mb, imp: l.max_image_megapixels,
     ims: l.min_image_side, vidf: l.video_formats.join(', '), vmb: l.max_video_mb, vs: l.max_video_seconds, vf: l.video_frames_sampled });
   $('caption').maxLength = l.max_text_chars;
+  // Image and video analysis is Senior Project 2: show the 'coming soon' card instead of the upload box.
+  const media = !!cfg.media_enabled;
+  $('drop').hidden = !media;
+  $('mediasoon').hidden = media;
+  if (!media) { $('media').value = ''; $('preview').hidden = true; }
   $('privacy').textContent = t('privacy', { days: l.retention_days });
   const ext = cfg.checks.reverse_image_search || cfg.checks.official_sources;
   $('consent').disabled = !ext;
