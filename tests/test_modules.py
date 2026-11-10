@@ -326,3 +326,22 @@ def test_negation_scope_and_distrust():
     assert ("share_pressure", "active") in ctx("They will not tell you the truth so share this now!")
     assert ("fear", "active") in ctx("The government is hiding the real numbers, people are trapped!")
     assert ctx("According to NCM, dangerous conditions are expected.") == {("fear", "attributed_warning")}
+
+
+def test_panic_level_for_reports_saved_before_the_label():
+    """Older reports stored only the indicator level and categories. The report summary, the report
+    section and the dashboard must all work out the same panic level from them."""
+    import json
+    from saqrsight import report, storage
+    old = {"indicator_level": "high", "categories": ["manipulation", "share_pressure", "urgency"]}
+    assert text_indicators.panic_level_of(old) == "strong"
+    assert text_indicators.panic_level_of({"indicator_level": "none", "categories": []}) == "none"
+    assert text_indicators.panic_level_of({"indicator_level": "low", "categories": ["urgency"]}) == "mild"
+    assert text_indicators.panic_level_of({**old, "panic_level": "mild"}) == "mild"   # stored value wins
+    assert text_indicators.panic_level_of(None) is None
+    mods = {"text_analysis": {"status": "completed", "data": old, "findings": []}}
+    assert report._panic_label(mods) == ("Strong panic", "ذعر شديد")
+    assert report._panic_label({"text_analysis": {"status": "failed", "data": {}}}) == ("Not assessed", "لم يُقيَّم")
+    row = {"id": "r1", "created_at": "2026-11-06T00:00:00+00:00", "status": "complete",
+           "payload": json.dumps({"caption": "x", "modules": mods})}
+    assert storage._summary(row)["panic_level"] == "strong"

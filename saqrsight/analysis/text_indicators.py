@@ -155,6 +155,19 @@ def panic_level_for(level: str, categories: set) -> str:
     return "mild"
 
 
+def panic_level_of(data: dict | None) -> str | None:
+    """The panic level of a saved text-analysis result. Reports saved before the label existed only
+    stored the indicator level and categories, so it is worked out from those the same way.
+    None when the text analysis did not run."""
+    if not data:
+        return None
+    if data.get("panic_level"):
+        return data["panic_level"]
+    if "indicator_level" not in data:
+        return None
+    return panic_level_for(data["indicator_level"], set(data.get("categories") or []))
+
+
 def level_for(active: list[dict]) -> str:
     cats = {m["category"] for m in active}
     n = len(active)

@@ -22,6 +22,7 @@ from datetime import datetime, timedelta, timezone
 from pathlib import Path
 from typing import Any, Iterator
 
+from .analysis.text_indicators import panic_level_of
 from .config import Settings
 
 SCHEMA = """
@@ -254,13 +255,14 @@ class Store:
 def _summary(r: sqlite3.Row) -> dict:
     p = json.loads(r["payload"])
     media = p.get("media") or ({"kind": "image"} if p.get("image") else None)
-    text = ((p.get("modules") or {}).get("text_analysis") or {}).get("data") or {}
+    t = (p.get("modules") or {}).get("text_analysis") or {}
+    text = t.get("data") or {}
     return {"id": r["id"], "created_at": r["created_at"], "caption": p.get("caption", ""),
             "mode": p.get("mode", "analysis"), "status": r["status"], "language": p.get("language"),
             "has_image": bool(media), "media_kind": media and media.get("kind"),
             "assessment": (p.get("assessment") or {}).get("verdict"),
             "priority": (p.get("priority") or {}).get("level"),
-            "panic_level": text.get("panic_level"), "categories": text.get("categories", [])}
+            "panic_level": panic_level_of(text) if t.get("status") == "completed" else None, "categories": text.get("categories", [])}
 
 
 def _fold(text: str) -> str:

@@ -9,6 +9,7 @@ from functools import lru_cache
 from pathlib import Path
 
 from .i18n_ar import LEVELS, MATCH_TYPES, REASONS, RELATIONS, ar, ar_all
+from .analysis.text_indicators import panic_level_of
 from .plain import GUIDE, STATUS_PLAIN, plain, plain_summary
 
 STATUS = STATUS_PLAIN   # reader-facing names; stored statuses are unchanged
@@ -138,7 +139,7 @@ def build_sections(p: dict) -> list[dict]:
     t = mods.get("text_analysis")
     if t and t["status"] == "completed":
         lvl = t["data"]["indicator_level"]
-        pl = t["data"].get("panic_level") or ("none" if lvl == "none" else "mild")
+        pl = panic_level_of(t["data"])
         pl_en = {"none": "None", "mild": "Mild urgency", "strong": "Strong panic / fear-inducing"}[pl]
         pl_ar = {"none": "لا يوجد", "mild": "استعجال خفيف", "strong": "ذعر شديد / مثير للخوف"}[pl]
         panic = [f for f in t["findings"] if f["code"] in ("urgency", "fear", "manipulation", "share_pressure")]
@@ -437,8 +438,8 @@ def _card(L: _Lang, s: dict, num: str) -> str:
 
 
 def _panic_label(mods: dict) -> tuple[str, str]:
-    data = ((mods.get("text_analysis") or {}).get("data") or {})
-    pl = data.get("panic_level")
+    t = mods.get("text_analysis") or {}
+    pl = panic_level_of(t.get("data")) if t.get("status") == "completed" else None
     if not pl:
         return ("Not assessed", "لم يُقيَّم")
     return {"none": ("None", "لا يوجد"), "mild": ("Mild urgency", "استعجال خفيف"),
